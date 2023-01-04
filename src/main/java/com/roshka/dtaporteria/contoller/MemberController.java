@@ -19,6 +19,11 @@ public class MemberController {
         return "hola";
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity getMember(@PathVariable(value = "id") String id){
+        return new ResponseEntity(service.getById(id), HttpStatus.OK);
+    }
+
     @GetMapping("/list")
     public ResponseEntity list(){
         return new ResponseEntity(service.list(), HttpStatus.OK);
@@ -38,5 +43,7 @@ public class MemberController {
     public ResponseEntity delete(@PathVariable(value = "id") String id){
         return new ResponseEntity(service.delete(id), HttpStatus.OK);
     }
-    
+
+
+
 }

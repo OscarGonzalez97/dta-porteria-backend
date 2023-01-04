@@ -1,20 +1,14 @@
 package com.roshka.dtaporteria.service;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.CollectionReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.QuerySnapshot;
-import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.firestore.*;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
 import com.roshka.dtaporteria.dto.MemberDTO;
 import com.roshka.dtaporteria.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -24,6 +18,18 @@ public class MemberService implements MemberRepository {
     private FirebaseInitializer firebase;
 
     @Override
+    public Map<String, Object> getById(String id) {
+        DocumentReference docRef = getCollection().document(id);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        try {
+            DocumentSnapshot document = future.get();
+            return document.getData();
+        } catch (InterruptedException | ExecutionException e) {
+            return null;
+        }
+    }
+
+    @Override
     public List<MemberDTO> list() {
         List<MemberDTO> response = new ArrayList<>();
         MemberDTO post;
@@ -31,6 +37,7 @@ public class MemberService implements MemberRepository {
         try {
             for (DocumentSnapshot doc : querySnapshotApiFuture.get().getDocuments()) {
                 post = doc.toObject(MemberDTO.class);
+                assert post != null;
                 post.setId(doc.getId());
                 response.add(post);
             }
@@ -58,8 +65,9 @@ public class MemberService implements MemberRepository {
     @Override
     public Boolean edit(String id, MemberDTO post) {
         Map<String, Object> docData = getDocData(post);
+        docData.values().removeAll(Collections.singleton(null));
         CollectionReference posts = getCollection();
-        ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).set(docData);
+        ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).update(docData);
         try {
             if (writeResultApiFuture.get() != null){
                 return Boolean.TRUE;
@@ -85,7 +93,7 @@ public class MemberService implements MemberRepository {
     }
 
     private static Map<String, Object> getDocData(MemberDTO post) {
-        Map<String, Object> docData = new HashMap<String, Object>();
+        Map<String, Object> docData = new HashMap<>();
         docData.put("created_by", post.getCreated_by());
         docData.put("id_member", post.getId_member());
         docData.put("is_defaulter", post.getIs_defaulter());
