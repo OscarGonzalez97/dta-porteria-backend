@@ -15,7 +15,7 @@ import java.io.IOException;
 public class FirebaseInitializer {
     @PostConstruct
     private Firestore iniFirestore() throws IOException {
-        FileInputStream serviceAccount = new FileInputStream("./firebase-account-info.json");
+        FileInputStream serviceAccount = new FileInputStream("./firebaseAccountInfo.json");
         FirebaseOptions options = new FirebaseOptions.Builder().
                 setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .setDatabaseUrl("https://porteria-dta-test.firebaseio.com/")
