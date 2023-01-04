@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "porteria-dta-test",
+  "private_key_id": "6834644a8d90f4471f84398d5d38654bb000a935",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC+YwtjydUEoDAB\n3cjt3y4/jFo3uc+inU3Ezh7Dm2a68ub+YeeWR7pCOG5mEn5zWp9E8DaiBMh9k8ix\nnzo/bfQMXSvH4eEfMqzhrZzhtpp20+Fg0j0PRqyQEYbCG9stFCzVMV1d0KsYAG9Q\nMvZaQVBgE4xlzy79g7presa2vXTioiESX4T3b7cSkZ9fGztUZx9LAnkWFiqmoH/s\n4AELqDTzAB0izj+mbxDJSyVEBVoU4b515Fv7QvbuvC0K2gd8mOG24yiuztZr2Ip3\nKBjyzi21QLMgulIeKon/JEduIW7j1Iy9nKYG1cA10SuLK98xlNh5I9pXvGaZRHaO\nG7Yil+OJAgMBAAECggEAKHBQs8QjzSz6LXdOjan1QJW+9u2ueu+XHGmckrdAIY7k\n/hzNDDhViWnDl0Yv2jAiOsocDJtf+35np0S3IlBoQTUMDtN9VftVScUu2KmI0xsL\nmN1nD0bXce1rFnFEw2Uw5aKr3nirUriK7Dm65m5PlGyqilhwtnPjpZ8pNJj2yglA\nKYQk0I5x9JRRIz7hCbA5lJxF2GHDVo0TS+l36q8h9BAi2LIEldz6XNEZh4zGzCHl\nQmnockVF6JEr13SCaFuyQoci335bWK7QzzIlW7AP2BPMGj/iatzSrdGvuBxisBkF\nXlsqhWen0QCJy2UM7/98TgDICfchdWLY1fProjIKNQKBgQDzdNZdLlR6gCuoM9lB\nJqGRFUWm2edDmVrdr2p5sMKm3WB5+GClB9+AQTuvD/AauZEogoYc1stCO5THNpwR\nCfnEWcx8G8I/junjKBta+ZLMF4l6rARhp7HQbU91vCdZgOq0in8Afoja71+/5lyt\nAXcWsWNjDvGy1VjG1l3D5tf/5QKBgQDIMjnv3G4UtJl92uVIt/sAokWLyG57yvZP\nKnrXldZWxq93+DhUr+uU7jq4DWlRWCEzOGX399DrWspx3i9RM9uHo1eTb9TwJeXn\niF+rGB2aGZBSRUqFpqVGaRXJkNXYHms8ZdhlGszclTBrInqaWvVQuZzQtBeueSAl\nT2PEVnxy1QKBgGWGecaOBYi4XnxccuMqewIHvu4fvMOB9lSwTFTHE8WGWC9FFvh7\nWgcgLQWKPfTHIfOkyszH/id2tUqGSXsJj/EECbRP1yeuL3cdSJsdrMwTnK9dgM5A\nonRqwVI1zqsSic4UW3YXTncOj/100X0MOV9rRikPGFgdhFIXHy8M21LJAoGACFYX\nFYbfSptunNAFpi6LFC6tqLFy8FK2SPui2+FQaJKjceJzLguZSr1U0p80WH/L+h8K\nF/ZIy9QfA/jVjZMUPCSwG+KXQlzBow+JtE0vxl/0I4jhHome7jyn/Jm8XeB+ZKh1\nB1jDWRgZSQzJgC3zcyYXgpVNOyWuEf+pTt6vFfUCgYEAh1V7rqqOya7D05WmDtI7\nKadFo0gBm9pSMhKrGFm2RSVW+bC/A917aa51kRvQWYW1yHAyRmaylDn7ZvAzxA8U\nU4+GupPZaUNDFT81HOMhfBymNtYjzqA0fYok+SdIyWcNTgn4cItIsJPPE/L+oMPG\ndYpTaqBEATTRvINJMmDQ9q8=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-b7ap4@porteria-dta-test.iam.gserviceaccount.com",
+  "client_id": "111221244220224998087",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-b7ap4%40porteria-dta-test.iam.gserviceaccount.com"
+}
