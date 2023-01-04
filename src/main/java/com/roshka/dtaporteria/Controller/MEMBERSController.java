@@ -12,22 +12,20 @@ public class MEMBERSController {
         this.membersService = membersService;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/createMembers")
     public String createMEMBERS(@RequestBody MEMBERS members) throws InterruptedException, ExecutionException {
         return membersService.createMEMBERS(members);
     }
-    @GetMapping("/get")
+    @GetMapping("/getMembers")
     public MEMBERS getMEMBERS(@RequestParam String documentID) throws InterruptedException, ExecutionException {
         return membersService.getMEMBERS(documentID);
     }
-    @PutMapping("/update")
+    @PutMapping("/updateMembers")
     public String updateMEMBERS(@RequestBody MEMBERS members) throws InterruptedException, ExecutionException {
         return membersService.updateMEMBERS(members);
     }
-    @DeleteMapping("/delete")
+    @DeleteMapping("/deleteMembers")
     public String deleteMEMBERS(@RequestParam String documentID) throws InterruptedException, ExecutionException {
         return membersService.deleteMEMBERS(documentID);
     }
-    @GetMapping("/test")
-    public ResponseEntity<String> testGetEndpoint(){return ResponseEntity.ok("Test done!");}
 }

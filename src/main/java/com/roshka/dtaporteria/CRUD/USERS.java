@@ -8,12 +8,10 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MEMBERS {
-    private String created_by;
-    private Long id_member;
-    private String is_defaulter;
-    private String photo;
+public class USERS {
+    private String active;
+    private String ci;
     private String name;
+    private String rol;
     private String surname;
-    private String type;
 }

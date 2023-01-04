@@ -16,12 +16,12 @@ import java.util.concurrent.ExecutionException;
 public class MEMBERSService {
     public String createMEMBERS(MEMBERS members) throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("MEMBERS").document(members.getCedula()).set(members);
+        ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("MEMBERS").document(String.valueOf(members.getId_member())).set(members);
         return  collectionsApiFuture.get().getUpdateTime().toString();
     }
     public String updateMEMBERS(MEMBERS members) throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> collectionApiFuture = dbFirestore.collection("MEMBERS").document(members.getCedula()).set(members);
+        ApiFuture<WriteResult> collectionApiFuture = dbFirestore.collection("MEMBERS").document(String.valueOf(members.getId_member())).set(members);
         return  collectionApiFuture.get().getUpdateTime().toString();
     }
     public String deleteMEMBERS(String documentID){
