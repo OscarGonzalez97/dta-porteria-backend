@@ -1,14 +1,102 @@
 package com.roshka.dtaporteria.service;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.DocumentSnapshot;
+import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.WriteResult;
+import com.roshka.dtaporteria.config.FirebaseInitializer;
 import com.roshka.dtaporteria.dto.MemberDTO;
+import com.roshka.dtaporteria.repository.MemberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
-public interface MemberService {
-    List<MemberDTO> list();
+@Service
+public class MemberService implements MemberRepository {
 
-    Boolean add(MemberDTO post);
-    Boolean edit(String id, MemberDTO post);
-    Boolean delete(String id);
+    @Autowired
+    private FirebaseInitializer firebase;
 
+    @Override
+    public List<MemberDTO> list() {
+        List<MemberDTO> response = new ArrayList<>();
+        MemberDTO post;
+        ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
+        try {
+            for (DocumentSnapshot doc : querySnapshotApiFuture.get().getDocuments()) {
+                post = doc.toObject(MemberDTO.class);
+                post.setId(doc.getId());
+                response.add(post);
+            }
+            return response;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public Boolean add(MemberDTO post) {
+        Map<String, Object> docData = getDocData(post);
+        CollectionReference posts = getCollection();
+        ApiFuture<WriteResult> writeResultApiFuture = posts.document(String.valueOf(post.getId_member())).set(docData);
+        try {
+            if (writeResultApiFuture.get() != null){
+                return Boolean.TRUE;
+            }
+            return Boolean.FALSE;
+        } catch (InterruptedException | ExecutionException e) {
+            return Boolean.FALSE;
+        }
+    }
+
+    @Override
+    public Boolean edit(String id, MemberDTO post) {
+        Map<String, Object> docData = getDocData(post);
+        CollectionReference posts = getCollection();
+        ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).set(docData);
+        try {
+            if (writeResultApiFuture.get() != null){
+                return Boolean.TRUE;
+            }
+            return Boolean.FALSE;
+        } catch (InterruptedException | ExecutionException e) {
+            return Boolean.FALSE;
+        }
+    }
+
+    @Override
+    public Boolean delete(String id) {
+        CollectionReference posts = getCollection();
+        ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).delete();
+        try {
+            if (writeResultApiFuture.get() != null){
+                return Boolean.TRUE;
+            }
+            return Boolean.FALSE;
+        } catch (InterruptedException | ExecutionException e) {
+            return Boolean.FALSE;
+        }
+    }
+
+    private static Map<String, Object> getDocData(MemberDTO post) {
+        Map<String, Object> docData = new HashMap<String, Object>();
+        docData.put("created_by", post.getCreated_by());
+        docData.put("id_member", post.getId_member());
+        docData.put("is_defaulter", post.getIs_defaulter());
+        docData.put("name", post.getName());
+        docData.put("photo", post.getPhoto());
+        docData.put("surname", post.getSurname());
+        docData.put("type", post.getType());
+        return docData;
+    }
+
+    private CollectionReference getCollection() {
+        return firebase.getFirestore().collection("MEMBERS");
+    }
 }
