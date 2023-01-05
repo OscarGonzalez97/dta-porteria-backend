@@ -1,9 +1,11 @@
 package com.roshka.dtaporteria.dto;
 
+import com.google.cloud.firestore.annotation.DocumentId;
 import lombok.Data;
 
 @Data
 public class RecordDTO {
+    @DocumentId
     private String id;
     private String ci_member;
     private String ci_portero;

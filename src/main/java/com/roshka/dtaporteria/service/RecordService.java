@@ -5,7 +5,6 @@ import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
-import com.roshka.dtaporteria.dto.MemberDTO;
 import com.roshka.dtaporteria.dto.RecordDTO;
 import com.roshka.dtaporteria.repository.RecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,6 @@ public class RecordService implements RecordRepository {
         try {
             for (DocumentSnapshot doc : querySnapshotApiFuture.get().getDocuments()) {
                 post = doc.toObject(RecordDTO.class);
-                Objects.requireNonNull(post).setId(doc.getId());
                 response.add(post);
             }
             return response;
