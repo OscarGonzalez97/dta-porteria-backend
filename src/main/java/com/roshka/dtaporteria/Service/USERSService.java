@@ -1,12 +1,11 @@
 package com.roshka.dtaporteria.Service;
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
-import com.google.cloud.firestore.Firestore;
-import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
-import com.roshka.dtaporteria.CRUD.USERS;
+import com.roshka.dtaporteria.Model.USERS;
+import com.roshka.dtaporteria.Utils.Update;
 import org.springframework.stereotype.Service;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -18,9 +17,11 @@ public class USERSService {
     }
     public String updateUSERS(USERS users, String email) throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> collectionApiFuture = dbFirestore.collection("USERS").document(email).set(users);
+        List<String> listaAtributos= Update.getUsers(users);
+        ApiFuture<WriteResult> collectionApiFuture = dbFirestore.collection("USERS").document(email).set(users, SetOptions.mergeFields(listaAtributos));
         return  collectionApiFuture.get().getUpdateTime().toString();
     }
+
     public String deleteUSERS(String documentID){
         Firestore dbFirestore = FirestoreClient.getFirestore();
         ApiFuture<WriteResult> writeResult = dbFirestore.collection("USERS").document().delete();

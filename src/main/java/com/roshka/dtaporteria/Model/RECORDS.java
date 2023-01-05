@@ -1,9 +1,8 @@
-package com.roshka.dtaporteria.CRUD;
+package com.roshka.dtaporteria.Model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 @Data
 @Builder
 @AllArgsConstructor

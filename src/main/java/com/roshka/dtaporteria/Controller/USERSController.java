@@ -1,7 +1,5 @@
 package com.roshka.dtaporteria.Controller;
-import com.roshka.dtaporteria.CRUD.RECORDS;
-import com.roshka.dtaporteria.CRUD.USERS;
-import com.roshka.dtaporteria.Service.RECORDSService;
+import com.roshka.dtaporteria.Model.USERS;
 import com.roshka.dtaporteria.Service.USERSService;
 import org.springframework.web.bind.annotation.*;
 import java.util.concurrent.ExecutionException;

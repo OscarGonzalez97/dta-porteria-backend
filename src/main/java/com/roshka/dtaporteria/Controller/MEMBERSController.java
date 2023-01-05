@@ -1,8 +1,7 @@
 package com.roshka.dtaporteria.Controller;
 import com.roshka.dtaporteria.Service.MEMBERSService;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.roshka.dtaporteria.CRUD.MEMBERS;
+import com.roshka.dtaporteria.Model.MEMBERS;
 import java.util.concurrent.ExecutionException;
 @RestController
 public class MEMBERSController {

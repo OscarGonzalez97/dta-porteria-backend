@@ -6,10 +6,11 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
-import com.google.firestore.v1.Write;
+import com.roshka.dtaporteria.Utils.Update;
 import org.springframework.stereotype.Service;
-import com.roshka.dtaporteria.CRUD.MEMBERS;
-import com.roshka.dtaporteria.*;
+import com.roshka.dtaporteria.Model.MEMBERS;
+
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 @Service
@@ -21,6 +22,7 @@ public class MEMBERSService {
     }
     public String updateMEMBERS(MEMBERS members) throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
+        List<String> listaAtributos= Update.getMembers(members);
         ApiFuture<WriteResult> collectionApiFuture = dbFirestore.collection("MEMBERS").document(String.valueOf(members.getId_member())).set(members);
         return  collectionApiFuture.get().getUpdateTime().toString();
     }

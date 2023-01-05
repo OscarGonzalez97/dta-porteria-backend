@@ -1,4 +1,4 @@
-package com.roshka.dtaporteria.CRUD;
+package com.roshka.dtaporteria.Model;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
