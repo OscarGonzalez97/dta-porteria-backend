@@ -5,11 +5,8 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.Firestore;
 import com.google.cloud.firestore.WriteResult;
 import com.google.firebase.cloud.FirestoreClient;
-import com.roshka.dtaporteria.Model.MEMBERS;
 import com.roshka.dtaporteria.Model.RECORDS;
-import com.roshka.dtaporteria.Utils.ListCollections;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 

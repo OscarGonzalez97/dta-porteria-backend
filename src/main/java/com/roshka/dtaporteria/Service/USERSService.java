@@ -3,7 +3,7 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 import com.roshka.dtaporteria.Model.USERS;
-import com.roshka.dtaporteria.Utils.Update;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -38,5 +38,8 @@ public class USERSService {
             return users;
         }
         return  null;
+    }
+    public List<USERS> getAllUSERS() throws ExecutionException, InterruptedException {
+        return ListCollections.getAllUsers();
     }
 }
