@@ -2,6 +2,8 @@ package com.roshka.dtaporteria.Controller;
 import com.roshka.dtaporteria.Service.MEMBERSService;
 import org.springframework.web.bind.annotation.*;
 import com.roshka.dtaporteria.Model.MEMBERS;
+
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 @RestController
 public class MEMBERSController {
@@ -18,6 +20,10 @@ public class MEMBERSController {
     @GetMapping("/getMembers")
     public MEMBERS getMEMBERS(@RequestParam String documentID) throws InterruptedException, ExecutionException {
         return membersService.getMEMBERS(documentID);
+    }
+    @GetMapping("/getAllMembers")
+    public List<MEMBERS> getAllMEMBERS() throws InterruptedException, ExecutionException {
+        return membersService.getAllMEMBERS();
     }
     @PutMapping("/updateMembers")
     public String updateMEMBERS(@RequestBody MEMBERS members) throws InterruptedException, ExecutionException {
