@@ -11,9 +11,6 @@ import java.util.concurrent.ExecutionException;
 public class USERSController {
 
     public USERSService usersService;
-    public USERSController(USERSService usersService){
-        this.usersService = usersService;
-    }
 
     @PostMapping("/createUsers")
     public String createUSERS(@RequestBody USERS users, @RequestParam String email) throws InterruptedException, ExecutionException {

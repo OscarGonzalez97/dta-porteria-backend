@@ -11,9 +11,6 @@ import java.util.concurrent.ExecutionException;
 public class RECORDSController {
 
     public RECORDSService recordsService;
-    public RECORDSController(RECORDSService recordsService){
-        this.recordsService = recordsService;
-    }
 
     @PostMapping("/createRecord")
     public String createRECORDS(@RequestBody RECORDS records) throws InterruptedException, ExecutionException {

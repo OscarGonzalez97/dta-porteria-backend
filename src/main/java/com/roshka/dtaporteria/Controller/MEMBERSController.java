@@ -9,9 +9,6 @@ import java.util.concurrent.ExecutionException;
 public class MEMBERSController {
 
     public MEMBERSService membersService;
-    public MEMBERSController(MEMBERSService membersService){
-        this.membersService = membersService;
-    }
 
     @PostMapping("/createMembers")
     public String createMEMBERS(@RequestBody MEMBERS members) throws InterruptedException, ExecutionException {
