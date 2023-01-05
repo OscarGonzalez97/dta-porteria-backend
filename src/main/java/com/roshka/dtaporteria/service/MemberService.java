@@ -37,8 +37,6 @@ public class MemberService implements MemberRepository {
         try {
             for (DocumentSnapshot doc : querySnapshotApiFuture.get().getDocuments()) {
                 post = doc.toObject(MemberDTO.class);
-                assert post != null;
-                post.setId(doc.getId());
                 response.add(post);
             }
             return response;
