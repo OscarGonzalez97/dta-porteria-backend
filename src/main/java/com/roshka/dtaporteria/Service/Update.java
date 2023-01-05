@@ -1,11 +1,10 @@
 package com.roshka.dtaporteria.Service;
-import com.roshka.dtaporteria.Model.MEMBERS;
-import com.roshka.dtaporteria.Model.RECORDS;
-import com.roshka.dtaporteria.Model.USERS;
+import com.roshka.dtaporteria.Model.Members;
+import com.roshka.dtaporteria.Model.Users;
 import java.util.LinkedList;
 import java.util.List;
 public class Update {
-    public static List<String> getUsers(USERS user){
+    public static List<String> getUsers(Users user){
         List<String> lista = new LinkedList<>();
         if(user.getActive()!=null)
             lista.add("active");
@@ -19,7 +18,7 @@ public class Update {
             lista.add("name");
         return lista;
         }
-    public static List<String> getMembers(MEMBERS members){
+    public static List<String> getMembers(Members members){
         List<String> lista = new LinkedList<>();
         if(members.getCreated_by()!=null)
             lista.add("created_by");

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class USERS {
+public class Users {
     private String active;
     private String ci;
     private String name;

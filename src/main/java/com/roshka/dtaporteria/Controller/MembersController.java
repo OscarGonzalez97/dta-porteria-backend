@@ -1,29 +1,32 @@
 package com.roshka.dtaporteria.Controller;
-import com.roshka.dtaporteria.Service.MEMBERSService;
+import com.roshka.dtaporteria.Service.MembersService;
 import org.springframework.web.bind.annotation.*;
-import com.roshka.dtaporteria.Model.MEMBERS;
+import com.roshka.dtaporteria.Model.Members;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 @RestController
-public class MEMBERSController {
+public class MembersController {
 
-    public MEMBERSService membersService;
+    public MembersService membersService;
+    public MembersController(MembersService membersService){
+        this.membersService = membersService;
+    }
 
     @PostMapping("/createMembers")
-    public String createMEMBERS(@RequestBody MEMBERS members) throws InterruptedException, ExecutionException {
+    public String createMEMBERS(@RequestBody Members members) throws InterruptedException, ExecutionException {
         return membersService.createMEMBERS(members);
     }
     @GetMapping("/getMembers")
-    public MEMBERS getMEMBERS(@RequestParam String documentID) throws InterruptedException, ExecutionException {
+    public Members getMEMBERS(@RequestParam String documentID) throws InterruptedException, ExecutionException {
         return membersService.getMEMBERS(documentID);
     }
     @GetMapping("/getAllMembers")
-    public List<MEMBERS> getAllMEMBERS() throws InterruptedException, ExecutionException {
+    public List<Members> getAllMEMBERS() throws InterruptedException, ExecutionException {
         return membersService.getAllMEMBERS();
     }
     @PutMapping("/updateMembers")
-    public String updateMEMBERS(@RequestBody MEMBERS members) throws InterruptedException, ExecutionException {
+    public String updateMEMBERS(@RequestBody Members members) throws InterruptedException, ExecutionException {
         return membersService.updateMEMBERS(members);
     }
     @DeleteMapping("/deleteMembers")

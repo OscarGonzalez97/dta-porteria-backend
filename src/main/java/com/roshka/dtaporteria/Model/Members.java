@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class MEMBERS {
+public class Members {
     private String created_by;
     private Long id_member;
     private String is_defaulter;
