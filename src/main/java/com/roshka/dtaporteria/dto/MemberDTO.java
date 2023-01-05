@@ -12,5 +12,4 @@ public class MemberDTO {
     private String photo;
     private String surname;
     private String type;
-
 }

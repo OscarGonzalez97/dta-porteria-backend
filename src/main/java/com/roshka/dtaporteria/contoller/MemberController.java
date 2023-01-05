@@ -44,6 +44,4 @@ public class MemberController {
         return new ResponseEntity(service.delete(id), HttpStatus.OK);
     }
 
-
-
 }
