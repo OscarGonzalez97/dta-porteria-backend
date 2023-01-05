@@ -31,7 +31,3 @@ build/
 
 ### VS Code ###
 .vscode/
-
-### Security Key###
-ServiceAccountKey.json
-firebaseAccountInfo.json
