@@ -1,10 +1,7 @@
 package com.roshka.dtaporteria.repository;
 
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.DocumentSnapshot;
 import com.roshka.dtaporteria.dto.MemberDTO;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
