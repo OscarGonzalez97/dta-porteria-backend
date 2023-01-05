@@ -1,6 +1,5 @@
 package com.roshka.dtaporteria.contoller;
 
-import com.roshka.dtaporteria.repository.RecordRepository;
 import com.roshka.dtaporteria.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

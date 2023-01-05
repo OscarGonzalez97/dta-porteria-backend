@@ -4,7 +4,6 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
 import com.roshka.dtaporteria.dto.MemberDTO;
-import com.roshka.dtaporteria.repository.MemberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +11,11 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 @Service
-public class MemberService implements MemberRepository {
+public class MemberService {
 
     @Autowired
     private FirebaseInitializer firebase;
 
-    @Override
     public Map<String, Object> getById(String id) {
         DocumentReference docRef = getCollection().document(id);
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -29,7 +27,6 @@ public class MemberService implements MemberRepository {
         }
     }
 
-    @Override
     public List<MemberDTO> list() {
         List<MemberDTO> response = new ArrayList<>();
         MemberDTO post;
@@ -45,7 +42,6 @@ public class MemberService implements MemberRepository {
         }
     }
 
-    @Override
     public Boolean add(MemberDTO post) {
         Map<String, Object> docData = getDocData(post);
         CollectionReference posts = getCollection();
@@ -60,7 +56,6 @@ public class MemberService implements MemberRepository {
         }
     }
 
-    @Override
     public Boolean edit(String id, MemberDTO post) {
         Map<String, Object> docData = getDocData(post);
         docData.values().removeAll(Collections.singleton(null));
@@ -76,7 +71,6 @@ public class MemberService implements MemberRepository {
         }
     }
 
-    @Override
     public Boolean delete(String id) {
         CollectionReference posts = getCollection();
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).delete();

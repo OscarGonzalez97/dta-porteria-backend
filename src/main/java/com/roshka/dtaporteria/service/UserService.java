@@ -6,7 +6,6 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
 import com.roshka.dtaporteria.dto.UserDTO;
-import com.roshka.dtaporteria.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,11 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class UserService implements UserRepository {
+public class UserService{
     @Autowired
     private FirebaseInitializer firebase;
 
-    @Override
     public List<UserDTO> list(){
         List<UserDTO> response = new ArrayList<>();
         UserDTO post;

@@ -6,18 +6,16 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
 import com.roshka.dtaporteria.dto.RecordDTO;
-import com.roshka.dtaporteria.repository.RecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
 
 @Service
-public class RecordService implements RecordRepository {
+public class RecordService {
     @Autowired
     private FirebaseInitializer firebase;
 
-    @Override
     public List<RecordDTO> list(){
         List<RecordDTO> response = new ArrayList<>();
         RecordDTO post;
