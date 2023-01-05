@@ -17,16 +17,6 @@ public class RECORDSService {
         ApiFuture<WriteResult> collectionsApiFuture = dbFirestore.collection("RECORDS").document().set(records);
         return  collectionsApiFuture.get().getUpdateTime().toString();
     }
-    public String updateRECORDS(RECORDS records) throws ExecutionException, InterruptedException {
-        Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> collectionApiFuture = dbFirestore.collection("RECORDS").document().set(records);
-        return  collectionApiFuture.get().getUpdateTime().toString();
-    }
-    public String deleteRECORDS(String documentID){
-        Firestore dbFirestore = FirestoreClient.getFirestore();
-        ApiFuture<WriteResult> writeResult = dbFirestore.collection("RECORDS").document().delete();
-        return  "Succesfully deleted";
-    }
     public RECORDS getRECORDS(String documentID) throws ExecutionException, InterruptedException {
         Firestore dbFirestore = FirestoreClient.getFirestore();
         DocumentReference documentReference = dbFirestore.collection("RECORDS").document(documentID);
