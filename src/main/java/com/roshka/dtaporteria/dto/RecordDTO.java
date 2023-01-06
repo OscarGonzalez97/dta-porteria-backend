@@ -4,7 +4,7 @@ import com.google.cloud.firestore.annotation.DocumentId;
 import lombok.Data;
 
 @Data
-public class RecordDTO {
+public class RecordDTO { //para el registro de entradas y salidas
     @DocumentId
     private String id;
     private String ci_member;

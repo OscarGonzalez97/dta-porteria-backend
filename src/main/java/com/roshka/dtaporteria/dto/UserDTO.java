@@ -4,7 +4,7 @@ import com.google.cloud.firestore.annotation.DocumentId;
 import lombok.Data;
 
 @Data
-public class UserDTO {
+public class UserDTO { //usuarios de la app
     @DocumentId
     private String id;
     private String active;

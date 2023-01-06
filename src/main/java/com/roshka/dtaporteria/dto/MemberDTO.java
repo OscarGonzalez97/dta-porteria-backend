@@ -4,7 +4,7 @@ import com.google.cloud.firestore.annotation.DocumentId;
 import lombok.Data;
 
 @Data
-public class MemberDTO {
+public class MemberDTO { //miembros del club
     @DocumentId
     private String id;
     private String created_by;
