@@ -10,6 +10,7 @@ public class TypeDTO { //como estara en firebase
 
 /*
     tipos de miembros
+
     Invitado = "Invitado";
     }Guarderia = "Guarderia";
     Gimnasio = "Gimnasio";
