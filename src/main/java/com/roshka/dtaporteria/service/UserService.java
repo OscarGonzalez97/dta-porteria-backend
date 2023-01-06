@@ -4,13 +4,19 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.CollectionReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
+import com.google.cloud.firestore.WriteResult;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
+import com.roshka.dtaporteria.dto.MemberDTO;
 import com.roshka.dtaporteria.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class UserService{
@@ -32,6 +38,29 @@ public class UserService{
         }
     }
 
+    public Boolean crear(UserDTO post){
+        Map<String, Object> docData = getDocData(post);
+        CollectionReference posts = getCollection();
+        ApiFuture<WriteResult> writeResultApiFuture = posts.document(String.valueOf(post.getId())).set(docData);
+        try {
+            if (writeResultApiFuture.get() != null){
+                return Boolean.TRUE;
+            }
+            return Boolean.FALSE;
+        } catch (InterruptedException | ExecutionException e) {
+            return Boolean.FALSE;
+        }
+    }
+
+    private static Map<String, Object> getDocData(UserDTO post) {
+        Map<String, Object> docData = new HashMap<>();
+        docData.put("active", post.getActive());
+        docData.put("ci", post.getCi());
+        docData.put("name", post.getName());
+        docData.put("surname", post.getSurname());
+        docData.put("rol", post.getRol());
+        return docData;
+    }
     private CollectionReference getCollection() {
         return firebase.getFirestore().collection("USERS");
     }

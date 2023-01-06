@@ -1,0 +1,9 @@
+.searchForm{
+    display: flex;
+    gap: 0.1em;
+}
+
+.search-btn{
+    
+    gap: 0em;
+}
