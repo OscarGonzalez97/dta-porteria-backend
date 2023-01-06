@@ -14,11 +14,6 @@ public class MemberController {
     @Autowired
     private MemberService service;
 
-    @GetMapping
-    public String hola(){
-        return "hola";
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity getMember(@PathVariable(value = "id") String id){
         return new ResponseEntity(service.getById(id), HttpStatus.OK);
