@@ -4,8 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 @Data
 @Builder
@@ -21,9 +22,15 @@ public class MemberDTO {
     private String photo;
     private String surname;
     private String type;
-    private LocalDate fecha_vencimiento;
+    private String fecha_vencimiento;
 
-    public String getFecha_vencimiento(){
-        return fecha_vencimiento.toString();
+    public String getFecha_vencimiento() {
+        try{
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate ld = LocalDate.parse(this.fecha_vencimiento, formatter);
+            return fecha_vencimiento;
+        }catch (DateTimeParseException e){
+                return null;
+        }
     }
 }
