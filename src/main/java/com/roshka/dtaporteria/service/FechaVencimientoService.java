@@ -16,11 +16,12 @@ import java.util.stream.Collectors;
 @EnableScheduling
 public class FechaVencimientoService {
     private final MemberService memberService;
-    public FechaVencimientoService(MemberService memberService, MemberDTO memberDTO) {
-        this.memberService = memberService;
-    }
     @Autowired
     final ObjectMapper mapper = new ObjectMapper();
+
+    public FechaVencimientoService(MemberService memberService) {
+        this.memberService = memberService;
+    }
 
     @Scheduled(cron = "0 0 0 * * *")
     public void checkFecha_Vencimiento(){
@@ -38,6 +39,7 @@ public class FechaVencimientoService {
                     }
                 }
         );
+        System.out.println(members);
     }
     public Boolean isAfterCurrentDate(String fecha){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
