@@ -25,8 +25,12 @@ public class MemberDTO {
     private String fecha_vencimiento;
 
     public String getFecha_vencimiento() {
+        try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate ld = LocalDate.parse(this.fecha_vencimiento, formatter);
             return fecha_vencimiento;
+        } catch (Exception e){
+            return null;
+        }
     }
 }
