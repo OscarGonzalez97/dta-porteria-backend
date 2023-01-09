@@ -8,8 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.annotation.HttpConstraint;
-
 @Controller
 @RequestMapping("/members")
 public class MemberController {
@@ -21,12 +19,15 @@ public class MemberController {
     public ResponseEntity getMember(@PathVariable(value = "id") String id){
         return new ResponseEntity(service.getById(id), HttpStatus.OK);
     }
-
     @GetMapping("/list")
     public ResponseEntity list(){
         return new ResponseEntity(service.list(), HttpStatus.OK);
     }
 
+    @GetMapping("/add")
+    public String getMiembroFormulario(){
+        return "formulario-miembro";
+    }
     @PostMapping("/add")
     public ResponseEntity agregar(@RequestBody MemberDTO post){
         return new ResponseEntity(service.add(post), HttpStatus.OK);

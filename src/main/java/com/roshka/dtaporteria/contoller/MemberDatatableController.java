@@ -25,4 +25,8 @@ public class MemberDatatableController {
         model.addAttribute("miembros", miembros);
         return "listmembers";
     }
+    @GetMapping("/añadir-miembro")
+    public String añadirMiembro(){
+        return "formulario-miembro";
+    }
 }
