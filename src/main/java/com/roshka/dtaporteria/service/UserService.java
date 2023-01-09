@@ -41,6 +41,7 @@ public class UserService{
     public Boolean crear(UserDTO post){
         Map<String, Object> docData = getDocData(post);
         CollectionReference posts = getCollection();
+        System.out.println(post.getId());
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(String.valueOf(post.getId())).set(docData);
         try {
             if (writeResultApiFuture.get() != null){
@@ -59,6 +60,7 @@ public class UserService{
         docData.put("name", post.getName());
         docData.put("surname", post.getSurname());
         docData.put("rol", post.getRol());
+        System.out.println(docData);
         return docData;
     }
     private CollectionReference getCollection() {
