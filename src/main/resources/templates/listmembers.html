@@ -13,88 +13,57 @@
 					<thead>
 					<tr>
 						<th>
-							#
+							ID
 						</th>
 						<th>
-							Product
+							Creado por
 						</th>
 						<th>
-							Payment Taken
+							Nombre
 						</th>
 						<th>
-							Status
+							Apellido
+						</th>
+						<th>
+							Fecha de vencimiento
+						</th>
+						<th>
+							Es moroso
+						</th>
+
+						<th>
+							Foto
+						</th>
+						<th>
+							Tipo
 						</th>
 					</tr>
 					</thead>
 					<tbody>
-					<tr>
-						<td>
+					<tr th:each = "m : ${miembros}">
+						<td th:text = "${m.id}">
 							1
 						</td>
-						<td>
+						<td th:text = "${m.created_by}">
 							TB - Monthly
 						</td>
-						<td>
+						<td th:text = "${m.name}">
 							01/04/2012
 						</td>
-						<td>
+						<td th:text = "${m.surname}">
 							Default
 						</td>
-					</tr>
-					<tr class="table-active">
-						<td>
-							1
+						<td th:text = "${m.fecha_vencimiento}">
+							Default
 						</td>
-						<td>
-							TB - Monthly
+						<td th:text = "${m.is_defaulter}">
+							Default
 						</td>
-						<td>
-							01/04/2012
+						<td th:text = "${m.photo}">
+							Default
 						</td>
-						<td>
-							Approved
-						</td>
-					</tr>
-					<tr class="table-success">
-						<td>
-							2
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-						<td>
-							02/04/2012
-						</td>
-						<td>
-							Declined
-						</td>
-					</tr>
-					<tr class="table-warning">
-						<td>
-							3
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-						<td>
-							03/04/2012
-						</td>
-						<td>
-							Pending
-						</td>
-					</tr>
-					<tr class="table-danger">
-						<td>
-							4
-						</td>
-						<td>
-							TB - Monthly
-						</td>
-						<td>
-							04/04/2012
-						</td>
-						<td>
-							Call in to confirm
+						<td th:text = "${m.type}">
+							Default
 						</td>
 					</tr>
 					</tbody>
