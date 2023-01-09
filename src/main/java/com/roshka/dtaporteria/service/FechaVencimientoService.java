@@ -1,7 +1,5 @@
 package com.roshka.dtaporteria.service;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.roshka.dtaporteria.dto.MemberDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -17,8 +15,6 @@ import java.util.stream.Collectors;
 @EnableScheduling
 public class FechaVencimientoService {
     private final MemberService memberService;
-    @Autowired
-    final ObjectMapper mapper = new ObjectMapper();
 
     public FechaVencimientoService(MemberService memberService) {
         this.memberService = memberService;
@@ -32,7 +28,7 @@ public class FechaVencimientoService {
         Map<Integer, MemberDTO> fecha_vencimiento = members.stream().collect(Collectors.toMap(MemberDTO::getId_member, Function.identity()));
         fecha_vencimiento.forEach(
                 (key, value) -> {
-                    //Por cada miembro chequear su fecha de vencimiento y si es mayor a la fecha actual retornar
+                    //Por cada miembro chequear su fecha de vencimiento y si es mayor a la fecha actual borrar miembro
                     if (value.getFecha_vencimiento() != null && isAfterCurrentDate(value.getFecha_vencimiento()) && !Objects.equals(value.getType(), "Socio")){
                         memberService.delete(String.valueOf(key));
                     }
