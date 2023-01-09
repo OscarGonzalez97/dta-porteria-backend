@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -32,14 +33,11 @@ public class FechaVencimientoService {
         fecha_vencimiento.forEach(
                 (key, value) -> {
                     //Por cada miembro chequear su fecha de vencimiento y si es mayor a la fecha actual retornar
-                    if (isAfterCurrentDate(value.getFecha_vencimiento())){
-                        value.setIs_defaulter("true");
-                        final MemberDTO memberDTO = mapper.convertValue(value, MemberDTO.class);
-                        memberService.edit(String.valueOf(key), memberDTO);
+                    if (value.getFecha_vencimiento() != null && isAfterCurrentDate(value.getFecha_vencimiento()) && !Objects.equals(value.getType(), "Socio")){
+                        memberService.delete(String.valueOf(key));
                     }
                 }
         );
-        System.out.println(members);
     }
     public Boolean isAfterCurrentDate(String fecha){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
