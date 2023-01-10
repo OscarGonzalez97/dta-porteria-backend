@@ -14,12 +14,13 @@ public class MemberService {
     @Autowired
     private FirebaseInitializer firebase;
 
-    public Map<String, Object> getById(String id) {
+    public MemberDTO getById(String id) {
         DocumentReference docRef = getCollection().document(id);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         try {
             DocumentSnapshot document = future.get();
-            return document.getData();
+            System.out.println(document.toObject(MemberDTO.class));
+            return document.toObject(MemberDTO.class);
         } catch (InterruptedException | ExecutionException e) {
             return null;
         }
@@ -46,7 +47,6 @@ public class MemberService {
             }
             return response;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
             e.printStackTrace();
             return null;
         }

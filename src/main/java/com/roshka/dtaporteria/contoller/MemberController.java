@@ -26,6 +26,7 @@ public class MemberController {
     public String Miembros(Model model) {
         List<MemberDTO> miembros = service.list();
         model.addAttribute("miembros", miembros);
+        model.addAttribute("tipos", typeService.list());
         return "listmembers";
     }
     @GetMapping("/add-form")
@@ -65,15 +66,20 @@ public class MemberController {
                 return "redirect:/members/add-form?error001";}
             if (service.getById(member.getId_member())){
                 return "redirect:/members/add-form?error002";}
-            System.out.println(member);
         new ResponseEntity(service.add(member), HttpStatus.OK);
         return "redirect:/members";
     }
 
-    @GetMapping("/{id_member}/form-update")
-    public String editMember(@PathVariable(value = "id_member") String id_member, Model model){
-        model.addAttribute("member", service.getById(id_member));
-        return "miembro-update";
+    @GetMapping("/form-update/{id}")
+    public String editMember(@PathVariable(value = "id") String id_member, Model model){
+        MemberDTO member = service.getById(id_member);
+        if (member !=null){
+            model.addAttribute("m", member);
+            model.addAttribute("tipos", typeService.list());
+            return "miembro-update";
+        }
+        return "redirect:/members";
+
     }
     @PutMapping("/{id}/update")
     public ResponseEntity edit(@PathVariable(value = "id") String id, @RequestBody MemberDTO post){
@@ -84,5 +90,4 @@ public class MemberController {
     public ResponseEntity delete(@PathVariable(value = "id") String id){
         return new ResponseEntity(service.delete(id), HttpStatus.OK);
     }
-
 }
