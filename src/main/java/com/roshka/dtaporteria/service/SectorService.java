@@ -14,6 +14,7 @@ import java.util.concurrent.ExecutionException;
 public class SectorService {
     @Autowired
     private FirebaseInitializer firebase;
+
     public Map<String, Object> getById(String id) {
         DocumentReference docRef = getCollection().document(id);
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -53,11 +54,11 @@ public class SectorService {
         }
     }
 
-    public Boolean edit(String id, SectorDTO post) {
+    public Boolean edit(SectorDTO post) {
         Map<String, Object> docData = getDocData(post);
         docData.values().removeAll(Collections.singleton(null));
         CollectionReference posts = getCollection();
-        ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).update(docData);
+        ApiFuture<WriteResult> writeResultApiFuture = posts.document(String.valueOf(post.getId())).update(docData);
         try {
             if (writeResultApiFuture.get() != null){
                 return Boolean.TRUE;
@@ -83,7 +84,7 @@ public class SectorService {
 
     private static Map<String, Object> getDocData(SectorDTO post) {
         Map<String, Object> docData = new HashMap<>();
-        docData.put("sector", post.getSector());
+        docData.put("sector", post.getId());
         return docData;
     }
 

@@ -5,42 +5,36 @@ import com.roshka.dtaporteria.service.SectorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+//@RestController
+@Controller
 @RequestMapping("/sectores")
 public class SectorController {
     @Autowired
     private SectorService service;
 
     @GetMapping
-    public String Sector(){
-        return "hola soy un sector";
+    public String list(Model modelo){
+        modelo.addAttribute("sector",service.list());
+        return "listSectores";
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity getSector(@PathVariable(value = "id") String id){
-        return new ResponseEntity(service.getById(id), HttpStatus.OK);
+    @GetMapping("/addSectores")
+    public String aggSectores(Model model){
+        model.addAttribute("SectorDTO", new SectorDTO());
+        return "addSectores";
     }
-
-    @GetMapping("/list")
-    public ResponseEntity list(){
-        return new ResponseEntity(service.list(), HttpStatus.OK);
-    }
-
     @PostMapping("/add")
-    public ResponseEntity agg(@RequestBody SectorDTO post){
-        return new ResponseEntity(service.add(post), HttpStatus.OK);
+    public String mostrarForm(SectorDTO post){
+        service.add(post);
+        return "redirect:/sectores";
     }
-
-    @PutMapping("/{id}/update")
-    public ResponseEntity edit(@PathVariable(value = "id") String id, @RequestBody SectorDTO post){
-        return new ResponseEntity(service.edit(id, post), HttpStatus.OK);
+    @GetMapping("/{id}")
+    public String formDelete (@PathVariable(value = "id") String id) {
+        service.delete(id);
+        return "redirect:/sectores";
     }
-
-    @DeleteMapping("/{id}/delete")
-    public ResponseEntity delete(@PathVariable(value = "id") String id){
-        return new ResponseEntity(service.delete(id), HttpStatus.OK);
-    }
-
 }
