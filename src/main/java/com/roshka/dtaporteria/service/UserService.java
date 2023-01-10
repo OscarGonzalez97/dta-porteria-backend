@@ -111,7 +111,6 @@ public class UserService{
         docData.put("name", post.getName());
         docData.put("surname", post.getSurname());
         docData.put("rol", post.getRol());
-        System.out.println(docData);
         return docData;
     }
     private CollectionReference getCollection() {
