@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragmento/base::base}">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin DTA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/css/newUser.css">
+    <style>
+        .smt{
+            padding-top: 0.9em;
+        }
+        body {
+            background-color: rgb(243, 243, 243) !important;
+            height: 100vh;
+            color: rgb(0, 0, 0) !important;
+        }
+    </style>
+</head>
+<body>
+<div layout:fragment="contenido">
+	<div class="container-fluid">
+        <div class="container central">
+            <div class="row justify-content-center align-items-center g-2">
+                <h1 class="text-center smt">
+                    Editar usuario
+                </h1>
+            </div>
+            <form action="localhost:8080/users/new" method="post">
+                <div class="row justify-content-center align-items-center g-2 smt">
+                    <div class="col-8">
+                        <label for="id" class="form-label">Correo electrónico</label>
+                        <input type="text"class="form-control" name="id" id="id" aria-describedby="helpId" placeholder="" th:value="${user.id}" readonly>
+                    </div>
+                </div>
+                <div class="row justify-content-center align-items-center g-2 smt">
+                    <div class="col-4">
+                        <label for="name" class="form-label">Nombre</label>
+                        <input type="text"class="form-control" name="name" id="name" aria-describedby="helpId" placeholder="" th:value="${user.name}">
+                    </div>
+                    <div class="col-4">
+                        <label for="sur" class="form-label">Apellido</label>
+                        <input type="text"class="form-control" name="surname" id="surname" aria-describedby="helpId" placeholder="" th:value="${user.surname}">
+                    </div>
+                </div>
+                <div class="row justify-content-center align-items-center g-2 smt">
+                    <div class="col-4">
+                        <label for="ci" class="form-label">Cédula</label>
+                        <input type="text"class="form-control" name="ci" id="ci" aria-describedby="helpId" placeholder="" th:value="${user.ci}">
+                    </div>
+                    <div class="col-2">
+                        <label for="rol" class="form-label">Rol</label>
+                        <select class="form-select" name="rol" id="rol">
+                            <option selected value="espectador">Espectador</option>
+                            <option value="portero">Portero</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <label for="active" class="form-label">Activo</label>
+                        <select class="form-select" name="active" id="active">
+                            <option selected value="espectador">True</option>
+                            <option value="portero">False</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row justify-content-center align-items-center g-2 smt">
+                    <button type="submit" class="btn btn-primary btn-lg col-6">Enviar</button>
+                </div>
+            </form>
+        </div>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <!-- <script src="js/listmembers/jquery.min.js"></script>
+	<script src="js/listmembers/bootstrap.min.js"></script>
+	<script src="js/listmembers/scripts.js"></script> -->
+</div>
+</body>
+</html>
