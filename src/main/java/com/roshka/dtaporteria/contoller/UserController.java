@@ -38,12 +38,60 @@ public class UserController {
         if (user == null){
             return userCrud(model);
         }
+        // model.addAttribute("UserDTO", new UserDTO());
         model.addAttribute("user", user);
         model.addAttribute("roles", rolService.list());
         return "updateUser";
     }
 
+    @PostMapping("/update")
+    public String postUpdateUser(UserDTO user, Model model){
+        service.update(user);
+        List<UserDTO> userModel = service.list();
+        model.addAttribute("user", userModel);
+        return "redirect:/users";
+    }
+
+    @GetMapping("/disable/{id}")
+    public String disableUser(@PathVariable(value = "id",required = true) String id, Model model){
+        service.disable(id);
+        List<UserDTO> userModel = service.list();
+        model.addAttribute("user", userModel);
+        return "redirect:/users";
+    }
+
+    @GetMapping("/new")
+    public String getCreateUser(Model model){
+        model.addAttribute("user", new UserDTO());
+        model.addAttribute("roles", rolService.list());
+        return "newUser";
+    }
     
+    @PostMapping("/new")
+    public String postCreateUser(UserDTO user, Model model){
+        service.crear(user);
+        List<UserDTO> userModel = service.list();
+        model.addAttribute("user", userModel);
+        return "redirect:/users";
+    }
+
+
+
+    @PostMapping("/delete/{id}")
+    public String postDeleteUser(@PathVariable(value = "id",required = true) String id, Model model){
+        service.delete(id);
+        List<UserDTO> userModel = service.list();
+        model.addAttribute("user", userModel);
+        return "redirect:/users";
+    }
+    
+    @GetMapping("/delete/{id}")
+    public String getDeleteUser(@PathVariable(value = "id",required = true) String id, Model model){
+        service.delete(id);
+        List<UserDTO> userModel = service.list();
+        model.addAttribute("user", userModel);
+        return "redirect:/users";
+    }
 
     @GetMapping("/{id}")
     public ResponseEntity getUser(@PathVariable(value = "id") String id){
@@ -54,10 +102,11 @@ public class UserController {
     public ResponseEntity list(){
         return new ResponseEntity(service.list(), HttpStatus.OK);
     }
-    @PostMapping("/new")
-    public ResponseEntity crear(@RequestParam UserDTO post){
-        return new ResponseEntity(service.crear(post), HttpStatus.OK);
-    }
+    
+    // @PostMapping("/new")
+    // public ResponseEntity crear(@RequestBody UserDTO post){
+    //     return new ResponseEntity(service.crear(post), HttpStatus.OK);
+    // }
 
 
 

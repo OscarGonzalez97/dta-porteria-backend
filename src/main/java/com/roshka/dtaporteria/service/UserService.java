@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,6 +69,41 @@ public class UserService{
         }
     }
 
+    public Boolean update(UserDTO post) {
+        Map<String, Object> docData = getDocData(post);
+        docData.values().removeAll(Collections.singleton(null));
+        CollectionReference posts = getCollection();
+        ApiFuture<WriteResult> writeResultApiFuture = posts.document(String.valueOf(post.getId())).update(docData);
+        try {
+            if (writeResultApiFuture.get() != null){
+                return Boolean.TRUE;
+            }
+            return Boolean.FALSE;
+        } catch (InterruptedException | ExecutionException e) {
+            return Boolean.FALSE;
+        }
+    }
+
+    public Boolean disable(String id){
+        UserDTO user = getById(id);
+        user.setActive("disabled");
+        return update(user);
+    }
+
+    public Boolean delete(String id){
+        CollectionReference posts = getCollection();
+        if (id == null) return Boolean.FALSE;
+        ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).delete();
+        try {
+            if (writeResultApiFuture.get() != null){
+                return Boolean.TRUE;
+            }
+            return Boolean.FALSE;
+        } catch (InterruptedException | ExecutionException e) {
+            return Boolean.FALSE;
+        }
+    }
+
     private static Map<String, Object> getDocData(UserDTO post) {
         Map<String, Object> docData = new HashMap<>();
         docData.put("active", post.getActive());
@@ -75,7 +111,6 @@ public class UserService{
         docData.put("name", post.getName());
         docData.put("surname", post.getSurname());
         docData.put("rol", post.getRol());
-        System.out.println(docData);
         return docData;
     }
     private CollectionReference getCollection() {
