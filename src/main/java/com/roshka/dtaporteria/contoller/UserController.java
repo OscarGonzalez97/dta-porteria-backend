@@ -2,19 +2,18 @@ package com.roshka.dtaporteria.contoller;
 
 import com.roshka.dtaporteria.dto.UserDTO;
 import com.roshka.dtaporteria.service.UserService;
+
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-<<<<<<< HEAD
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-=======
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
->>>>>>> develop
 
 @Controller
 @RequestMapping("/users")
@@ -22,16 +21,27 @@ public class UserController {
     @Autowired
     private UserService service;
 
-<<<<<<< HEAD
     @GetMapping
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model){
-        model.addAttribute("name", name);
-        return "greeting";
-=======
+    public String userCrud(Model model){
+        List<UserDTO> users = service.list();
+        model.addAttribute("users", users);
+        return "users";
+    }
+
+    @GetMapping("/update/{id}")
+    public String updateUser(@PathVariable(value = "id", required = true) String id, Model model){
+        UserDTO user = service.getById(id);
+        if (user == null){
+            return userCrud(model);
+        }
+        model.addAttribute("user", user);
+        return "updateUser";
+    }
+
+
     @GetMapping("/{id}")
     public ResponseEntity getUser(@PathVariable(value = "id") String id){
         return new ResponseEntity(service.getById(id), HttpStatus.OK);
->>>>>>> develop
     }
 
     @GetMapping("/list")

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragmento/base::base}">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin DTA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+<div layout:fragment="contenido">
+	<div class="container-fluid">
+        <table class="table table-bordered table-hover table-striped">
+            <thead class="thead-dark">
+            <tr>
+                <th>
+                    ID
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Apellido
+                </th>
+                <th>
+                    Cédula
+                </th>
+                <th>
+                    Rol
+                </th>
+                <th>
+                    Activo
+                </th>
+                <th>
+                    Opciones
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each = "m : ${users}">
+                <td th:text = "${m.id}">
+                    Default
+                </td>
+                <td th:text = "${m.name}">
+                    Default
+                </td>
+                <td th:text = "${m.surname}">
+                    Default
+                </td>
+                <td th:text = "${m.ci}">
+                    Default
+                </td>
+                <td th:text = "${m.rol}">
+                    Default
+                </td>
+                <td th:text = "${m.active}">
+                    Default
+                </td>
+                <td>
+                    <a class="btn btn-warning" th:href="@{/users/update/{id}(id=${m.id})}" target="_blank">Editar</a>
+                    <a class="btn btn-danger"  th:href="@{/users/delete/{id}(id=${m.id})}" target="_blank">Eliminar</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+	</div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <!-- <script src="js/listmembers/jquery.min.js"></script>
+	<script src="js/listmembers/bootstrap.min.js"></script>
+	<script src="js/listmembers/scripts.js"></script> -->
+</div>
+</body>
+</html>

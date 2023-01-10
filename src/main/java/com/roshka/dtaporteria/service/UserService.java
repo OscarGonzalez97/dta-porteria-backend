@@ -7,6 +7,7 @@ import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
+import com.roshka.dtaporteria.dto.MemberDTO;
 import com.roshka.dtaporteria.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,7 +57,6 @@ public class UserService{
     public Boolean crear(UserDTO post){
         Map<String, Object> docData = getDocData(post);
         CollectionReference posts = getCollection();
-        System.out.println(post.getId());
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(String.valueOf(post.getId())).set(docData);
         try {
             if (writeResultApiFuture.get() != null){
