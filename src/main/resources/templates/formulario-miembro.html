@@ -2,13 +2,17 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragmento/base::base}">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="css/listmembers/style.css">
     <title>Club Deportivo Aleman</title>
 </head>
+
 <body>
 <div layout:fragment="contenido">
-    <div class="container-fluid text-center">
-       <div class="h3 text-center">Formulario para el miembro</div>
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center g-2">
+            <h1 class="text-center smt">
+                Añadir miembro
+            </h1>
+        </div>
         <form th:action="@{/members/add-form}" th:object="${addMember}" method="POST" class="form-group justify-content-center">
                 <div th:if=${param.error001}>
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -20,39 +24,47 @@
                         <strong>ID de miembro invalido</strong> El id de miembro ya existe.
                     </div>
                 </div>
-                <h2 class="h4 text-left">ID miembro</h2>
-            <div class="col-md-4  offset-md-4">
-                <input class="form-control form-control-lg" type="number" name="id_member">
+            <div class="row justify-content-center align-items-center smt">
+              <div class="col-md-6">
+                  <label for="id_member" class="form-label">ID miembro</label>
+                   <input class="form-control form-control-lg" type="number" name="id_member" id="id_member">
+               </div>
+                <div class="col-md-6">
+                    <label for="created_by" class="form-label">Creado por</label>
+                    <input class="form-control form-control-lg" type="text" name="created_by" id="created_by">
+                </div>
             </div>
-                <h2 class="h4 text-left">Creado por</h2>
-            <div class="col-md-4 offset-md-4">
-                <input class="form-control form-control-lg" type="text" name="created_by">
+            <div class="row justify-content-center align-items-center smt">
+                <div class="col-md-6">
+                    <label for="fecha_vencimiento" class="form-label">Fecha de vencimiento</label>
+                    <input class="form-control form-control-lg" type="date" name="fecha_vencimiento" placeholder="yyyy-MM-dd" id="fecha_vencimiento">
+                </div>
+                <div class="col-md-3">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input class="form-control form-control-lg" type="text" name="name" id="name">
+                </div>
+                <div class="col-md-3">
+                    <label for="surname" class="form-label">Apellido</label>
+                    <input class="form-control form-control-lg" type="text" name="surname" id="surname">
+                </div>
+                </div>
+            <div class="row justify-content-center align-items-center smt">
+                <div class="col-md-6">
+                    <label for="photo" class="form-label">Foto</label>
+                    <input class="form-control form-control-lg" type="text" name="photo" id="photo">
+                </div>
+               <div class="col-md-3">
+                   <label for="type" class="form-label">Tipo</label>
+                   <input class="form-control form-control-lg" type="text" name="type" id="type">
+                </div>
+                <div class="col-md-3">
+                    <label for="is_defaulter" class="form-label">Es moroso</label>
+                    <input class="form-control form-control-lg" type="text" name="is_defaulter" id="is_defaulter">
+                </div>
             </div>
-                <h2 class="h4 text-left">Nombre</h2>
-            <div class="col-md-4 offset-md-4">
-                <input class="form-control form-control-lg" type="text" name="name">
+            <div class="row smt submit">
+                <button type="submit" class="btn btn-primary btn-lg col-md-2 offset-10">Submit</button>
             </div>
-                <h2 class="h4 text-left">Apellido</h2>
-            <div class="col-md-4 offset-md-4">
-                <input class="form-control form-control-lg" type="text" name="surname">
-            </div>
-                <h2 class="h4 text-left">Fecha de vencimiento</h2>
-            <div class="col-md-4 offset-md-4">
-                <input class="form-control form-control-lg" type="text" name="fecha_vencimiento" placeholder="yyyy-MM-dd">
-            </div>
-                <h2 class="h4 text-left">Es moroso</h2>
-            <div class="col-md-4 offset-md-4">
-                <input class="form-control form-control-lg" type="text" name="is_defaulter">
-            </div>
-                <h2 class="h4 text-left">Foto</h2>
-            <div class="col-md-4 offset-md-4">
-                <input class="form-control form-control-lg" type="text" name="photo">
-            </div>
-                <h2 class="h4 text-left">Tipo</h2>
-            <div class="col-md-4 offset-md-4">
-                <input class="form-control form-control-lg" type="text" name="type">
-            </div>
-                <button type="submit" class="btn btn-primary col-md-1">Submit</button>
         </form>
     </div>
 </div>
