@@ -11,12 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserDTO {
+public class RolDTO {
     @DocumentId
     private String id;
-    private String active;
-    private String ci;
-    private String name;
-    private String surname;
-    private String rol;
+    private Boolean createUsers;
 }

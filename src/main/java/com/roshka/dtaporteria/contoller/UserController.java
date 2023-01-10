@@ -1,6 +1,7 @@
 package com.roshka.dtaporteria.contoller;
 
 import com.roshka.dtaporteria.dto.UserDTO;
+import com.roshka.dtaporteria.service.RolService;
 import com.roshka.dtaporteria.service.UserService;
 
 import java.util.List;
@@ -21,6 +22,9 @@ public class UserController {
     @Autowired
     private UserService service;
 
+    @Autowired
+    private RolService rolService;
+
     @GetMapping
     public String userCrud(Model model){
         List<UserDTO> users = service.list();
@@ -29,15 +33,17 @@ public class UserController {
     }
 
     @GetMapping("/update/{id}")
-    public String updateUser(@PathVariable(value = "id", required = true) String id, Model model){
+    public String getUpdateUser(@PathVariable(value = "id", required = true) String id, Model model){
         UserDTO user = service.getById(id);
         if (user == null){
             return userCrud(model);
         }
         model.addAttribute("user", user);
+        model.addAttribute("roles", rolService.list());
         return "updateUser";
     }
 
+    
 
     @GetMapping("/{id}")
     public ResponseEntity getUser(@PathVariable(value = "id") String id){
