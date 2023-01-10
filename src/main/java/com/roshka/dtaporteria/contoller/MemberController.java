@@ -71,15 +71,11 @@ public class MemberController {
     }
 
     @GetMapping("/form-update/{id}")
-    public String editMember(@PathVariable(value = "id") String id_member, Model model){
+    public String editMember(@PathVariable(value = "id", required=true) String id_member, Model model){
         MemberDTO member = service.getById(id_member);
-        if (member !=null){
             model.addAttribute("m", member);
             model.addAttribute("tipos", typeService.list());
             return "miembro-update";
-        }
-        return "redirect:/members";
-
     }
     @PutMapping("/{id}/update")
     public ResponseEntity edit(@PathVariable(value = "id") String id, @RequestBody MemberDTO post){
