@@ -2,51 +2,61 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragmento/base::base}">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link rel="stylesheet" href="css/listmembers/style.css">
     <title>Club Deportivo Aleman</title>
 </head>
 <body>
 <div layout:fragment="contenido">
-    <div class="container-fluid align-content-center text-center">
+    <div class="container-fluid text-center">
        <div class="h3 text-center">Formulario para el miembro</div>
-        <form th:action="@{/members/add}" th:object="${addMember}" method="POST">
-            <div class="form-outline mb-4">
-                <label class="form-label text-left h4" for="id-miembro">ID del miembro</label>
-                <input type="number" id="id-miembro" class="form-control" name="id"/>
-            </div>
+        <form th:action="@{/members/add-form}" th:object="${addMember}" method="POST" class="form-group justify-content-center">
+                <div th:if=${param.error001}>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>ID de miembro vacio</strong> El id de miembro no puede quedar vacio.
+                    </div>
+                </div>
+                <div th:if=${param.error002}>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>ID de miembro invalido</strong> El id de miembro ya existe.
+                    </div>
+                </div>
                 <h2 class="h4 text-left">ID miembro</h2>
-                <h2 class="h4 text-center">Creado por</h2>
-            <div class="col-md-12">
+            <div class="col-md-4  offset-md-4">
+                <input class="form-control form-control-lg" type="number" name="id_member">
+            </div>
+                <h2 class="h4 text-left">Creado por</h2>
+            <div class="col-md-4 offset-md-4">
                 <input class="form-control form-control-lg" type="text" name="created_by">
             </div>
-                <h2 class="h4 text-center">Nombre</h2>
-            <div class="col-md-12">
+                <h2 class="h4 text-left">Nombre</h2>
+            <div class="col-md-4 offset-md-4">
                 <input class="form-control form-control-lg" type="text" name="name">
             </div>
-                <h2 class="h4 text-center">Apellido</h2>
-            <div class="col-md-12">
+                <h2 class="h4 text-left">Apellido</h2>
+            <div class="col-md-4 offset-md-4">
                 <input class="form-control form-control-lg" type="text" name="surname">
             </div>
-                <h2 class="h4 text-center">Fecha de vencimiento</h2>
-            <div class="col-md-12">
+                <h2 class="h4 text-left">Fecha de vencimiento</h2>
+            <div class="col-md-4 offset-md-4">
                 <input class="form-control form-control-lg" type="text" name="fecha_vencimiento" placeholder="yyyy-MM-dd">
             </div>
-                <h2 class="h4 text-center">Es moroso</h2>
-            <div class="col-md-12">
-                <input class="form-control form-control-lg" type="checkbox" name="is_defaulter">
+                <h2 class="h4 text-left">Es moroso</h2>
+            <div class="col-md-4 offset-md-4">
+                <input class="form-control form-control-lg" type="text" name="is_defaulter">
             </div>
-                <h2 class="h4 text-center">Foto</h2>
-            <div class="col-md-12">
+                <h2 class="h4 text-left">Foto</h2>
+            <div class="col-md-4 offset-md-4">
                 <input class="form-control form-control-lg" type="text" name="photo">
             </div>
-                <h2 class="h4 text-center">Tipo</h2>
-            <div class="col-md-12">
+                <h2 class="h4 text-left">Tipo</h2>
+            <div class="col-md-4 offset-md-4">
                 <input class="form-control form-control-lg" type="text" name="type">
             </div>
                 <button type="submit" class="btn btn-primary col-md-1">Submit</button>
         </form>
     </div>
 </div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body>
 </html>

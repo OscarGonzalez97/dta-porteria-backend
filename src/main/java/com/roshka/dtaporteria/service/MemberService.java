@@ -24,6 +24,16 @@ public class MemberService {
             return null;
         }
     }
+    public Boolean getById(Integer idmember) {
+        DocumentReference docRef = getCollection().document(String.valueOf(idmember));
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        try {
+            DocumentSnapshot document = future.get();
+            return document.exists();
+        } catch (InterruptedException | ExecutionException e) {
+            return null;
+        }
+    }
 
     public List<MemberDTO> list() {
         List<MemberDTO> response = new ArrayList<>();
