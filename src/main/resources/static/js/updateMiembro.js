@@ -5,7 +5,6 @@ $(document).ready(() => {
     const fecha = document.getElementById("fecha_vencimiento")
     function seleccion(){
         if (type.value !== "Socio"){
-            // ci.disabled = true
             ci.readOnly = true
             fecha.readOnly = false
         }
