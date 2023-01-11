@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class Main {
 
     @GetMapping
-    public String hello(){
-        return "dashboard";
+    public String main(){
+        return "fragmento/base";
     }
 
 }

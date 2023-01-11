@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragmento/base::base}">
+<head>
+	<meta charset="UTF-8">
+	<title>Club Deportivo Aleman</title>
+</head>
+<body>
+<div layout:fragment="contenido">
+	<div class="container-fluid">
+		<h1 style="padding: 0.5em; justify-content: center; text-align: center;">Miembros</h1>
+		<div class="row smt">
+			<div class="col-md-2 offset-10">
+				<a th:href="@{/members/add-form}" type="button" class="btn btn-sm btn-primary">Añadir miembro</a>
+			</div>
+		</div>
+		<div class="row smt">
+			<div class="col-md-12">
+				<table class="table table-bordered table-hover table-striped">
+					<thead class="thead-light">
+					<tr>
+						<th>
+							ID
+						</th>
+						<th>
+							CI
+						</th>
+						<th>
+							Creado por
+						</th>
+						<th>
+							Nombre
+						</th>
+						<th>
+							Apellido
+						</th>
+						<th>
+							Fecha de vencimiento
+						</th>
+						<th>
+							Es moroso
+						</th>
+
+						<th>
+							Foto
+						</th>
+						<th>
+							Tipo
+						</th>
+						<th>
+							Opciones
+						</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr th:each = "m : ${miembros}"
+						th:class = 'lm'>
+						<td th:text = "${m.id}">
+							Default
+						</td>
+						<td th:text = "${m.ci}">
+							Default
+						</td>
+						<td th:text = "${m.created_by}">
+							Default
+						</td>
+						<td th:text = "${m.name}">
+							Default
+						</td>
+						<td th:text = "${m.surname}">
+							Default
+						</td>
+						<td th:text = "${m.fecha_vencimiento}">
+							Default
+						</td>
+						<th:block th:if="${m.is_defaulter == null}">
+							<td th:text="No"
+								th:classappend="moroso"></td>
+						</th:block>
+						<th:block th:if="${m.is_defaulter != null}">
+							<td th:text="${m.is_defaulter}">
+								Default
+							</td>
+						</th:block>
+						<td th:text = "${m.photo}">
+							Default
+						</td>
+						<td th:text = "${m.type}">
+							Default
+						</td>
+						<td>
+							<a type="button" class="btn btn-sm btn-primary" th:href="@{/members/update/{id}(id=${m.id})}">Editar</a>
+							<a type="button" class="btn btn-sm btn-danger" th:href="@{/members/delete/{id}(id=${m.id})}">Eliminar</a>
+						</td>
+					</th:block>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+</div>
+</body>
+</html>

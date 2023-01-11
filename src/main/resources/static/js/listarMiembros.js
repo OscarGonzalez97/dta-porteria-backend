@@ -1,0 +1,3 @@
+$(".moroso").ready(function(){
+    $(this)
+})
