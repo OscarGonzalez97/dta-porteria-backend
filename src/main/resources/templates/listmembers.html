@@ -89,7 +89,7 @@
 						</td>
 						<td>
 							<a type="button" class="btn btn-sm btn-primary" th:href="@{/members/update/{id}(id=${m.id})}">Editar</a>
-							<a th:href="|{/members/${m.id}/delete}|" class="btn btn-sm btn-danger" type="button">Eliminar</a>
+							<a type="button" class="btn btn-sm btn-danger" th:href="@{/members/delete/{id}(id=${m.id})}">Eliminar</a>
 						</td>
 					</th:block>
 					</tr>

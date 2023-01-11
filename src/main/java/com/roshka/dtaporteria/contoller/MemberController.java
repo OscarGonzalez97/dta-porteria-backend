@@ -40,7 +40,7 @@ public class MemberController {
         return new ResponseEntity(service.getById(id), HttpStatus.OK);
     }
     @GetMapping("/list")
-    public ResponseEntity list(){
+    public ResponseEntity listMember(){
         return new ResponseEntity(service.list(), HttpStatus.OK);
     }
 
@@ -50,18 +50,18 @@ public class MemberController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity agregar(@RequestBody MemberDTO post){
+    public ResponseEntity agregarMember(@RequestBody MemberDTO post){
         return new ResponseEntity(service.add(post), HttpStatus.OK);
     }
     @PostMapping("/add-form")
-    public String agregarForm(MemberDTO member){
+    public String agregarFormMember(MemberDTO member){
         new ResponseEntity(service.add(member), HttpStatus.OK);
         return "redirect:/members";
     }
 
     @GetMapping("/update/{id}")
-    public String editMember(@PathVariable(value = "id", required=true) String id_member, Model model){
-        MemberDTO member = service.getById(id_member);
+    public String getEditMember(@PathVariable(value = "id", required=true) String id, Model model){
+        MemberDTO member = service.getById(id);
         if (member==null){
             return "redirect:/members";
         }
@@ -70,11 +70,11 @@ public class MemberController {
         return "miembro-update";
     }
     @PutMapping("/{id}/update")
-    public ResponseEntity edit(@PathVariable(value = "id") String id, @RequestBody MemberDTO post){
+    public ResponseEntity editMember(@PathVariable(value = "id") String id, @RequestBody MemberDTO post){
         return new ResponseEntity(service.edit(id, post), HttpStatus.OK);
     }
     @PostMapping ("/update")
-    public String update(MemberDTO member){
+    public String updateMember(MemberDTO member){
         member.setId_member(Integer.parseInt(member.getId()));
         if (service.someAttributeIsNull(member)){
             return "redirect:/members/update/"+member.getId()+"?error001";}
@@ -82,8 +82,14 @@ public class MemberController {
         return "redirect:/members";
     }
 
-    @DeleteMapping("/{id}/delete")
-    public ResponseEntity delete(@PathVariable(value = "id") String id){
-        return new ResponseEntity(service.delete(id), HttpStatus.OK);
+    @PostMapping("/delete/{id}")
+    public String deleteMember(@PathVariable(value = "id") String id){
+        new ResponseEntity(service.delete(id), HttpStatus.OK);
+        return "redirect:/members";
+    }
+    @GetMapping("/delete/{id}")
+    public String getDeleteMember(@PathVariable(value = "id") String id){
+        new ResponseEntity(service.delete(id), HttpStatus.OK);
+        return "redirect:/members";
     }
 }

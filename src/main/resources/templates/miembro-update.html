@@ -23,11 +23,15 @@
             <div class="row justify-content-center align-items-center smt">
                 <div class="col-md-6">
                     <label for="id" class="form-label">ID miembro</label>
-                    <input class="form-control form-control-lg" type="text" name="id" id="id" th:value="${m.id}" readonly>
+                    <input class="form-control form-control-lg" th:field="*{id}" type="text" name="id" id="id" th:value="${m.id}">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
+                    <label for="created_by" class="form-label">Cédula</label>
+                    <input class="form-control form-control-lg" th:field="*{ci}" type="text" name="ci" id="ci">
+                </div>
+                <div class="col-md-2">
                     <label for="created_by" class="form-label">Creado por</label>
-                    <input class="form-control form-control-lg" type="text" name="created_by" id="created_by"  th:value="${m.created_by}" required>
+                    <input class="form-control form-control-lg" th:field="*{created_by}" type="text" name="created_by" id="created_by"  th:value="${m.created_by}" required>
                     <div class="invalid-feedback">
                         Es necesario un valor en este campo.
                     </div>
@@ -36,21 +40,21 @@
             <div class="row justify-content-center align-items-center smt">
                 <div class="col-md-6">
                     <label for="fecha_vencimiento" class="form-label">Fecha de vencimiento</label>
-                    <input class="form-control form-control-lg" type="date" name="fecha_vencimiento" placeholder="yyyy-MM-dd" id="fecha_vencimiento"  th:value="${m.fecha_vencimiento}" required>
+                    <input class="form-control form-control-lg" th:field="*{fecha_vencimiento}" type="date" name="fecha_vencimiento" placeholder="yyyy-MM-dd" id="fecha_vencimiento"  th:value="${m.fecha_vencimiento}" required>
                     <div class="invalid-feedback">
                         Es necesario un valor en este campo.
                     </div>
                 </div>
                 <div class="col-md-3">
                     <label for="name" class="form-label">Nombre</label>
-                    <input class="form-control form-control-lg" type="text" name="name" id="name" th:value="${m.name}" required>
+                    <input class="form-control form-control-lg" th:field="*{name}" type="text" name="name" id="name" th:value="${m.name}" required>
                     <div class="invalid-feedback">
                         Es necesario un valor en este campo.
                     </div>
                 </div>
                 <div class="col-md-3">
                     <label for="surname" class="form-label">Apellido</label>
-                    <input class="form-control form-control-lg" type="text" name="surname" id="surname"  th:value="${m.surname}" required>
+                    <input class="form-control form-control-lg" th:field="*{surname}" type="text" name="surname" id="surname"  th:value="${m.surname}" required>
                     <div class="invalid-feedback">
                         Es necesario un valor en este campo.
                     </div>
@@ -59,12 +63,12 @@
             <div class="row justify-content-center align-items-center smt">
                 <div class="col-md-5">
                     <label for="photo" class="form-label">Foto</label>
-                    <input class="form-control form-control-lg" type="text" name="photo" id="photo"  th:value="${m.photo}">
+                    <input class="form-control form-control-lg" th:field="*{photo}" type="text" name="photo" id="photo"  th:value="${m.photo}">
                 </div>
 
                 <div class="col-md-5">
                     <label for="type" class="form-label">Tipo</label>
-                    <select class="form-select" name="Type" id="type">
+                    <select class="form-select" th:field="*{type}" name="Type" id="type">
                         <option
                                 th:each="tipo : ${tipos}"
                                 th:value="${tipo.Type}"
@@ -75,7 +79,7 @@
                 </div>
                 <div class="col-md-2" id="checkbox">
                     <div class="form-check">
-                        <input class="form-check-input" name="is_defaulter" type="checkbox" value="Si" id="flexCheckDefault">
+                        <input class="form-check-input" th:field="*{is_defaulter}" name="is_defaulter" type="checkbox" value="Si" id="flexCheckDefault">
                         <label class="form-check-label" for="flexCheckDefault">
                             Es moroso
                         </label>
