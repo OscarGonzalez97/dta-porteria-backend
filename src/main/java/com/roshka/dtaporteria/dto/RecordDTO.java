@@ -9,7 +9,7 @@ public class RecordDTO { //para el registro de entradas y salidas
     private String id;
     private String ci_member;
     private String ci_portero;
-    private String date_time;
+    private String date_time; //fecha y hora exacta
     private String email_portero;
     private String id_member;
     private String is_defaulter;
