@@ -7,11 +7,14 @@
 
 <body>
 <div layout:fragment="contenido">
-    <div class="container-fluid">
+    <div class="container-fluid central" style="padding-top: 1em;">
+        <div class="col-1 g-2"><a type="button" class="btn btn-warning" href="/members" aria-label="Close">Cancelar</a></div>
         <div class="row justify-content-center align-items-center g-2">
-            <h1 class="text-center smt">
-                Editar miembro
-            </h1>
+            <div class="col-8">
+                <h1 class="text-center smt">
+                    Editar miembro
+                </h1>
+            </div>
         </div>
         <form th:action="@{/members/update}" th:object="${m}" method="POST" class="form-group justify-content-center needs-validation" id="submit"
         novalidate>
@@ -87,7 +90,7 @@
                 </div>
             </div>
             <div class="row smt submit">
-                <button type="submit" class="btn btn-primary btn-lg col-md-2 offset-10">Submit</button>
+                <button type="submit" class="btn btn-primary btn-lg col-md-2 offset-10" style="margin-top: 1em">Submit</button>
             </div>
         </form>
     </div>

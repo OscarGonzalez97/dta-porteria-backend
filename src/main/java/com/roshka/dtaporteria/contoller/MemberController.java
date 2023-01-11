@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/members")
@@ -27,13 +26,13 @@ public class MemberController {
         List<MemberDTO> miembros = service.list();
         model.addAttribute("miembros", miembros);
         model.addAttribute("tipos", typeService.list());
-        return "listmembers";
+        return "members";
     }
     @GetMapping("/add-form")
     public String addForm(Model model){
         model.addAttribute("tipos", typeService.list());
         model.addAttribute("member", new MemberDTO());
-        return "formulario-miembro";
+        return "newMember";
     }
     @GetMapping("/{id}")
     public ResponseEntity getMember(@PathVariable(value = "id") String id){
@@ -46,7 +45,7 @@ public class MemberController {
 
     @GetMapping("/add")
     public String getMiembroFormulario(){
-        return "formulario-miembro";
+        return "newMember";
     }
 
     @PostMapping("/add")
@@ -67,7 +66,7 @@ public class MemberController {
         }
         model.addAttribute("m", member);
         model.addAttribute("tipos", typeService.list());
-        return "miembro-update";
+        return "updateMember";
     }
     @PutMapping("/{id}/update")
     public ResponseEntity editMember(@PathVariable(value = "id") String id, @RequestBody MemberDTO post){
