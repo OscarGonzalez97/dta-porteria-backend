@@ -32,6 +32,7 @@ public class MemberController {
     @GetMapping("/add-form")
     public String addForm(Model model){
         model.addAttribute("tipos", typeService.list());
+        model.addAttribute("member", new MemberDTO());
         return "formulario-miembro";
     }
     @GetMapping("/{id}")
@@ -53,10 +54,7 @@ public class MemberController {
         return new ResponseEntity(service.add(post), HttpStatus.OK);
     }
     @PostMapping("/add-form")
-    public String agregarForm(@ModelAttribute("addMember") MemberDTO member){
-        if (service.someAttributeIsNull(member)) return "redirect:/members/add-form?error001";
-        if (service.getById(member.getId_member())){
-                return "redirect:/members/add-form?error002";}
+    public String agregarForm(MemberDTO member){
         new ResponseEntity(service.add(member), HttpStatus.OK);
         return "redirect:/members";
     }

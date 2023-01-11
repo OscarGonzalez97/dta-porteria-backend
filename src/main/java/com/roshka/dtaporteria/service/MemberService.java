@@ -29,8 +29,9 @@ public class MemberService {
             return null;
         }
     }
+
     public Boolean getById(Integer idmember) {
-        DocumentReference docRef = getCollection().document(String.valueOf(idmember));
+        DocumentReference docRef = getCollection().document(idmember.toString());
         ApiFuture<DocumentSnapshot> future = docRef.get();
         try {
             DocumentSnapshot document = future.get();

@@ -22,6 +22,9 @@
 							ID
 						</th>
 						<th>
+							CI
+						</th>
+						<th>
 							Creado por
 						</th>
 						<th>
@@ -52,6 +55,9 @@
 					<tr th:each = "m : ${miembros}"
 						th:class = 'lm'>
 						<td th:text = "${m.id}">
+							Default
+						</td>
+						<td th:text = "${m.ci}">
 							Default
 						</td>
 						<td th:text = "${m.created_by}">
