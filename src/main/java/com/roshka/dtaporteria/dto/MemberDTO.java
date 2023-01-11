@@ -32,4 +32,5 @@ public class MemberDTO {
             return null;
         }
     }
+
 }
