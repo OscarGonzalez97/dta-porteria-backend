@@ -1,3 +1,0 @@
-$(".moroso").ready(function(){
-    $(this)
-})

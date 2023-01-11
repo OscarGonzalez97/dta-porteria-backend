@@ -12,7 +12,7 @@ function seleccion(){
     else{
         id_member.readOnly = true
         id_member.disabled = true
-        id_member.value = selection.valueOf()
+        id_member.value = selection.value
         fecha.readOnly = false
         fecha.disabled = false
     }
