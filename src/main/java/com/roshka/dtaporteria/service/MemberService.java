@@ -3,8 +3,11 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
 import com.roshka.dtaporteria.dto.MemberDTO;
+import com.roshka.dtaporteria.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.lang.reflect.Member;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
@@ -19,8 +22,11 @@ public class MemberService {
         ApiFuture<DocumentSnapshot> future = docRef.get();
         try {
             DocumentSnapshot document = future.get();
-            System.out.println(document.toObject(MemberDTO.class));
-            return document.toObject(MemberDTO.class);
+            if (document.exists()){
+                MemberDTO member = document.toObject(MemberDTO.class);
+                return member;
+            }
+            return null;
         } catch (InterruptedException | ExecutionException e) {
             return null;
         }
@@ -80,6 +86,20 @@ public class MemberService {
             return Boolean.FALSE;
         }
     }
+    public Boolean update(MemberDTO member) {
+        Map<String, Object> docData = getDocData(member);
+        docData.values().remove(Collections.singleton(null));
+        CollectionReference posts = getCollection();
+        ApiFuture<WriteResult> writeResultApiFuture = posts.document(String.valueOf(member.getId())).update(docData);
+        try {
+            if (writeResultApiFuture.get() != null){
+                return Boolean.TRUE;
+            }
+            return Boolean.FALSE;
+        } catch (InterruptedException | ExecutionException e) {
+            return Boolean.FALSE;
+        }
+    }
 
     public Boolean delete(String id) {
         CollectionReference posts = getCollection();
@@ -105,6 +125,19 @@ public class MemberService {
         docData.put("type", post.getType());
         docData.put("fecha_vencimiento", post.getFecha_vencimiento());
         return docData;
+    }
+    public boolean someAttributeIsNull(MemberDTO member) {
+        if ((member.getId_member() == null)
+                || (member.getCreated_by() == "")
+                || (member.getFecha_vencimiento() == "" && !Objects.equals(member.getType(), "Socio"))
+                || (member.getName() == "")
+                || (member.getSurname() == "")
+                || (member.getPhoto() == "")
+                || (member.getType() == "")
+                || (member.getIs_defaulter() == "")) {
+            return true;
+        }
+        return false;
     }
     private CollectionReference getCollection() {
         return firebase.getFirestore().collection("MEMBERS");

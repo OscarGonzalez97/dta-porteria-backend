@@ -8,7 +8,12 @@
 <div layout:fragment="contenido">
 	<div class="container-fluid">
 		<h1 style="padding: 0.5em; justify-content: center; text-align: center;">Miembros</h1>
-		<div class="row">
+		<div class="row smt">
+			<div class="col-md-2 offset-10">
+				<a th:href="@{/members/add-form}" type="button" class="btn btn-sm btn-primary">Añadir miembro</a>
+			</div>
+		</div>
+		<div class="row smt">
 			<div class="col-md-12">
 				<table class="table table-bordered table-hover table-striped">
 					<thead class="thead-light">
@@ -70,14 +75,13 @@
 							Default
 						</td>
 						<td>
-							<a type="button" class="btn btn-sm btn-primary" th:href="@{/members/form-update/{id}(id=${m.id})}">Editar</a>
+							<a type="button" class="btn btn-sm btn-primary" th:href="@{/members/update/{id}(id=${m.id})}">Editar</a>
 							<a th:href="|{/members/${m.id}/delete}|" class="btn btn-sm btn-danger" type="button">Eliminar</a>
 						</td>
 					</tr>
 					</tbody>
 				</table>
 			</div>
-			<a th:href="@{/members/add-form}">Añadir miembro</a>
 		</div>
 	</div>
 	<script src="js/listmembers/jquery.min.js"></script>

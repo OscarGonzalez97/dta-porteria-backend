@@ -13,60 +13,73 @@
                 Editar miembro
             </h1>
         </div>
-        <form th:action="@{/members/edit-form}" th:object="${m}" method="POST" class="form-group justify-content-center">
+        <form th:action="@{/members/update}" th:object="${m}" method="POST" class="form-group justify-content-center needs-validation" id="submit"
+        novalidate>
             <div th:if=${param.error001}>
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>Un campo esta vacio</strong> Por favor rellene los campos necesarios.
                 </div>
             </div>
-            <div th:if=${param.error002}>
-                <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    <strong>ID de miembro invalido</strong> El id de miembro ya existe.
-                </div>
-            </div>
             <div class="row justify-content-center align-items-center smt">
                 <div class="col-md-6">
                     <label for="id" class="form-label">ID miembro</label>
-                    <input class="form-control form-control-lg" type="text" name="id" id="id" th:value="${m.id}" readonly disabled>
+                    <input class="form-control form-control-lg" type="text" name="id" id="id" th:value="${m.id}" readonly>
                 </div>
                 <div class="col-md-6">
                     <label for="created_by" class="form-label">Creado por</label>
-                    <input class="form-control form-control-lg" type="text" name="created_by" id="created_by"  th:value="${m.created_by}">
+                    <input class="form-control form-control-lg" type="text" name="created_by" id="created_by"  th:value="${m.created_by}" required>
+                    <div class="invalid-feedback">
+                        Es necesario un valor en este campo.
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-center align-items-center smt">
                 <div class="col-md-6">
                     <label for="fecha_vencimiento" class="form-label">Fecha de vencimiento</label>
-                    <input class="form-control form-control-lg" type="date" name="fecha_vencimiento" placeholder="yyyy-MM-dd" id="fecha_vencimiento"  th:value="${m.fecha_vencimiento}">
+                    <input class="form-control form-control-lg" type="date" name="fecha_vencimiento" placeholder="yyyy-MM-dd" id="fecha_vencimiento"  th:value="${m.fecha_vencimiento}" required>
+                    <div class="invalid-feedback">
+                        Es necesario un valor en este campo.
+                    </div>
                 </div>
                 <div class="col-md-3">
                     <label for="name" class="form-label">Nombre</label>
-                    <input class="form-control form-control-lg" type="text" name="name" id="name" th:value="${m.name}">
+                    <input class="form-control form-control-lg" type="text" name="name" id="name" th:value="${m.name}" required>
+                    <div class="invalid-feedback">
+                        Es necesario un valor en este campo.
+                    </div>
                 </div>
                 <div class="col-md-3">
                     <label for="surname" class="form-label">Apellido</label>
-                    <input class="form-control form-control-lg" type="text" name="surname" id="surname"  th:value="${m.surname}">
+                    <input class="form-control form-control-lg" type="text" name="surname" id="surname"  th:value="${m.surname}" required>
+                    <div class="invalid-feedback">
+                        Es necesario un valor en este campo.
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-center align-items-center smt">
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <label for="photo" class="form-label">Foto</label>
                     <input class="form-control form-control-lg" type="text" name="photo" id="photo"  th:value="${m.photo}">
                 </div>
-                <div class="col-md-3">
+
+                <div class="col-md-5">
                     <label for="type" class="form-label">Tipo</label>
                     <select class="form-select" name="Type" id="type">
-                        <option selected disabled th:value="${m.type}" th:text="${m.type}"></option>
                         <option
                                 th:each="tipo : ${tipos}"
                                 th:value="${tipo.Type}"
+                                th:selected="(${m.type}) == (${tipo.Type})"
                                 th:text="${tipo.Type}">
                         </option>
                     </select>
                 </div>
-                <div class="col-md-3">
-                    <label for="is_defaulter" class="form-label">Es moroso</label>
-                    <input class="form-control form-control-lg" type="text" name="is_defaulter" id="is_defaulter"  th:value="${m.is_defaulter}">
+                <div class="col-md-2" id="checkbox">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" data-val="true" value="true" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Es moroso
+                        </label>
+                    </div>
                 </div>
             </div>
             <div class="row smt submit">

@@ -1,11 +1,13 @@
 const selection = document.getElementById("type");
 const fecha = document.getElementById("fecha_vencimiento")
-selection.addEventListener('change', () => {
+function seleccion(){
     if (selection.value === "Socio"){
-        fecha.disabled = true
-        fecha.value = null
+        fecha.value = ""
+        fecha.readOnly = true
     }
     else{
-        fecha.disabled = false
+        fecha.readOnly = false
     }
-})
+}
+seleccion()
+selection.addEventListener('change', seleccion)

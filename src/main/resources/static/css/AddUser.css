@@ -6,3 +6,23 @@ body {
     height: 100vh;
     color: rgb(0, 0, 0) !important;
 }
+.form-check {
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+}
+#checkbox{
+    padding-top: 2em;
+}
+/*.form-check-input{*/
+/*    height: 1.5em;*/
+/*    width: 1.5em;*/
+/*}*/
+/*.form-check-label{*/
+/*    vertical-align: middle;*/
+/*    font-size: 1.5em;*/
+/*}*/
+/*.form-check-input + .form-check-label{*/
+/*    display: inline-block;*/
+/*    vertical-align: baseline;*/
+/*}*/

@@ -54,32 +54,34 @@ public class MemberController {
     }
     @PostMapping("/add-form")
     public String agregarForm(@ModelAttribute("addMember") MemberDTO member){
-            if ((member.getId_member() == null)
-            || (member.getCreated_by() == "")
-            || (member.getFecha_vencimiento() == "" && !Objects.equals(member.getType(), "Socio"))
-            || (member.getName() == "")
-            || (member.getSurname() == "")
-            || (member.getPhoto() == "")
-            || (member.getType() == "")
-            || (member.getIs_defaulter() == ""))
-            {
-                return "redirect:/members/add-form?error001";}
-            if (service.getById(member.getId_member())){
+        if (service.someAttributeIsNull(member)) return "redirect:/members/add-form?error001";
+        if (service.getById(member.getId_member())){
                 return "redirect:/members/add-form?error002";}
         new ResponseEntity(service.add(member), HttpStatus.OK);
         return "redirect:/members";
     }
 
-    @GetMapping("/form-update/{id}")
+    @GetMapping("/update/{id}")
     public String editMember(@PathVariable(value = "id", required=true) String id_member, Model model){
         MemberDTO member = service.getById(id_member);
-            model.addAttribute("m", member);
-            model.addAttribute("tipos", typeService.list());
-            return "miembro-update";
+        if (member==null){
+            return "redirect:/members";
+        }
+        model.addAttribute("m", member);
+        model.addAttribute("tipos", typeService.list());
+        return "miembro-update";
     }
     @PutMapping("/{id}/update")
     public ResponseEntity edit(@PathVariable(value = "id") String id, @RequestBody MemberDTO post){
         return new ResponseEntity(service.edit(id, post), HttpStatus.OK);
+    }
+    @PostMapping ("/update")
+    public String update(MemberDTO member){
+        member.setId_member(Integer.parseInt(member.getId()));
+        if (service.someAttributeIsNull(member)){
+            return "redirect:/members/update/"+member.getId()+"?error001";}
+        service.update(member);
+        return "redirect:/members";
     }
 
     @DeleteMapping("/{id}/delete")
