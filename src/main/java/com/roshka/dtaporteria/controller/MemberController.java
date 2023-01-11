@@ -74,9 +74,15 @@ public class MemberController {
     }
     @PostMapping ("/update")
     public String updateMember(MemberDTO member){
-        member.setId_member(Integer.parseInt(member.getId()));
-        if (service.someAttributeIsNull(member)){
-            return "redirect:/members/update/"+member.getId()+"?error001";}
+        // member.setId_member(Integer.parseInt(member.getId()));
+        // if (service.someAttributeIsNull(member)){
+        //     return "redirect:/members/update/"+member.getId()+"?error001";}
+        if (member.getType().toLowerCase().equals("socio")) {
+            member.setId(member.getCi());
+        }else{
+            member.setId(String.valueOf(member.getId_member()));
+        }
+        System.out.println(member);
         service.update(member);
         return "redirect:/members";
     }
