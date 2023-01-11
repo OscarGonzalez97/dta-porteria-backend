@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragmento/base::base}">
+<head>
+    <meta charset="UTF-8">
+    <title>Club Deportivo Aleman</title>
+    <link th:href="@{/css/AddUser.css}" rel = "stylesheet">
+</head>
+
+<body>
+<div layout:fragment="contenido">
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center g-2">
+            <h1 class="text-center smt">
+                Añadir miembro
+            </h1>
+        </div>
+        <form th:action="@{/members/add-form}" th:object="${member}" method="POST" class="form-group justify-content-center">
+                <div th:if=${param.error001}>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Un campo esta vacio</strong> Por favor rellene los campos necesarios.
+                    </div>
+                </div>
+                <div th:if=${param.error002}>
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>ID de miembro invalido</strong> El id de miembro ya existe.
+                    </div>
+                </div>
+            <div class="row justify-content-center align-items-center smt">
+              <div class="col-md-6">
+                  <label for="id_member" class="form-label">ID miembro</label>
+                   <input class="form-control form-control-lg" type="number" name="id_member" id="id_member" th:field="*{id_member}">
+               </div>
+                <div class="col-md-4">
+                    <label for="created_by" class="form-label">Cédula</label>
+                    <input class="form-control form-control-lg" type="text" name="ci" id="ci" th:field="*{ci}">
+                </div>
+                <div class="col-md-2">
+                    <label for="created_by" class="form-label">Creado por</label>
+                    <input class="form-control form-control-lg" type="text" name="created_by" id="created_by" th:field="*{created_by}">
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center smt">
+                <div class="col-md-6">
+                    <label for="fecha_vencimiento" class="form-label">Fecha de vencimiento</label>
+                    <input class="form-control form-control-lg" type="date" name="fecha_vencimiento" placeholder="yyyy-MM-dd" id="fecha_vencimiento" th:field="*{fecha_vencimiento}">
+                </div>
+                <div class="col-md-3">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input class="form-control form-control-lg" type="text" name="name" id="name" th:field="*{name}">
+                </div>
+                <div class="col-md-3">
+                    <label for="surname" class="form-label">Apellido</label>
+                    <input class="form-control form-control-lg" type="text" name="surname" id="surname" th:field="*{surname}">
+                </div>
+                </div>
+            <div class="row justify-content-center align-items-center smt">
+                <div class="col-md-6">
+                    <label for="photo" class="form-label">Foto</label>
+                    <input class="form-control form-control-lg" type="text" name="photo" id="photo" th:field="*{photo}">
+                </div>
+               <div class="col-md-4">
+                   <label for="type" class="form-label">Tipo</label>
+                   <select class="form-select" name="Type" id="type" th:field="*{type}">
+                       <option value="" selected disabled hidden>Seleccionar</option>
+                       <option th:each="tipo : ${tipos}"
+                               th:value="${tipo.Type}"
+                               th:text="${tipo.Type}">
+                       </option>
+                   </select>
+                </div>
+                <div class="col-md-2" id="checkbox">
+                    <div class="form-check">
+                        <input class="form-check-input" th:field="*{is_defaulter}" name="is_defaulter" type="checkbox" value="Si" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Es moroso
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row smt submit">
+                <button type="submit" class="btn btn-primary btn-lg col-md-2 offset-10">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script type="text/javascript" th:src="@{/js/AddMember.js}"></script>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+</body>
+</html>

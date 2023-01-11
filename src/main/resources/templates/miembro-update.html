@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragmento/base::base}">
+<head>
+    <meta charset="UTF-8">
+    <title>Club Deportivo Aleman</title>
+</head>
+
+<body>
+<div layout:fragment="contenido">
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center g-2">
+            <h1 class="text-center smt">
+                Editar miembro
+            </h1>
+        </div>
+        <form th:action="@{/members/update}" th:object="${m}" method="POST" class="form-group justify-content-center needs-validation" id="submit"
+        novalidate>
+            <div th:if=${param.error001}>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Un campo esta vacio</strong> Por favor rellene los campos necesarios.
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center smt">
+                <div class="col-md-6">
+                    <label for="id" class="form-label">ID miembro</label>
+                    <input class="form-control form-control-lg" th:field="*{id}" type="text" name="id" id="id" th:value="${m.id}">
+                </div>
+                <div class="col-md-4">
+                    <label for="created_by" class="form-label">Cédula</label>
+                    <input class="form-control form-control-lg" th:field="*{ci}" type="text" name="ci" id="ci">
+                </div>
+                <div class="col-md-2">
+                    <label for="created_by" class="form-label">Creado por</label>
+                    <input class="form-control form-control-lg" th:field="*{created_by}" type="text" name="created_by" id="created_by"  th:value="${m.created_by}" required>
+                    <div class="invalid-feedback">
+                        Es necesario un valor en este campo.
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center smt">
+                <div class="col-md-6">
+                    <label for="fecha_vencimiento" class="form-label">Fecha de vencimiento</label>
+                    <input class="form-control form-control-lg" th:field="*{fecha_vencimiento}" type="date" name="fecha_vencimiento" placeholder="yyyy-MM-dd" id="fecha_vencimiento"  th:value="${m.fecha_vencimiento}" required>
+                    <div class="invalid-feedback">
+                        Es necesario un valor en este campo.
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="name" class="form-label">Nombre</label>
+                    <input class="form-control form-control-lg" th:field="*{name}" type="text" name="name" id="name" th:value="${m.name}" required>
+                    <div class="invalid-feedback">
+                        Es necesario un valor en este campo.
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label for="surname" class="form-label">Apellido</label>
+                    <input class="form-control form-control-lg" th:field="*{surname}" type="text" name="surname" id="surname"  th:value="${m.surname}" required>
+                    <div class="invalid-feedback">
+                        Es necesario un valor en este campo.
+                    </div>
+                </div>
+            </div>
+            <div class="row justify-content-center align-items-center smt">
+                <div class="col-md-5">
+                    <label for="photo" class="form-label">Foto</label>
+                    <input class="form-control form-control-lg" th:field="*{photo}" type="text" name="photo" id="photo"  th:value="${m.photo}">
+                </div>
+
+                <div class="col-md-5">
+                    <label for="type" class="form-label">Tipo</label>
+                    <select class="form-select" th:field="*{type}" name="Type" id="type">
+                        <option
+                                th:each="tipo : ${tipos}"
+                                th:value="${tipo.Type}"
+                                th:selected="(${m.type}) == (${tipo.Type})"
+                                th:text="${tipo.Type}">
+                        </option>
+                    </select>
+                </div>
+                <div class="col-md-2" id="checkbox">
+                    <div class="form-check">
+                        <input class="form-check-input" th:field="*{is_defaulter}" name="is_defaulter" type="checkbox" value="Si" id="flexCheckDefault">
+                        <label class="form-check-label" for="flexCheckDefault">
+                            Es moroso
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row smt submit">
+                <button type="submit" class="btn btn-primary btn-lg col-md-2 offset-10">Submit</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script th:src="@{/js/updateMiembro.js}"></script>
+</div>
+</body>
+</html>

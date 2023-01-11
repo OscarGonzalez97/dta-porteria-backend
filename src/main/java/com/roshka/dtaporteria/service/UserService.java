@@ -22,7 +22,6 @@ import java.util.concurrent.ExecutionException;
 public class UserService{
     @Autowired
     private FirebaseInitializer firebase;
-
     public UserDTO getById(String id) {
         if (id == null) return null;
         DocumentReference docRef = getCollection().document(id);
