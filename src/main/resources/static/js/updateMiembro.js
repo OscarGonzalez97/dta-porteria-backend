@@ -1,21 +1,21 @@
 const type = document.getElementById("type")
 const ci = document.getElementById("ci")
 const id = document.getElementById("id")
-if (type.value !== "Socio"){
-    ci.disabled = true
-    ci.readOnly = true
+function seleccion(){
+    if (type.value !== "Socio"){
+        ci.disabled = true
+        ci.readOnly = true
+        fecha.readOnly = false
+    }
+    else{
+    id.readOnly = true
+    fecha.readOnly= true
+    fecha.value = ""
+    }
 }
-type.readOnly = true
-id.readOnly = true
-id.disabled = true
-fecha.readOnly= true
-fecha.value = ""
-fecha.disabled = true
 
-
-
-
-
+seleccion()
+type.addEventListener('change', seleccion)
 
 // Fetch all the forms we want to apply custom Bootstrap validation styles to
 var forms = document.querySelectorAll('.needs-validation')
