@@ -23,7 +23,7 @@ public class MemberDTO {
     public String getFecha_vencimiento() {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate ld = LocalDate.parse(this.fecha_vencimiento, formatter);
+            LocalDate.parse(this.fecha_vencimiento, formatter);
             return fecha_vencimiento;
         } catch (Exception e){
             return null;
@@ -32,11 +32,10 @@ public class MemberDTO {
 
     public String getId() {
         if (this.type.equals("Socio") || this.type.equals("socio")){
-            return this.id_member.toString();
+            return String.valueOf(this.id_member);
         }
-        setId_member(null);
         return this.ci;
     }
-    
+
 
 }
