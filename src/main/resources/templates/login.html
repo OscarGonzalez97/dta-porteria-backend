@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Club Deportivo Aleman</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a81368914c.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<img class="wave" th:src="@{/img/newwave.png}">
+<div class="container">
+    <div class="img">
+        <img src="">
+    </div>
+    <div class="login-content">
+        <form th:action="@{/login}" th:object="${user}" method="POST">
+            <img class="logo" th:src="@{/img/zyro-image.png}">
+            <h2 id="welcome" class="title">Bienvenido</h2>
+            <div class="input-div one">
+                <div class="i">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="div">
+                    <h5>Correo electrónico</h5>
+                    <input type="text" class="input" name="id" id="id" th:field="*{id}">
+                </div>
+            </div>
+            <div class="input-div pass">
+                <div class="i">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <div class="div">
+                    <h5>Contraseña</h5>
+                    <input type="password" class="input" name="id" id="id" th:field="*{name}">
+                </div>
+            </div>
+            <a href="#">Olvide mi contraseña</a>
+            <input type="submit" class="btn" value="Ingresar">
+        </form>
+    </div>
+</div>
+<script th:src="@{/js/login.js}"></script>
+</body>
+</html>
