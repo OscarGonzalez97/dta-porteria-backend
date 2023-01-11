@@ -1,39 +1,75 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragmento/base::base}">
 <head>
-  <meta charset="UTF-8">
-  <title>Records</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-
+    <meta charset="UTF-8">
+    <title>Admin DTA</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- Table to Datatable CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
 </head>
 <body>
 <div layout:fragment="contenido">
-  <div class = "container">
-    <div class = "row">
-      <h1>Records</h1>
+        <div class="container-fluid text-center">
+            <div class="row justify-content-center align-items-center g-2">
+                <div class="col-10      ">
+                    <h1 style="padding: 0.5em;">Records</h1>
+                </div>
+                <div class="col-2 d-grid justify-content-end">
+                    <a type="button" class="btn btn-secondary" th:ref="@{/records}" target="_self">Actualizar</a>
+                </div>
+            </div>
+        </div>
+
+    <div class="container-fluid">
+        <table id="example" class="table table-striped">
+            <thead>
+            <tr>
+                <th>
+                    Numero de Socio
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Apellido
+                </th>
+                <th>
+                    Cédula
+                </th>
+                <th>
+                    Tipo
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each = "m : ${records}">
+                <td th:text = "${m.id_member}">
+                    Default
+                </td>
+                <td th:text = "${m.name_member}">
+                    Default
+                </td>
+                <td th:text = "${m.surname_member}">
+                    Default
+                </td>
+                <td th:text = "${m.ci_member}">
+                    Default
+                </td>
+                <td th:text = "${m.type}">
+                    Default
+                </td>
+            </tr>
+            </tbody>
+        </table>
     </div>
-    <table class = "table table-striped table-bordered">
-      <thead class = "table-dark">
-      <tr>
-        <th>Numero de Socio</th>
-        <th>Nombre</th>
-        <th>Apellido</th>
-        <th>CI</th>
-        <th>Tipo</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr th:each = "records:${records}">
-        <td th:text = "${records.id_member}"></td>
-        <td th:text = "${records.name_member}"></td>
-        <td th:text = "${records.surname_member}"></td>
-        <td th:text = "${records.ci_member}"></td>
-        <td th:text = "${records.type}"></td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+    <!-- Bootstrap Js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <!-- Table to Datatable scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <script th:src="@{/js/datatableScript.js}"></script>
 </div>
 </body>
 </html>
->

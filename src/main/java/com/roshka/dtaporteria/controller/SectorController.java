@@ -1,4 +1,4 @@
-package com.roshka.dtaporteria.contoller;
+package com.roshka.dtaporteria.controller;
 
 import com.roshka.dtaporteria.dto.SectorDTO;
 import com.roshka.dtaporteria.service.SectorService;
@@ -16,6 +16,7 @@ public class SectorController { //controlador de sectores
     @GetMapping
     public String list(Model modelo){ //metodo para listar todos los sectores
         modelo.addAttribute("sector",service.list());
+        modelo.addAttribute("SectorDTO", new SectorDTO());
         return "listSectores";
     }
 

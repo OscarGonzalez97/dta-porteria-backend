@@ -1,4 +1,4 @@
-package com.roshka.dtaporteria.contoller;
+package com.roshka.dtaporteria.controller;
 
 import com.roshka.dtaporteria.dto.MemberDTO;
 import com.roshka.dtaporteria.service.MemberService;
@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Objects;
 
 @Controller
 @RequestMapping("/members")
