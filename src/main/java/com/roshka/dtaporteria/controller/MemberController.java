@@ -1,4 +1,4 @@
-package com.roshka.dtaporteria.contoller;
+package com.roshka.dtaporteria.controller;
 
 import com.roshka.dtaporteria.dto.MemberDTO;
 import com.roshka.dtaporteria.service.MemberService;

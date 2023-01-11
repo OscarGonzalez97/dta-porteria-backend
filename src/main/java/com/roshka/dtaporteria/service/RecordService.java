@@ -2,6 +2,7 @@ package com.roshka.dtaporteria.service;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.CollectionReference;
+import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 @Service
 public class RecordService {
@@ -30,7 +32,6 @@ public class RecordService {
             return null;
         }
     }
-
     private CollectionReference getCollection() {
         return firebase.getFirestore().collection("RECORDS");
     }

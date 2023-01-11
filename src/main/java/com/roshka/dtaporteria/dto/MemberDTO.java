@@ -1,16 +1,12 @@
 package com.roshka.dtaporteria.dto;
-import com.google.cloud.firestore.annotation.DocumentId;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import com.google.cloud.firestore.annotation.DocumentId;
+import lombok.Data;
+
 @Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class MemberDTO {
     @DocumentId
     private String id;
