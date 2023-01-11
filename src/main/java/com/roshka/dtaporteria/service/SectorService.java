@@ -15,7 +15,7 @@ public class SectorService {
     @Autowired
     private FirebaseInitializer firebase;
 
-    public Map<String, Object> getById(String id) {
+    public Map<String, Object> getById(String id) { //metodo para obtener el id
         DocumentReference docRef = getCollection().document(id);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         try {
@@ -26,7 +26,7 @@ public class SectorService {
         }
     }
 
-    public List<SectorDTO> list(){
+    public List<SectorDTO> list(){ //metodo para generar el listado de sectores
         List<SectorDTO> response = new ArrayList<>();
         SectorDTO post;
         ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
@@ -40,7 +40,7 @@ public class SectorService {
             return null;
         }
     }
-    public Boolean add(SectorDTO post) {
+    public Boolean add(SectorDTO post) { //metodo para agregar sectores
         Map<String, Object> docData = getDocData(post);
         CollectionReference posts = getCollection();
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(String.valueOf(post.getId())).set(docData);
@@ -54,7 +54,7 @@ public class SectorService {
         }
     }
 
-    public Boolean edit(SectorDTO post) {
+    public Boolean edit(SectorDTO post) { //metodo para editar sectores
         Map<String, Object> docData = getDocData(post);
         docData.values().removeAll(Collections.singleton(null));
         CollectionReference posts = getCollection();
@@ -69,7 +69,7 @@ public class SectorService {
         }
     }
 
-    public Boolean delete(String id) {
+    public Boolean delete(String id) { //metodo para eliminar sectores
         CollectionReference posts = getCollection();
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).delete();
         try {
@@ -82,7 +82,7 @@ public class SectorService {
         }
     }
 
-    private static Map<String, Object> getDocData(SectorDTO post) {
+    private static Map<String, Object> getDocData(SectorDTO post) {  //metodo para mapear el elemento
         Map<String, Object> docData = new HashMap<>();
         docData.put("sector", post.getId());
         return docData;
@@ -90,5 +90,5 @@ public class SectorService {
 
     private CollectionReference getCollection() {
         return firebase.getFirestore().collection("SECTOR");
-    }
+    }//metodo para obtener la coleccion
 }
