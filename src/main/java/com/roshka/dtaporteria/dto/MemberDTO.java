@@ -1,5 +1,8 @@
 package com.roshka.dtaporteria.dto;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
 import com.google.cloud.firestore.annotation.DocumentId;
 import lombok.Data;
 
@@ -15,7 +18,7 @@ public class MemberDTO {
     private String photo;
     private String surname;
     private String type;
-    private String Fecha_vencimiento;
+    private String fecha_vencimiento;
 
     public String getFecha_vencimiento() {
         try {
