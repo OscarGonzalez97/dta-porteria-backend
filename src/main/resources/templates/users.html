@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Admin DTA</title>
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- Table to Datatable CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
 </head>
 <body>
 <div layout:fragment="contenido">
@@ -19,8 +22,8 @@
         </div>
     </div>
 	<div class="container-fluid">
-        <table class="table table-bordered table-hover table-striped">
-            <thead class="table-dark">
+        <table id="example" class="table table-striped">
+            <thead>
             <tr>
                 <th>
                     ID
@@ -65,8 +68,8 @@
                 <td th:text = "${m.active}">
                     Default
                 </td>
-                <td>
-                    <a type="button" class="btn btn-sm btn-secondary" th:href="@{/users/update/{id}(id=${m.id})}" target="_self">Editar</a>
+                <td class="d-flex gap-1">
+                    <a type="button" class="btn btn-sm btn-secondary" th:href="@{/users/update/{id}(id=${m.id})}" target="_self">Editar</a> 
                     <a type="button" class="btn btn-sm btn-warning" th:href="@{/users/disable/{id}(id=${m.id})}" target="_self">Inhabilitar</a>
                     <a type="button" class="btn btn-sm btn-danger"  th:href="@{/users/delete/{id}(id=${m.id})}" target="_self">Eliminar</a>
                 </td>
@@ -74,10 +77,13 @@
             </tbody>
         </table>
 	</div>
+    <!-- Bootstrap Js -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <!-- <script src="js/listmembers/jquery.min.js"></script>
-	<script src="js/listmembers/bootstrap.min.js"></script>
-	<script src="js/listmembers/scripts.js"></script> -->
+    <!-- Table to Datatable scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <script th:src="@{/js/datatableScript.js}"></script>
 </div>
 </body>
 </html>

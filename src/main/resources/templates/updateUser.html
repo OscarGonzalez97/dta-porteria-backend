@@ -38,7 +38,7 @@
                     <div class="col-8 input-group-lg">
                         <label for="id" class="form-label">Correo electrónico</label>
                         <input type="text" class="form-control" name="id" id="id" th:field="*{id}"
-                            aria-describedby="helpId" placeholder="" th:value="${user.id}" readonly disabled>
+                            aria-describedby="helpId" placeholder="" th:value="${user.id}" readonly>
                     </div>
                 </div>
                 <div class="row justify-content-center align-items-center g-2 smt">
@@ -60,10 +60,10 @@
                             aria-describedby="helpId" placeholder="" th:value="${user.ci}" required>
                     </div>
                     <div class="col-2 input-group-lg">
-                        <label for="rol" class="form-label" th:field="*{rol}">Rol</label>
-                        <select class="form-select" name="rol" id="rol">
+                        <label for="rol" class="form-label">Rol</label>
+                        <select class="form-select" name="rol" id="rol" th:field="*{rol}">
                             <option th:each="rol : ${roles}" th:value="${rol.id}"
-                                th:selected="(${user.rol}) == (${rol.id})" th:text="${rol.id}">
+                                th:selected="${user.rol == rol.id}" th:text="${rol.id}">
                             </option>
                         </select>
                     </div>

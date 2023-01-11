@@ -38,7 +38,6 @@ public class UserController {
         if (user == null){
             return userCrud(model);
         }
-        // model.addAttribute("UserDTO", new UserDTO());
         model.addAttribute("user", user);
         model.addAttribute("roles", rolService.list());
         return "updateUser";
