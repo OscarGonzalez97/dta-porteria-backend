@@ -15,6 +15,7 @@ public class MemberDTO {
     @DocumentId
     private String id;
     private String created_by;
+    private String ci;
     private Integer id_member;
     private String is_defaulter;
     private String name;
@@ -32,5 +33,14 @@ public class MemberDTO {
             return null;
         }
     }
+
+    public String getId() {
+        if (this.type.equals("Socio") || this.type.equals("socio")){
+            return this.id_member.toString();
+        }
+        setId_member(null);
+        return this.ci;
+    }
+    
 
 }

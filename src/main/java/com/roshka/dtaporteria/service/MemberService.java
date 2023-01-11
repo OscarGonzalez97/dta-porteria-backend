@@ -3,11 +3,9 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
 import com.roshka.dtaporteria.dto.MemberDTO;
-import com.roshka.dtaporteria.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Member;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
@@ -59,9 +57,10 @@ public class MemberService {
     }
 
     public Boolean add(MemberDTO post) {
+        String documentId = post.getId();
         Map<String, Object> docData = getDocData(post);
         CollectionReference posts = getCollection();
-        ApiFuture<WriteResult> writeResultApiFuture = posts.document(String.valueOf(post.getId_member())).set(docData);
+        ApiFuture<WriteResult> writeResultApiFuture = posts.document(documentId).set(docData);
         try {
             if (writeResultApiFuture.get() != null){
                 return Boolean.TRUE;
@@ -118,6 +117,7 @@ public class MemberService {
         Map<String, Object> docData = new HashMap<>();
         docData.put("created_by", post.getCreated_by());
         docData.put("id_member", post.getId_member());
+        docData.put("ci", post.getCi());
         docData.put("is_defaulter", post.getIs_defaulter());
         docData.put("name", post.getName());
         docData.put("photo", post.getPhoto());
