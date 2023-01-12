@@ -1,6 +1,7 @@
 /* globals Chart:false, feather:false */
 
-(() => {
+
+/*(() => {
   'use strict'
 
   feather.replace({ 'aria-hidden': 'true' })
@@ -50,4 +51,16 @@
       }
     }
   })
-})()
+})()*/
+
+/*Naser*/
+navbar1 = document.querySelector(".navbar1").querySelectorAll("a");
+console.log(navbar1);
+
+navbar1.forEach(element => {
+    element.addEventListener("click", function(){
+      navbar1.forEach(nav=>nav.classList.remove("active"))
+      this.classList.add("active")
+    })
+})
+
