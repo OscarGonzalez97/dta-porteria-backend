@@ -14,7 +14,7 @@
         <img src="">
     </div>
     <div class="login-content">
-        <form th:action="@{/login}" th:object="${user}" method="POST">
+        <form th:action="@{/login}"  method="POST">
             <img class="logo" th:src="@{/img/zyro-image.png}">
             <h2 id="welcome" class="title">Bienvenido</h2>
             <div class="input-div one">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="div">
                     <h5>Correo electrónico</h5>
-                    <input type="text" class="input" name="id" id="id" th:field="*{id}">
+                    <input type="email" class="input" name="username" id="username" >
                 </div>
             </div>
             <div class="input-div pass">
@@ -32,7 +32,7 @@
                 </div>
                 <div class="div">
                     <h5>Contraseña</h5>
-                    <input type="password" class="input" name="id" id="id" th:field="*{name}">
+                    <input type="password" class="input" name="password" id="password" >
                 </div>
             </div>
             <a href="#">Olvide mi contraseña</a>
