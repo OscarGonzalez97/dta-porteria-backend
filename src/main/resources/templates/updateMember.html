@@ -7,14 +7,19 @@
 
 <body>
 <div layout:fragment="contenido">
-    <div class="container-fluid">
+    <div class="container-fluid central" style="padding-top: 1em;">
+        <div class="col-1 g-2"><a type="button" class="btn btn-warning" href="/members" aria-label="Close">Cancelar</a></div>
         <div class="row justify-content-center align-items-center g-2">
-            <h1 class="text-center smt">
-                Editar miembro
-            </h1>
+            <div class="col-8">
+                <h1 class="text-center smt">
+                    Editar miembro
+                </h1>
+            </div>
         </div>
-        <form th:action="@{/members/update}" th:object="${m}" method="POST" class="form-group justify-content-center needs-validation" id="submit"
-        novalidate>
+
+        <form th:action="@{/members/update}" th:object="${m}" method="POST"
+              class="form-group justify-content-center needs-validation" id="submit"
+              onsubmit="this.querySelectorAll('input').forEach(i => i.disabled = false)" novalidate>
             <div th:if=${param.error001}>
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>Un campo esta vacio</strong> Por favor rellene los campos necesarios.
@@ -22,12 +27,12 @@
             </div>
             <div class="row justify-content-center align-items-center smt">
                 <div class="col-md-6">
-                    <label for="id" class="form-label">ID miembro</label>
-                    <input class="form-control form-control-lg" th:field="*{id}" type="text" name="id" id="id" th:value="${m.id}">
+                    <label for="id_member" class="form-label">ID miembro</label>
+                    <input class="form-control form-control-lg" th:field="*{id_member}" type="text" name="id_member" id="id_member" th:value="${m.id_member}" readonly>
                 </div>
                 <div class="col-md-4">
                     <label for="created_by" class="form-label">Cédula</label>
-                    <input class="form-control form-control-lg" th:field="*{ci}" type="text" name="ci" id="ci">
+                    <input class="form-control form-control-lg" th:field="*{ci}" type="text" name="ci" id="ci" th:value="${m.ci}">
                 </div>
                 <div class="col-md-2">
                     <label for="created_by" class="form-label">Creado por</label>
@@ -68,14 +73,7 @@
 
                 <div class="col-md-5">
                     <label for="type" class="form-label">Tipo</label>
-                    <select class="form-select" th:field="*{type}" name="Type" id="type">
-                        <option
-                                th:each="tipo : ${tipos}"
-                                th:value="${tipo.Type}"
-                                th:selected="(${m.type}) == (${tipo.Type})"
-                                th:text="${tipo.Type}">
-                        </option>
-                    </select>
+                    <input class="form-control form-control-lg" th:field="*{type}" type="text" name="type" id="type" th:value="${m.type}" readonly>
                 </div>
                 <div class="col-md-2" id="checkbox">
                     <div class="form-check">
@@ -87,7 +85,7 @@
                 </div>
             </div>
             <div class="row smt submit">
-                <button type="submit" class="btn btn-primary btn-lg col-md-2 offset-10">Submit</button>
+                <button type="submit" class="btn btn-primary btn-lg col-md-2 offset-10" style="margin-top: 1em">Submit</button>
             </div>
         </form>
     </div>

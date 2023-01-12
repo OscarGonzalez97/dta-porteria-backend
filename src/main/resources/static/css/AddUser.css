@@ -14,16 +14,6 @@ body {
 #checkbox{
     padding-top: 2em;
 }
-
-/*.form-check-input{*/
-/*    height: 1.5em;*/
-/*    width: 1.5em;*/
-/*}*/
-/*.form-check-label{*/
-/*    vertical-align: middle;*/
-/*    font-size: 1.5em;*/
-/*}*/
-/*.form-check-input + .form-check-label{*/
-/*    display: inline-block;*/
-/*    vertical-align: baseline;*/
-/*}*/
+#cancelarNuevoMiembro{
+    padding-top: 5em;
+}

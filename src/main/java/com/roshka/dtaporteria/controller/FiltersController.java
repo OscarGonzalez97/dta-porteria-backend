@@ -19,8 +19,6 @@ public class FiltersController {
     }
     @PostMapping("/add")
     public String addFiltros(){
-        System.out.println("Funciona");
-
         return "redirect:/filters";
     }
 

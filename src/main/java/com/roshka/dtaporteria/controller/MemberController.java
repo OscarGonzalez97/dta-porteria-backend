@@ -26,13 +26,13 @@ public class MemberController {
         List<MemberDTO> miembros = service.list();
         model.addAttribute("miembros", miembros);
         model.addAttribute("tipos", typeService.list());
-        return "listmembers";
+        return "members";
     }
     @GetMapping("/add-form")
     public String addForm(Model model){
         model.addAttribute("tipos", typeService.list());
         model.addAttribute("member", new MemberDTO());
-        return "formulario-miembro";
+        return "newMember";
     }
     @GetMapping("/{id}")
     public ResponseEntity getMember(@PathVariable(value = "id") String id){
@@ -45,7 +45,7 @@ public class MemberController {
 
     @GetMapping("/add")
     public String getMiembroFormulario(){
-        return "formulario-miembro";
+        return "newMember";
     }
 
     @PostMapping("/add")
@@ -53,7 +53,12 @@ public class MemberController {
         return new ResponseEntity(service.add(post), HttpStatus.OK);
     }
     @PostMapping("/add-form")
-    public String agregarFormMember(MemberDTO member){
+    public String agregarFormMember(MemberDTO member) {
+        if (service.getByIdIfExists(member.getId()))
+        {
+            //Error si se quiere añadir un miembro con un id que ya existe
+            return "redirect:/members/add-form/?error002";
+        }
         new ResponseEntity(service.add(member), HttpStatus.OK);
         return "redirect:/members";
     }
@@ -66,7 +71,7 @@ public class MemberController {
         }
         model.addAttribute("m", member);
         model.addAttribute("tipos", typeService.list());
-        return "miembro-update";
+        return "updateMember";
     }
     @PutMapping("/{id}/update")
     public ResponseEntity editMember(@PathVariable(value = "id") String id, @RequestBody MemberDTO post){
@@ -74,9 +79,14 @@ public class MemberController {
     }
     @PostMapping ("/update")
     public String updateMember(MemberDTO member){
-        member.setId_member(Integer.parseInt(member.getId()));
-        if (service.someAttributeIsNull(member)){
-            return "redirect:/members/update/"+member.getId()+"?error001";}
+        // member.setId_member(Integer.parseInt(member.getId()));
+        // if (service.someAttributeIsNull(member)){
+        //     return "redirect:/members/update/"+member.getId()+"?error001";}
+        if (member.getType().toLowerCase().equals("socio")) {
+            member.setId(member.getCi());
+        }else{
+            member.setId(String.valueOf(member.getId_member()));
+        }
         service.update(member);
         return "redirect:/members";
     }

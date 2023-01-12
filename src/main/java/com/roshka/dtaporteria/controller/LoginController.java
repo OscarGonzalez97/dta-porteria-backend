@@ -25,7 +25,6 @@ public class LoginController {
     
     @PostMapping
     public String postLogin(UserDTO user, Model model) {
-        System.out.println(user);
         model.addAttribute("user", user);
         return "dashboard";
     }
