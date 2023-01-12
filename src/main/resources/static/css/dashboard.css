@@ -148,12 +148,12 @@ body {
     .box:hover {
       box-shadow: 0 0 11px rgba(0, 0, 0, 0.2); 
     } */
-    li {
+    .recuadro {
       font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
       border-bottom: 1px solid #ccc;
     }
      
-    li:last-child {
+    .recuadro:last-child {
       border: none;
     }
      
