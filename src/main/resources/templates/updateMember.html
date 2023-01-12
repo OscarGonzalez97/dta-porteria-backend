@@ -25,6 +25,7 @@
                     <strong>Un campo esta vacio</strong> Por favor rellene los campos necesarios.
                 </div>
             </div>
+            <input th:field="*{id}" type="hidden" name="id" id="id" th:value="${m.id}" readonly>
             <div class="row justify-content-center align-items-center smt">
                 <div class="col-md-6">
                     <label for="id_member" class="form-label">ID miembro</label>

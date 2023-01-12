@@ -4,7 +4,8 @@ $(document).ready(() => {
     const id = document.getElementById("id_member")
     tipo.addEventListener('change', () => {
         if (tipo.value === "Socio") {
-            fecha.value = ""
+            fecha.required = false;
+            fecha.value = "";
             fecha.disabled = true;
         }
         else {
