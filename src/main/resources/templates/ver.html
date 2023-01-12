@@ -3,31 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <title>Filtros</title>
+    <title>Records</title>
 </head>
 <body>
 <div layout:fragment="contenido">
     <div class = "container py-4">
         <div class="card bg-light">
-            <div class="card header">
-            </div>
             <div class="card-body" th:each = "m : ${records}">
-                <span>Cedula del miembro: </span> <ul class="list-group-item active" th:text="${m.ci_member}"></ul>
-                <span>Numero de Id del miembro: </span><ul class="list-group-item" th:text="${records.id_member}"></ul>
-                <span>Nombre del miembro: </span><ul class="list-group-item" th:text="${records.name_member}"></ul>
-                <span>Apellido del miembro: </span><ul class="list-group-item" th:text="${records.surname_member}"></ul>
-                <span>Tipo de miembro: </span><ul class="list-group-item" th:text="${records.type}"></ul>
-                <span>Sector: </span><ul class="list-group-item" th:text="${records.sector}"></ul>
-                <span>Foto: </span> <img th:src="${records.photo}" style="height: 300px; width:300px">
-                <span>Is defaulter: </span><ul class="list-group-item" th:text="${records.is_defaulter}"></ul>
-                <span>Is exit: </span><ul class="list-group-item" th:text="${records.is_exit}"></ul>
-                <span>Is walk: </span><ul class="list-group-item" th:text="${records.is_walk}"></ul>
-                <span>Cedula del portero: </span><ul class="list-group-item" th:text="${records.ci_portero}"></ul>
-                <span>Nombre del portero: </span><ul class="list-group-item" th:text="${records.name_portero}"></ul>
-                <span>Apellido del portero: </span><ul class="list-group-item" th:text="${records.surname_portero}"></ul>
-                <span>Email del portero: </span><ul class="list-group-item" th:text="${records.email_portero}"></ul>
-                <span>Fecha y hora exacta: </span><ul class="list-group-item" th:text="${records.date_time}"></ul>
-            </div>
+                <div class = "row">
+                    <p style="text-align:center;"><img th:src="${records.photo}" style="height: 250px; width:250px">
+                </div>
+                <div class = row >
+                    <div class = "col-sm-4">
+                        <span><strong>Cedula del miembro:</strong></span> <ul class="list-group-item active" th:text="${m.ci_member}"></ul>
+                        <span><strong>Numero de Id del miembro:</strong></span><ul class="list-group-item" th:text="${records.id_member}"></ul>
+                        <span><strong>Nombre del miembro:</strong></span><ul class="list-group-item" th:text="${records.name_member}"></ul>
+                        <span><strong>Apellido del miembro:</strong></span><ul class="list-group-item" th:text="${records.surname_member}"></ul>
+                        <span><strong>Tipo de miembro: </strong></span><ul class="list-group-item" th:text="${records.type}"></ul>
+                    </div>
+                    <div class = "col-sm-4">
+                        <span><strong>Sector: </strong></span><ul class="list-group-item" th:text="${records.sector}"></ul>
+                        <span><strong>Is defaulter: </strong></span><ul class="list-group-item" th:text="${records.is_defaulter}"></ul>
+                        <span><strong>Is exit: </strong></span><ul class="list-group-item" th:text="${records.is_exit}"></ul>
+                        <span><strong>Is walk: </strong></span><ul class="list-group-item" th:text="${records.is_walk}"></ul>
+                        <span><strong>Fecha y hora exacta: </strong></span><ul class="list-group-item" th:text="${records.date_time}"></ul>
+                    </div>
+                    <div class = "col-sm-4">
+                        <span><strong>Cedula del portero: </strong></span><ul class="list-group-item" th:text="${records.ci_portero}"></ul>
+                        <span><strong>Nombre del portero: </strong></span><ul class="list-group-item" th:text="${records.name_portero}"></ul>
+                        <span><strong>Apellido del portero: </strong></span><ul class="list-group-item" th:text="${records.surname_portero}"></ul>
+                        <span><strong>Email del portero: </strong></span><ul class="list-group-item" th:text="${records.email_portero}"></ul>
+                    </div>
+                </div>
+                </div>
         </div>
     </div>
 </div>
