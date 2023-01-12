@@ -87,7 +87,6 @@ public class MemberController {
         }else{
             member.setId(String.valueOf(member.getId_member()));
         }
-        System.out.println(member);
         service.update(member);
         return "redirect:/members";
     }
