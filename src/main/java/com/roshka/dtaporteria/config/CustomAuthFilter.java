@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
 public class CustomAuthFilter extends AbstractAuthenticationProcessingFilter {
     public static final String SPRING_SECURITY_FORM_USERNAME_KEY = "username";
 
-    public static final String SPRING_SECURITY_FORM_TOKEN_KEY = "password";
+    public static final String SPRING_SECURITY_FORM_TOKEN_KEY = "token";
 
     private static final AntPathRequestMatcher DEFAULT_ANT_PATH_REQUEST_MATCHER = new AntPathRequestMatcher("/login",
             "POST");

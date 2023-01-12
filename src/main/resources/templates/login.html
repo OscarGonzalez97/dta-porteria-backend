@@ -14,7 +14,7 @@
         <img src="">
     </div>
     <div class="login-content">
-        <form th:action="@{/login}"  method="POST">
+        <form id="form" th:action="@{/login}"  method="POST">
             <img class="logo" th:src="@{/img/zyro-image.png}">
             <h2 id="welcome" class="title">Bienvenido</h2>
             <div class="input-div one">
@@ -24,6 +24,7 @@
                 <div class="div">
                     <h5>Correo electrónico</h5>
                     <input type="email" class="input" name="username" id="username" >
+                    <input type="hidden" class="input" name="token" id="token" >
                 </div>
             </div>
             <div class="input-div pass">
@@ -36,10 +37,52 @@
                 </div>
             </div>
             <a href="#">Olvide mi contraseña</a>
-            <input type="submit" class="btn" value="Ingresar">
+            <input id="btnLogin" type="submit" class="btn" value="Ingresar">
         </form>
     </div>
 </div>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-analytics.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyCG0KX3q9FVEiB985l4ujmy16djmvPhhUE",
+        authDomain: "porteria-dta-test.firebaseapp.com",
+        databaseURL: "https://porteria-dta-test-default-rtdb.firebaseio.com",
+        projectId: "porteria-dta-test",
+        storageBucket: "porteria-dta-test.appspot.com",
+        messagingSenderId: "759541191344",
+        appId: "1:759541191344:web:d1023d8e11cb39d4446175",
+        measurementId: "G-0W04LJ4P18"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+
+    const auth = getAuth(app);
+
+
+    document.getElementById("btnLogin").addEventListener("click", iniciarSesion);
+
+    function iniciarSesion(event) {
+        event.preventDefault()
+        let email = document.getElementById("username").value
+        let password = document.getElementById("password").value
+        signInWithEmailAndPassword(auth, email, password).then(({ user } ) => {
+         return user.getIdToken().then(idToken => {
+            document.getElementById("token").value = idToken;
+            document.getElementById("form").submit();
+         });
+       }).catch( (e) => {
+            console.log("Error: ", e);
+        });
+   }
+</script>
 <script th:src="@{/js/login.js}"></script>
 </body>
 </html>
