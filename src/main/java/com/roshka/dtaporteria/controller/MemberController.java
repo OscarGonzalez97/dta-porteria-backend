@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Controller
 @RequestMapping("/members")
@@ -54,7 +55,7 @@ public class MemberController {
     }
     @PostMapping("/add-form")
     public String agregarFormMember(MemberDTO member) {
-        if (member.getType() == "Socio")
+        if (!Objects.equals(member.getType(), "Socio"))
         {
             member.setId_member(null);
         }
