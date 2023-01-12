@@ -11,23 +11,22 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/login")
 public class LoginController {
     
     @Autowired
     private UserService service;
 
-    @GetMapping
+    @GetMapping("/")
     public String getLogin(Model model) {
-        model.addAttribute("user", new UserDTO());
         return "login";
     }
     
-    @PostMapping
+    @GetMapping("/dashboard")
     public String postLogin(UserDTO user, Model model) {
         System.out.println(user);
         model.addAttribute("user", user);
         return "dashboard";
     }
+
 
 }
