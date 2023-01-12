@@ -1,12 +1,14 @@
 $(document).ready(() => {
     const fecha = document.getElementById("fecha_vencimiento")
     const tipo = document.getElementById("type")
+    const id = document.getElementById("id_member")
     tipo.addEventListener('change', () => {
         if (tipo.value === "Socio") {
             fecha.value = ""
             fecha.disabled = true;
         }
-        else { 
+        else {
+
             fecha.disabled = false;
         }
     })  
