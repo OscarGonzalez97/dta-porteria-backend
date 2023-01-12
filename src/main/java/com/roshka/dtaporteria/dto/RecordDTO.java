@@ -21,4 +21,5 @@ public class RecordDTO { //para el registro de entradas y salidas
     private String surname_member;
     private String surname_portero;
     private String type;
+    private String sector;
 }

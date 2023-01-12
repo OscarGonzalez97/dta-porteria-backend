@@ -40,25 +40,19 @@
                 <th>
                     Tipo
                 </th>
+                <th>
+                    Sector
+                </th>
             </tr>
             </thead>
             <tbody>
             <tr th:each = "m : ${records}">
-                <td th:text = "${m.id_member}">
-                    Default
-                </td>
-                <td th:text = "${m.name_member}">
-                    Default
-                </td>
-                <td th:text = "${m.surname_member}">
-                    Default
-                </td>
-                <td th:text = "${m.ci_member}">
-                    Default
-                </td>
-                <td th:text = "${m.type}">
-                    Default
-                </td>
+                <td th:text = "${m.id_member}"></td>
+                <td th:text = "${m.name_member}"></td>
+                <td th:text = "${m.surname_member}"></td>
+                <td th:text = "${m.ci_member}"></td>
+                <td th:text = "${m.type}"></td>
+                <td th:text = "${m.sector}"></td>
             </tr>
             </tbody>
         </table>
