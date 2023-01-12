@@ -43,6 +43,9 @@
                 <th>
                     Sector
                 </th>
+                <th>
+                    Detalles
+                </th>
             </tr>
             </thead>
             <tbody>
@@ -53,6 +56,9 @@
                 <td th:text = "${m.ci_member}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
                 <td th:text = "${m.type}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
                 <td th:text = "${m.sector}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
+                <td>
+                    <a th:href="@{/records/ver/{id}(id=${m.id})}" class="btn btn-info">Detalles</a>
+                </td>
             </tr>
             </tbody>
         </table>
