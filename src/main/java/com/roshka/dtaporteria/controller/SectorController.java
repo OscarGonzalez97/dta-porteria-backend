@@ -23,7 +23,7 @@ public class SectorController { //controlador de sectores
     @GetMapping("/addSectores")
     public String mostrarForm(Model model){ //metodo que redirecciona al formulario para agregar nuevos sectores
         model.addAttribute("SectorDTO", new SectorDTO());
-        return "addSectores";
+        return "newSector";
     }
     @PostMapping("/add")
     public String aggSectores(SectorDTO post){ //metodo el cual se encarga de guardar lo cargado en el formulario
