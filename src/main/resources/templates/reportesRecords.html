@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragmento/base::base}">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin DTA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+<div layout:fragment="contenido">
+    <div class="container-fluid text-center">
+        <div class="row justify-content-center align-items-center g-2">
+            <div class="col-10      ">
+                <h1 style="padding: 0.5em;">Usuarios</h1>
+            </div>
+            <div class="col-2">
+                <a type="button" class="btn btn-success" th:href="@{/users/new}" target="_self">Nuevo</a>
+                <a type="button" class="btn btn-secondary" th:href="@{/users}" target="_self">Actualizar</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+</div>
+</body>
+</html>
