@@ -30,8 +30,8 @@ public class MemberService {
         }
     }
 
-    public Boolean getById(Integer idmember) {
-        DocumentReference docRef = getCollection().document(String.valueOf(idmember));
+    public Boolean getByIdIfExists(String id) {
+        DocumentReference docRef = getCollection().document(id);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         try {
             DocumentSnapshot document = future.get();

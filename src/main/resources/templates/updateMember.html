@@ -16,8 +16,10 @@
                 </h1>
             </div>
         </div>
-        <form th:action="@{/members/update}" th:object="${m}" method="POST" class="form-group justify-content-center needs-validation" id="submit"
-        novalidate>
+
+        <form th:action="@{/members/update}" th:object="${m}" method="POST"
+              class="form-group justify-content-center needs-validation" id="submit"
+              onsubmit="this.querySelectorAll('input').forEach(i => i.disabled = false)" novalidate>
             <div th:if=${param.error001}>
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>Un campo esta vacio</strong> Por favor rellene los campos necesarios.
@@ -71,14 +73,7 @@
 
                 <div class="col-md-5">
                     <label for="type" class="form-label">Tipo</label>
-                    <select class="form-select" th:field="*{type}" name="Type" id="type">
-                        <option
-                                th:each="tipo : ${tipos}"
-                                th:value="${tipo.Type}"
-                                th:selected="(${m.type}) == (${tipo.Type})"
-                                th:text="${tipo.Type}">
-                        </option>
-                    </select>
+                    <input class="form-control form-control-lg" th:field="*{type}" type="text" name="type" id="type" th:value="${m.type}" readonly>
                 </div>
                 <div class="col-md-2" id="checkbox">
                     <div class="form-check">

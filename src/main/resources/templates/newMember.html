@@ -17,12 +17,7 @@
                 </h1>
             </div>
         </div>
-        <form th:action="@{/members/add-form}" th:object="${member}" method="POST" class="form-group justify-content-center">
-                <div th:if=${param.error001}>
-                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                        <strong>Un campo esta vacio</strong> Por favor rellene los campos necesarios.
-                    </div>
-                </div>
+        <form th:action="@{/members/add-form}" th:object="${member}" method="POST" class="form-group justify-content-center needs-validation" novalidate>
                 <div th:if=${param.error002}>
                     <div class="alert alert-warning alert-dismissible fade show" role="alert">
                         <strong>ID de miembro invalido</strong> El id de miembro ya existe.
@@ -31,29 +26,47 @@
             <div class="row justify-content-center align-items-center smt">
               <div class="col-md-6">
                   <label for="id_member" class="form-label">ID miembro</label>
-                   <input class="form-control form-control-lg" type="number" name="id_member" id="id_member" th:field="*{id_member}">
-               </div>
+                   <input class="form-control form-control-lg" type="number" name="id_member" id="id_member" th:field="*{id_member}" required>
+                  <div class="invalid-feedback">
+                      Es necesario un valor en este campo.
+                  </div>
+              </div>
                 <div class="col-md-4">
                     <label for="created_by" class="form-label">Cédula</label>
-                    <input class="form-control form-control-lg" type="text" name="ci" id="ci" th:field="*{ci}">
+                    <input class="form-control form-control-lg" type="text" name="ci" id="ci" th:field="*{ci}" required>
+                    <div class="invalid-feedback">
+                        Es necesario un valor en este campo.
+                    </div>
                 </div>
                 <div class="col-md-2">
                     <label for="created_by" class="form-label">Creado por</label>
-                    <input class="form-control form-control-lg" type="text" name="created_by" id="created_by" th:field="*{created_by}">
+                    <input class="form-control form-control-lg" type="text" name="created_by" id="created_by" th:field="*{created_by}" required>
+                    <div class="invalid-feedback">
+                        Es necesario un valor en este campo.
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-center align-items-center smt">
                 <div class="col-md-6">
                     <label for="fecha_vencimiento" class="form-label">Fecha de vencimiento</label>
-                    <input class="form-control form-control-lg" type="date" name="fecha_vencimiento" placeholder="yyyy-MM-dd" id="fecha_vencimiento" th:field="*{fecha_vencimiento}">
+                    <input class="form-control form-control-lg" type="date" name="fecha_vencimiento" placeholder="yyyy-MM-dd" id="fecha_vencimiento" th:field="*{fecha_vencimiento}" required>
+                    <div class="invalid-feedback">
+                        Es necesario un valor en este campo.
+                    </div>
                 </div>
                 <div class="col-md-3">
                     <label for="name" class="form-label">Nombre</label>
-                    <input class="form-control form-control-lg" type="text" name="name" id="name" th:field="*{name}">
+                    <input class="form-control form-control-lg" type="text" name="name" id="name" th:field="*{name}" required>
+                    <div class="invalid-feedback">
+                        Es necesario un valor en este campo.
+                    </div>
                 </div>
                 <div class="col-md-3">
                     <label for="surname" class="form-label">Apellido</label>
-                    <input class="form-control form-control-lg" type="text" name="surname" id="surname" th:field="*{surname}">
+                    <input class="form-control form-control-lg" type="text" name="surname" id="surname" th:field="*{surname}" required>
+                    <div class="invalid-feedback">
+                        Es necesario un valor en este campo.
+                    </div>
                 </div>
                 </div>
             <div class="row justify-content-center align-items-center smt">
@@ -85,9 +98,11 @@
             </div>
         </form>
     </div>
-    <script type="text/javascript" th:src="@{/js/AddMember.js}"></script>
-</div>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script th:src="@{/js/newMiembro.js}"></script>
+
+    </div>
 </body>
 </html>

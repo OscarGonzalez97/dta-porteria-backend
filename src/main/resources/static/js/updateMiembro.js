@@ -1,17 +1,22 @@
 $(document).ready(() => {
     const type = document.getElementById("type")
     const ci = document.getElementById("ci")
-    const id = document.getElementById("id")
+    const id = document.getElementById("id_member")
     const fecha = document.getElementById("fecha_vencimiento")
     function seleccion(){
-        if (type.value !== "Socio"){
-            ci.readOnly = true
-            fecha.readOnly = false
+        type.disabled = true
+        if (type.value === "Socio")
+        {
+            fecha.required = false
+            fecha.disabled = true
+            id.disabled = true
+            ci.disabled = false
+            ci.readOnly = false
+            ci.required = true
         }
-        else{
-        id.readOnly = true
-        fecha.readOnly= true
-        fecha.value = ""
+        else {
+            ci.disabled = true
+            id.disabled = true
         }
     }
     

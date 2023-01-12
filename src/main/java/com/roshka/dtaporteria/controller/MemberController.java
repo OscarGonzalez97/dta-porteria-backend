@@ -53,7 +53,12 @@ public class MemberController {
         return new ResponseEntity(service.add(post), HttpStatus.OK);
     }
     @PostMapping("/add-form")
-    public String agregarFormMember(MemberDTO member){
+    public String agregarFormMember(MemberDTO member) {
+        if (service.getByIdIfExists(member.getId()))
+        {
+            //Error si se quiere añadir un miembro con un id que ya existe
+            return "redirect:/members/add-form/?error002";
+        }
         new ResponseEntity(service.add(member), HttpStatus.OK);
         return "redirect:/members";
     }
