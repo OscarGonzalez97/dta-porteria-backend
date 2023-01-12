@@ -44,19 +44,19 @@
             </thead>
             <tbody>
             <tr th:each = "m : ${records}">
-                <td th:text = "${m.id_member}">
+                <td th:text = "${m.id_member}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <td th:text = "${m.name_member}">
+                <td th:text = "${m.name_member}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <td th:text = "${m.surname_member}">
+                <td th:text = "${m.surname_member}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <td th:text = "${m.ci_member}">
+                <td th:text = "${m.ci_member}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <td th:text = "${m.type}">
+                <td th:text = "${m.type}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}">
                     Default
                 </td>
             </tr>
