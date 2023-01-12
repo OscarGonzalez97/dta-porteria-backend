@@ -7,12 +7,18 @@ $(document).ready(() => {
             fecha.required = false;
             fecha.value = "";
             fecha.disabled = true;
+            id.required = true;
+            id.readOnly = false;
         }
         else {
-
+            id.readOnly = true;
+            id.value = "";
+            id.required = false;
+            id.disabled = true;
             fecha.disabled = false;
+            fecha.required = true;
         }
-    })  
+    })
 
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
     var forms = document.querySelectorAll('.needs-validation')
