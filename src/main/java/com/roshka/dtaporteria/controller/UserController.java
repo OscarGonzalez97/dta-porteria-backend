@@ -1,4 +1,4 @@
-package com.roshka.dtaporteria.contoller;
+package com.roshka.dtaporteria.controller;
 
 import com.roshka.dtaporteria.dto.UserDTO;
 import com.roshka.dtaporteria.service.RolService;
@@ -38,7 +38,6 @@ public class UserController {
         if (user == null){
             return userCrud(model);
         }
-        // model.addAttribute("UserDTO", new UserDTO());
         model.addAttribute("user", user);
         model.addAttribute("roles", rolService.list());
         return "updateUser";

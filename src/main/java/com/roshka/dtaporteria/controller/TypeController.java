@@ -1,4 +1,4 @@
-package com.roshka.dtaporteria.contoller;
+package com.roshka.dtaporteria.controller;
 
 
 
@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 //@RestController
@@ -23,11 +22,6 @@ public class TypeController {
         return new ResponseEntity(service.getById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/prueba")
-    public String Listtype(Model model){
-        model.addAttribute("type",service.list());
-        return "pruebaType";
-    }
 
     @GetMapping("/list")
     public ResponseEntity list(){

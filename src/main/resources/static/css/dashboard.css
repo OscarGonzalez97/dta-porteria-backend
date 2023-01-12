@@ -140,14 +140,14 @@ body {
       }
 
     /*Naser*/
-    .box {
+    /* .box {
       transition: box-shadow .3s;
       border: 1px solid #ccc;
       
     }
     .box:hover {
       box-shadow: 0 0 11px rgba(0, 0, 0, 0.2); 
-    }
+    } */
     li {
       font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
       border-bottom: 1px solid #ccc;
@@ -157,7 +157,7 @@ body {
       border: none;
     }
      
-    li a {
+    .recuadro a {
       text-decoration: none;
       color: #000;
       display: block;
@@ -170,7 +170,7 @@ body {
       transition: font-size 0.3s ease, background-color 0.3s ease;
     }
      
-    li a:hover {
+    .recuadro a:hover {
       font-size: 27px;
       background: #f6f6f6;
       transition: 500ms;

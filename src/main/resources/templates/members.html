@@ -13,11 +13,11 @@
         <div class="container-fluid text-center">
             <div class="row justify-content-center align-items-center g-2">
                 <div class="col-10      ">
-                    <h1 style="padding: 0.5em;">Usuarios</h1>
+                    <h1 style="padding: 0.5em;">Miembros</h1>
                 </div>
                 <div class="col-2">
-                    <a type="button" class="btn btn-success" th:href="@{/users/new}" target="_self">Nuevo</a>
-                    <a type="button" class="btn btn-secondary" th:href="@{/users}" target="_self">Actualizar</a>
+                    <a type="button" class="btn btn-success" th:href="@{/members/add-form}" target="_self">Nuevo</a>
+                    <a type="button" class="btn btn-secondary" th:href="@{/members}" target="_self">Actualizar</a>
                 </div>
             </div>
         </div>
@@ -30,19 +30,28 @@
                     ID
                 </th>
                 <th>
+                    CI
+                </th>
+                <th>
+                    Creado por
+                </th>
+                <th>
                     Nombre
                 </th>
                 <th>
                     Apellido
                 </th>
                 <th>
-                    Cédula
+                    Fecha de vencimiento
                 </th>
                 <th>
-                    Rol
+                    Es moroso
                 </th>
                 <th>
-                    Activo
+                    Foto
+                </th>
+                <th>
+                    Tipo
                 </th>
                 <th>
                     Opciones
@@ -50,29 +59,42 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each = "m : ${users}">
-                <td th:text = "${m.id}">
+            <tr th:each = "m : ${miembros}">
+                <td th:text = "${m.id}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <td th:text = "${m.name}">
+                <td th:text = "${m.ci}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <td th:text = "${m.surname}">
+                <td th:text = "${m.created_by}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <td th:text = "${m.ci}">
+                <td th:text = "${m.name}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <td th:text = "${m.rol}">
+                <td th:text = "${m.surname}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <td th:text = "${m.active}">
+                <td th:text = "${m.fecha_vencimiento}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                    Default
+                </td>
+                <th:block th:if="${m.is_defaulter == null}" >
+                    <td th:text="No" th:classappend="moroso" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}"></td>
+                </th:block>
+                <th:block th:if="${m.is_defaulter != null}">
+                    <td th:text="${m.is_defaulter}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                        Default
+                    </td>
+                </th:block>
+                <td th:text = "${m.photo}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                    Default
+                </td>
+                <td th:text = "${m.type}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
                     Default
                 </td>
                 <td class="d-flex gap-1">
-                    <a type="button" class="btn btn-sm btn-primary" th:href="@{/users/update/{id}(id=${m.id})}" target="_self">Editar</a> 
-                    <a type="button" class="btn btn-sm btn-secondary" th:href="@{/users/disable/{id}(id=${m.id})}" target="_self">Inhabilitar</a>
-                    <button type="button" class="btn btn-sm btn-danger" th:data-id="${m.id}" data-bs-toggle="modal" data-bs-target="#exampleModal">Eliminar</button>
+                    <a type="button" class="btn btn-sm btn-primary" th:href="@{/members/update/{id}(id=${m.id})}" target="_self">Editar</a> 
+                    <button type="button" class="btn btn-sm btn-danger" th:data-id="${m.id}" data-bs-toggle="modal" data-bs-target="#exampleModal" target="_self">Eliminar</button>
                 </td>
             </tr>
             </tbody>
@@ -83,11 +105,11 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar usuario</h1>
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar miembro</h1>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              Estas seguro que quieres eliminar este usuario?
+              Estas seguro que quieres eliminar este miembro?
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -96,7 +118,7 @@
           </div>
         </div>
     </div>
-    
+
     <!-- Bootstrap Js -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <!-- Table to Datatable scripts -->
@@ -104,7 +126,8 @@
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
     <script th:src="@{/js/datatableScript.js}"></script>
-    <script th:src="@{/js/userDelete.js}"></script> 
+    <script th:src="@{/js/memberDelete.js}"></script>
+
 </div>
 </body>
 </html>

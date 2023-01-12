@@ -1,4 +1,4 @@
-package com.roshka.dtaporteria.contoller;
+package com.roshka.dtaporteria.controller;
 
 import com.roshka.dtaporteria.dto.UserDTO;
 import com.roshka.dtaporteria.service.UserService;
@@ -25,7 +25,6 @@ public class LoginController {
     
     @PostMapping
     public String postLogin(UserDTO user, Model model) {
-        System.out.println(user);
         model.addAttribute("user", user);
         return "dashboard";
     }
