@@ -1,4 +1,4 @@
-package com.roshka.dtaporteria.contoller;
+package com.roshka.dtaporteria.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class Main {
 
     @GetMapping
-    public String hello(){
-        return "dashboard";
+    public String main(){
+        return "fragmento/base";
     }
 
 }
