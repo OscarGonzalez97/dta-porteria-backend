@@ -56,7 +56,7 @@ public class recordExcel {
 
         CellStyle estilo = excel.createCellStyle();
         XSSFFont fuente = excel.createFont();
-        fuente.setFontHeight(14); //el tamaño de la letra
+        fuente.setFontHeight(16); //el tamaño de la letra
         estilo.setFont(fuente);
 
         for (RecordDTO record: listaRecord){
@@ -70,17 +70,17 @@ public class recordExcel {
 
             celda = fila.createCell(1);
             celda.setCellValue(record.getCi_member());
-            hoja.autoSizeColumn(0);
+            hoja.autoSizeColumn(1);
             celda.setCellStyle(estilo);
 
             celda = fila.createCell(2);
             celda.setCellValue(record.getCi_portero());
-            hoja.autoSizeColumn(0);
+            hoja.autoSizeColumn(2);
             celda.setCellStyle(estilo);
 
             celda = fila.createCell(3);
             celda.setCellValue(record.getDate_time());
-            hoja.autoSizeColumn(0);
+            hoja.autoSizeColumn(3);
             celda.setCellStyle(estilo);
         }
     }
