@@ -1,4 +1,5 @@
 package com.roshka.dtaporteria.service;
+
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
@@ -20,7 +21,7 @@ public class MemberService {
         ApiFuture<DocumentSnapshot> future = docRef.get();
         try {
             DocumentSnapshot document = future.get();
-            if (document.exists()){
+            if (document.exists()) {
                 MemberDTO member = document.toObject(MemberDTO.class);
                 return member;
             }
@@ -58,12 +59,11 @@ public class MemberService {
     }
 
     public Boolean add(MemberDTO post) {
-        String documentId = post.getId();
         Map<String, Object> docData = getDocData(post);
         CollectionReference posts = getCollection();
-        ApiFuture<WriteResult> writeResultApiFuture = posts.document(documentId).set(docData);
+        ApiFuture<WriteResult> writeResultApiFuture = posts.document().set(docData);
         try {
-            if (writeResultApiFuture.get() != null){
+            if (writeResultApiFuture.get() != null) {
                 return Boolean.TRUE;
             }
             return Boolean.FALSE;
@@ -78,7 +78,7 @@ public class MemberService {
         CollectionReference posts = getCollection();
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).update(docData);
         try {
-            if (writeResultApiFuture.get() != null){
+            if (writeResultApiFuture.get() != null) {
                 return Boolean.TRUE;
             }
             return Boolean.FALSE;
@@ -86,13 +86,14 @@ public class MemberService {
             return Boolean.FALSE;
         }
     }
+
     public Boolean update(MemberDTO member) {
         Map<String, Object> docData = getDocData(member);
         docData.values().remove(Collections.singleton(null));
         CollectionReference posts = getCollection();
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(String.valueOf(member.getId())).update(docData);
         try {
-            if (writeResultApiFuture.get() != null){
+            if (writeResultApiFuture.get() != null) {
                 return Boolean.TRUE;
             }
             return Boolean.FALSE;
@@ -105,7 +106,7 @@ public class MemberService {
         CollectionReference posts = getCollection();
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).delete();
         try {
-            if (writeResultApiFuture.get() != null){
+            if (writeResultApiFuture.get() != null) {
                 return Boolean.TRUE;
             }
             return Boolean.FALSE;
@@ -127,6 +128,7 @@ public class MemberService {
         docData.put("fecha_vencimiento", post.getFecha_vencimiento());
         return docData;
     }
+
     public boolean someAttributeIsNull(MemberDTO member) {
         if ((member.getId_member() == null)
                 || (member.getCreated_by() == "")
@@ -140,6 +142,7 @@ public class MemberService {
         }
         return false;
     }
+
     private CollectionReference getCollection() {
         return firebase.getFirestore().collection("MEMBERS");
     }

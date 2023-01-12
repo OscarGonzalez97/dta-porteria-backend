@@ -12,7 +12,7 @@ public class MemberDTO {
     private String id;
     private String created_by;
     private String ci;
-    private Integer id_member;
+    private String id_member;
     private String is_defaulter;
     private String name;
     private String photo;
@@ -29,13 +29,5 @@ public class MemberDTO {
             return null;
         }
     }
-
-    public String getId() {
-        if (this.type.equals("Socio") || this.type.equals("socio")){
-            return String.valueOf(this.id_member);
-        }
-        return this.ci;
-    }
-
 
 }

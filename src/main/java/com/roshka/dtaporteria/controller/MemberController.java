@@ -73,20 +73,13 @@ public class MemberController {
         model.addAttribute("tipos", typeService.list());
         return "updateMember";
     }
+
     @PutMapping("/{id}/update")
     public ResponseEntity editMember(@PathVariable(value = "id") String id, @RequestBody MemberDTO post){
         return new ResponseEntity(service.edit(id, post), HttpStatus.OK);
     }
     @PostMapping ("/update")
     public String updateMember(MemberDTO member){
-        // member.setId_member(Integer.parseInt(member.getId()));
-        // if (service.someAttributeIsNull(member)){
-        //     return "redirect:/members/update/"+member.getId()+"?error001";}
-        if (member.getType().toLowerCase().equals("socio")) {
-            member.setId(member.getCi());
-        }else{
-            member.setId(String.valueOf(member.getId_member()));
-        }
         service.update(member);
         return "redirect:/members";
     }

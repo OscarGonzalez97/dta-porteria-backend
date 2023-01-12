@@ -27,10 +27,10 @@
             <thead>
             <tr>
                 <th>
-                    ID
+                    Cédula
                 </th>
                 <th>
-                    CI
+                    Número socio
                 </th>
                 <th>
                     Creado por
@@ -60,10 +60,10 @@
             </thead>
             <tbody>
             <tr th:each = "m : ${miembros}">
-                <td th:text = "${m.id}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                <td th:text = "${m.ci}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <td th:text = "${m.ci}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                <td th:text = "${m.id_member}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
                     Default
                 </td>
                 <td th:text = "${m.created_by}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
