@@ -25,6 +25,7 @@
                     <strong>Un campo esta vacio</strong> Por favor rellene los campos necesarios.
                 </div>
             </div>
+            <input th:field="*{id}" type="hidden" name="id" id="id" th:value="${m.id}" readonly>
             <div class="row justify-content-center align-items-center smt">
                 <div class="col-md-6">
                     <label for="id_member" class="form-label">ID miembro</label>
@@ -73,7 +74,12 @@
 
                 <div class="col-md-5">
                     <label for="type" class="form-label">Tipo</label>
-                    <input class="form-control form-control-lg" th:field="*{type}" type="text" name="type" id="type" th:value="${m.type}" readonly>
+                    <select class="form-select" name="type" id="type" th:field="*{type}">
+                        <option th:each="t : ${tipos}" th:value="${t.Type}"
+                            th:selected="${m.type == t.Type}" th:text="${t.Type}">
+                        </option>
+                    </select>
+                    <!-- <input class="form-control form-control-lg" th:field="*{type}" type="text" name="type" id="type" th:value="${m.type}" readonly> -->
                 </div>
                 <div class="col-md-2" id="checkbox">
                     <div class="form-check">

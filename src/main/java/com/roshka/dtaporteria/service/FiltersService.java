@@ -18,9 +18,7 @@ public class FiltersService {
     @Autowired
     private RecordService service;
     /*public List<String> filterType (String type) {
-        if (service.getById(type).getType() == ) {
 
-        }
         tipos.add(service.getById(type).getType());
         return tipos;
 
