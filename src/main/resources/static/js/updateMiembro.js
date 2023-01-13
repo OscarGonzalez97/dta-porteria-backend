@@ -2,12 +2,13 @@ $(document).ready(() => {
     const fecha = document.getElementById("fecha_vencimiento")
     const tipo = document.getElementById("type")
     const id = document.getElementById("id_member")
-    tipo.addEventListener('change', () => {
+    function validateType(){
         if (tipo.value === "Socio") {
             fecha.required = false;
             fecha.value = "";
             fecha.disabled = true;
             id.required = true;
+            id.disabled = false
             id.readOnly = false;
         }
         else {
@@ -18,6 +19,10 @@ $(document).ready(() => {
             fecha.disabled = false;
             fecha.required = true;
         }
+    }
+    validateType()
+    tipo.addEventListener('change', function(){
+        validateType();
     })
 
     // Fetch all the forms we want to apply custom Bootstrap validation styles to
