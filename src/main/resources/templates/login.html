@@ -14,7 +14,7 @@
         <img src="">
     </div>
     <div class="login-content">
-        <form id="form" th:action="@{/login}"  method="POST">
+        <form id="form" action="/login"  method="POST">
             <img class="logo" th:src="@{/img/zyro-image.png}">
             <h2 id="welcome" class="title">Bienvenido</h2>
             <div class="input-div one">
@@ -37,7 +37,7 @@
                 </div>
             </div>
             <a href="#">Olvide mi contraseña</a>
-            <input id="btnLogin" type="submit" class="btn" value="Ingresar">
+            <button id="btnLogin" type="submit" class="btn" >Ingresar</button>
         </form>
     </div>
 </div>
@@ -45,6 +45,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-analytics.js";
     import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"
+    // import { getAuth, signOut } from "firebase/auth";
     // https://firebase.google.com/docs/web/setup#available-libraries
 
     // Your web app's Firebase configuration
@@ -62,26 +63,31 @@
 
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
+    // const analytics = getAnalytics(app);
 
     const auth = getAuth(app);
 
 
-    document.getElementById("btnLogin").addEventListener("click", iniciarSesion);
 
-    function iniciarSesion(event) {
-        event.preventDefault()
+   const form = document.getElementById("form");
+    form.addEventListener("submit", (e)=>{
+        console.log("hola")
+        e.preventDefault();
         let email = document.getElementById("username").value
         let password = document.getElementById("password").value
         signInWithEmailAndPassword(auth, email, password).then(({ user } ) => {
-         return user.getIdToken().then(idToken => {
-            document.getElementById("token").value = idToken;
-            document.getElementById("form").submit();
-         });
-       }).catch( (e) => {
+            return user.getIdToken().then(idToken => {
+                console.log("hola")
+                document.getElementById("token").value = idToken;
+                form.submit();
+            });
+        }).catch( (e) => {
             console.log("Error: ", e);
         });
-   }
+    });
+
+
+
 </script>
 <script th:src="@{/js/login.js}"></script>
 </body>

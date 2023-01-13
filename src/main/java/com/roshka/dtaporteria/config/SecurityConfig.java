@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 
 @Configuration @EnableWebSecurity @RequiredArgsConstructor
@@ -39,22 +40,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .csrf().disable();
         http
                 .authorizeRequests()
-                .antMatchers("/","/js/**","/login","/css/**","/img/**")
+                .antMatchers("/error","/login","/js/**","/css/**","/img/**")
                 .permitAll()
-                .antMatchers("/dashboard","/users/**")
+                .antMatchers("/base","/members","/records" , "/records/**")
+                .hasAnyAuthority("admin","espectador")
+                .antMatchers("/users","/users/**" , "/members/**","/sectores" , "/sectores/**", "/type" ,"/type/**")
                 .hasAuthority("admin")
                 .anyRequest()
                 .authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
-                .defaultSuccessUrl("/dashboard" ,true);
+                .and()
+                .logout()
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login")
+                .permitAll();
         http
                 .addFilterAt(new CustomAuthFilter(authenticationManagerBean()), UsernamePasswordAuthenticationFilter.class);
     }

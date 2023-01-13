@@ -1,9 +1,11 @@
-package com.roshka.dtaporteria.contoller;
+package com.roshka.dtaporteria.controller;
 
 import com.roshka.dtaporteria.dto.UserDTO;
 import com.roshka.dtaporteria.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,17 +18,15 @@ public class LoginController {
     @Autowired
     private UserService service;
 
-    @GetMapping("/")
-    public String getLogin(Model model) {
-        return "login";
-    }
-    
-    @GetMapping("/dashboard")
-    public String postLogin(UserDTO user, Model model) {
-        System.out.println(user);
-        model.addAttribute("user", user);
-        return "dashboard";
+
+    @GetMapping("/error")
+    public String base() {
+        return "holaMundo";
     }
 
+    @GetMapping("/login")
+    public String getLogin() {
+        return "login";
+    }
 
 }

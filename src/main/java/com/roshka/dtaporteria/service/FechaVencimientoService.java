@@ -25,12 +25,13 @@ public class FechaVencimientoService {
         //Todos los miembros
         List<MemberDTO>members = memberService.list();
         //convertir lista a hashmap
-        Map<Integer, MemberDTO> fecha_vencimiento = members.stream().collect(Collectors.toMap(MemberDTO::getId_member, Function.identity()));
+        Map<String, MemberDTO> fecha_vencimiento = members.stream().collect(Collectors.toMap(MemberDTO::getId, Function.identity()));
+
         fecha_vencimiento.forEach(
                 (key, value) -> {
                     //Por cada miembro chequear su fecha de vencimiento y si es mayor a la fecha actual borrar miembro
-                    if (value.getFecha_vencimiento() != null && isAfterCurrentDate(value.getFecha_vencimiento()) && !Objects.equals(value.getType(), "Socio")){
-                        memberService.delete(String.valueOf(key));
+                    if (!Objects.equals(value.getType(), "Socio") && !isAfterCurrentDate(value.getFecha_vencimiento())){
+                        memberService.delete(key);
                     }
                 }
         );

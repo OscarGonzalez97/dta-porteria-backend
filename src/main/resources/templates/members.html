@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragmento/base::base}"
+      xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin DTA</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <!-- Table to Datatable CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
+</head>
+<body>
+<div layout:fragment="contenido">
+        <div class="container-fluid text-center">
+            <div class="row justify-content-center align-items-center g-2">
+                <div class="col-10      ">
+                    <h1 style="padding: 0.5em;">Miembros</h1>
+                </div>
+<!--                <div sec:authorize="hasAuthority('admin')">-->
+                    <div sec:authorize="hasAuthority('espectador')" class="col-2">
+                        <a type="button" class="btn btn-success" th:href="@{/members/add-form}" target="_self">Nuevo</a>
+                        <a type="button" class="btn btn-secondary" th:href="@{/members}" target="_self">Actualizar</a>
+                    </div>
+<!--                </div>-->
+            </div>
+        </div>
+
+    <div class="container-fluid">
+        <table id="example" class="table table-striped">
+            <thead>
+            <tr>
+                <th>
+                    Cédula
+                </th>
+                <th>
+                    Número socio
+                </th>
+                <th>
+                    Creado por
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Apellido
+                </th>
+                <th>
+                    Fecha de vencimiento
+                </th>
+                <th>
+                    Es moroso
+                </th>
+                <th>
+                    Foto
+                </th>
+                <th>
+                    Tipo
+                </th>
+
+                <th sec:authorize="hasAuthority('admin')">
+                    Opciones
+                </th>
+
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each = "m : ${miembros}">
+                <td th:text = "${m.ci}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                    Default
+                </td>
+                <td th:text = "${m.id_member}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                    Default
+                </td>
+                <td th:text = "${m.created_by}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                    Default
+                </td>
+                <td th:text = "${m.name}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                    Default
+                </td>
+                <td th:text = "${m.surname}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                    Default
+                </td>
+                <td th:text = "${m.fecha_vencimiento}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                    Default
+                </td>
+                <th:block th:if="${m.is_defaulter == null}" >
+                    <td th:text="No" th:classappend="moroso" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}"></td>
+                </th:block>
+                <th:block th:if="${m.is_defaulter != null}">
+                    <td th:text="${m.is_defaulter}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                        Default
+                    </td>
+                </th:block>
+                <td th:text = "${m.photo}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                    Default
+                </td>
+                <td th:text = "${m.type}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                    Default
+                </td>
+                <td sec:authorize="hasAuthority('admin')" class="d-flex gap-1">
+                    <a type="button" class="btn btn-sm btn-primary" th:href="@{/members/update/{id}(id=${m.id})}" target="_self">Editar</a>
+                    <button type="button" class="btn btn-sm btn-danger" th:data-id="${m.id}" data-bs-toggle="modal" data-bs-target="#exampleModal" target="_self">Eliminar</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="exampleModalLabel">Eliminar miembro</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Estas seguro que quieres eliminar este miembro?
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button type="button" id="deleteButton" class="btn btn-danger">Eliminar</button>
+            </div>
+          </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <!-- Table to Datatable scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <script th:src="@{/js/datatableScript.js}"></script>
+    <script th:src="@{/js/memberDelete.js}"></script>
+
+</div>
+</body>
+</html>
