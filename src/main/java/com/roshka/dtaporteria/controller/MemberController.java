@@ -1,6 +1,7 @@
 package com.roshka.dtaporteria.controller;
 
 import com.roshka.dtaporteria.dto.MemberDTO;
+import com.roshka.dtaporteria.reporte.ImportMembersExcel;
 import com.roshka.dtaporteria.service.MemberService;
 import com.roshka.dtaporteria.service.TypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -21,7 +25,8 @@ public class MemberController {
     private MemberService service;
     @Autowired
     private TypeService typeService;
-
+    @Autowired
+    private ImportMembersExcel importMembersExcel;
     @GetMapping
     public String Miembros(Model model) {
         List<MemberDTO> miembros = service.list();
@@ -49,6 +54,16 @@ public class MemberController {
         return "newMember";
     }
 
+    @GetMapping("/import")
+    public String getMiembroImportarExcel(){
+        return "importMiembroExcel";
+    }
+    @PostMapping("/import")
+    public String cargarMiembrosExcel(@RequestParam("file") MultipartFile file) throws IOException {
+        importMembersExcel.getFileAndAddMember(file);
+        return "redirect:/members";
+    }
+
     @PostMapping("/add")
     public ResponseEntity agregarMember(@RequestBody MemberDTO post){
         return new ResponseEntity(service.add(post), HttpStatus.OK);
@@ -73,7 +88,6 @@ public class MemberController {
         model.addAttribute("tipos", typeService.list());
         return "updateMember";
     }
-
     @PutMapping("/{id}/update")
     public ResponseEntity editMember(@PathVariable(value = "id") String id, @RequestBody MemberDTO post){
         return new ResponseEntity(service.edit(id, post), HttpStatus.OK);
