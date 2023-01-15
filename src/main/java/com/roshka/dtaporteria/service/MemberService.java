@@ -36,17 +36,6 @@ public class MemberService {
         }
     }
 
-    public Boolean getByIdIfExists(String id) {
-        DocumentReference docRef = getCollection().document(id);
-        ApiFuture<DocumentSnapshot> future = docRef.get();
-        try {
-            DocumentSnapshot document = future.get();
-            return document.exists();
-        } catch (InterruptedException | ExecutionException e) {
-            return null;
-        }
-    }
-
     public List<MemberDTO> list() {
         List<MemberDTO> response = new ArrayList<>();
         MemberDTO post;
@@ -133,21 +122,15 @@ public class MemberService {
         docData.put("fecha_vencimiento", post.getFecha_vencimiento());
         return docData;
     }
-
-    public boolean someAttributeIsNull(MemberDTO member) {
-        if ((member.getId_member() == null)
-                || (member.getCreated_by() == "")
-                || (member.getFecha_vencimiento() == "" && !Objects.equals(member.getType(), "Socio"))
-                || (member.getName() == "")
-                || (member.getSurname() == "")
-                || (member.getPhoto() == "")
-                || (member.getType() == "")
-                || (member.getIs_defaulter() == "")) {
-            return true;
-        }
-        return false;
-    }
     private CollectionReference getCollection() {
         return firebase.getFirestore().collection("MEMBERS");
+    }
+
+    public void AddMembersByList(List<MemberDTO> miembros) {
+        Firestore db = getCollection().getFirestore();
+        WriteBatch batch = db.batch();
+        DocumentReference memberReference = db.collection("MEMBERS").document();
+        miembros.forEach(memberDTO -> batch.set(memberReference, memberDTO));
+        ApiFuture<List<WriteResult>> future = batch.commit();
     }
 }

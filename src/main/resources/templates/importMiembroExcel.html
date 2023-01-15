@@ -7,7 +7,7 @@
 </head>
 <body>
 <div layout:fragment="contenido">
-    <form th:action="@{/members/import}" method="POST" enctype="multipart/form-data">>
+    <form th:action="@{/members/import}" method="POST" enctype="multipart/form-data">
         <div class="container-fluid central" style="padding-top: 1em;">
         <div class="mb-3">
             <div class="row justify-content-center align-items-center g-2">
@@ -17,13 +17,19 @@
                     </h1>
                 </div>
             </div>
-            <form th:action="@{/members/import}" method="POST">
-    <!--            El input solo acepta formato .xlsx, el formato del excel para cargar-->
-                <input class="form-control" type="file" id="formFile" name="file" accept=".xlsx">
-                <button type="submit" class="btn btn-primary btn-lg col-md-2 offset-10">Enviar</button>
-            </form>
+<!--            El input solo acepta formato .xlsx, el formato del excel para cargar-->
+            <input class="form-control" type="file" id="formFile" name="file" accept=".xlsx">
+            <button type="submit" class="btn btn-primary btn-lg col-md-2 offset-10">Enviar</button>
+            <div th:if=${param.error}>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Errores</strong>
+                    <p th:each="error : ${err}"
+                        th:text="${error}"></p>
+                </div>
+            </div>
         </div>
+        </div>
+    </form>
     </div>
-</div>
 </body>
 </html>

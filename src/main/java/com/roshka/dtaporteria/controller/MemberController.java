@@ -11,8 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
@@ -59,8 +59,14 @@ public class MemberController {
         return "importMiembroExcel";
     }
     @PostMapping("/import")
-    public String cargarMiembrosExcel(@RequestParam("file") MultipartFile file) throws IOException {
-        importMembersExcel.getFileAndAddMember(file);
+    public String cargarMiembrosExcel(@RequestParam("file") MultipartFile file, RedirectAttributes redirAttr) throws IOException {
+        List<String> err= importMembersExcel.validateExcel(file);
+        if (!err.isEmpty()){
+            redirAttr.addFlashAttribute("err", err);
+            return "redirect:/members/import?error";
+        }
+        List<MemberDTO> miembros = importMembersExcel.obtenerMiembros(file);
+        service.AddMembersByList(miembros);
         return "redirect:/members";
     }
 
