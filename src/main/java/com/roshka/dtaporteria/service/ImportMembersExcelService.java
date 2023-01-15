@@ -15,68 +15,90 @@ import java.util.Objects;
 
 @Service
 public class ImportMembersExcelService {
+    int posicion = 0;
+    List<String> mensaje = new ArrayList<>();
+    HashMap<Double, Integer> ID  = new HashMap<>();
     public List<String> validarExcel(MultipartFile file) throws IOException {
-        List<String> mensaje = new ArrayList<>();
         Sheet hoja = getHoja1(file);
         conseguirNumeroDeFilas(hoja);
-        //Si es un Excel vacio sin filas, retornar el error
+        int filas = hoja.getLastRowNum();
         if (hoja.getRow(hoja.getLastRowNum()) == null)
         {
             mensaje.add("No hay filas validas en el Excel.");
             return mensaje;
         }
-        HashMap<Double, Integer> ID  = new HashMap<>();
-        int filas = hoja.getLastRowNum();
-        //Verificaciones
         try {
-            if (filas==0)
-            {
-                mensaje.add("No hay filas validas en el Excel.");
-            }
-            for (int x =1; x<=filas; x++){
-                Row row = hoja.getRow(x);
-                String tipo = row.getCell(5).getStringCellValue();
-                if (!Objects.equals(tipo, "Socio") && row.getCell(1) == null )
-                {
-                    mensaje.add("Fila "+(x+1)+": Miembo no Socio con Campo 'CI' vacio.");
-                }
-                if (row.getCell(0) != null){
-                    Double id_miembro = row.getCell(0).getNumericCellValue();
-                    if (!Objects.equals(tipo, "Socio"))
-                    {
-                        mensaje.add("Fila "+(x+1)+": La combinacion ID de miembro "+id_miembro+" y tipo "+tipo+" no es valida.");
-                    }
-                    if (ID.containsKey(id_miembro)){
-                        mensaje.add("Fila "+(x+1)+": ID de miembro repetido: "+id_miembro+".");
-                    }
-                    else {
-                        ID.put(id_miembro, 1);
-                    }
-                }
-                //Un socio no puede tener fecha de vencimiento
-                if(Objects.equals(tipo, "Socio") && row.getCell(6) != null){
-                    mensaje.add("Fila "+(x+1)+": Miembro Socio con fecha de vencimiento " + row.getCell(6)
-                            .getLocalDateTimeCellValue()
-                            .toLocalDate().toString()+".");
-                }
-                //Un miembro no socio debe tener fecha de vencimiento
-                if(!Objects.equals(tipo, "Socio") && row.getCell(6) == null){
-                    mensaje.add("Fila "+(x+1) +": Miembro no Socio sin fecha de vencimiento.");
-                    }
-                }
-            } catch (NullPointerException n){
+            validacionesExcel(hoja, filas);
+        } catch (NullPointerException n){
                 mensaje.add("Error: " + n.getMessage() + "Una fila esta vacia. Por favor, asegurese de cargar los miembros en filas consecutivas y las celdas necesarias.");
                 return mensaje;
             }
         return mensaje;
     }
+
+    private void validacionesExcel(Sheet hoja, int filas) {
+        if (filas ==0)
+        {
+            mensaje.add("No hay filas validas en el Excel.");
+        }
+        for (posicion=1; posicion<= filas; posicion++){
+            Row row = hoja.getRow(posicion);
+            String tipo = row.getCell(5).getStringCellValue();
+            checkMiembroNoSocioCiVacio(row, tipo);
+            if (row.getCell(0) != null){
+                Double id_miembro = row.getCell(0).getNumericCellValue();
+                checkMiembroNoSocioConIdMiembro(tipo, id_miembro);
+                checkMiembroSocioConIdRepetido(id_miembro);
+            }
+            checkMiembroSocioConFechavencimiento(row, tipo);
+            checkMiembroNoSocioSinFechavencimiento(row, tipo);
+        }
+    }
+
+    private void checkMiembroNoSocioSinFechavencimiento(Row row, String tipo) {
+        if(!Objects.equals(tipo, "Socio") && row.getCell(6) == null){
+            mensaje.add("Fila "+(posicion+1) +": Miembro no Socio sin fecha de vencimiento.");
+            }
+    }
+
+    private void checkMiembroSocioConFechavencimiento(Row row, String tipo) {
+        if(Objects.equals(tipo, "Socio") && row.getCell(6) != null){
+            mensaje.add("Fila "+(posicion+1)+": Miembro Socio con fecha de vencimiento " + row.getCell(6)
+                    .getLocalDateTimeCellValue()
+                    .toLocalDate().toString()+".");
+        }
+    }
+
+    private void checkMiembroSocioConIdRepetido(Double id_miembro) {
+        if (ID.containsKey(id_miembro)){
+            mensaje.add("Fila "+(posicion+1)+": ID de miembro repetido: "+ id_miembro +".");
+        }
+        else {
+            ID.put(id_miembro, 1);
+        }
+    }
+
+    private void checkMiembroNoSocioConIdMiembro(String tipo, Double id_miembro) {
+        if (!Objects.equals(tipo, "Socio"))
+        {
+            mensaje.add("Fila "+(posicion+1)+": La combinacion ID de miembro "+ id_miembro +" y tipo "+ tipo +" no es valida.");
+        }
+    }
+
+    private void checkMiembroNoSocioCiVacio(Row row, String tipo) {
+        if (!Objects.equals(tipo, "Socio") && row.getCell(1) == null )
+        {
+            mensaje.add("Fila "+(posicion+1)+": Miembo no Socio con Campo 'CI' vacio.");
+        }
+    }
+
     public List<MemberDTO> obtenerMiembros(MultipartFile file) throws IOException {
         Sheet hoja = getHoja1(file);
         conseguirNumeroDeFilas(hoja);
         int filas = hoja.getLastRowNum();
         List<MemberDTO> miembros = new ArrayList<>();
-        for (int x =1; x<=filas; x++){
-            Row row = hoja.getRow(x);
+        for (posicion =1; posicion<=filas; posicion++){
+            Row row = hoja.getRow(posicion);
             MemberDTO memberDTO = new MemberDTO();
             memberDTO.setId_member(row.getCell(0)!= null ? String.valueOf((int) row.getCell(0).getNumericCellValue()) : null);
             memberDTO.setCi(row.getCell(1)!=null ? String.valueOf((int) row.getCell(1).getNumericCellValue()) : null);
@@ -95,7 +117,6 @@ public class ImportMembersExcelService {
         return miembros;
     }
 
-    //No hay un metodo que de con exactitud el numero de filas con valores dentro de una hoja de excel, por lo que hay que usar el metodo de abajo para encontrarlo
     private static void conseguirNumeroDeFilas(Sheet hoja) {
         short c;
         Row lastRow;
@@ -105,7 +126,6 @@ public class ImportMembersExcelService {
         while (!stop) {
             nonBlankRowFound = false;
             lastRow = hoja.getRow(hoja.getLastRowNum());
-            //No hay filas
             if (lastRow == null){
                 break;
             }
