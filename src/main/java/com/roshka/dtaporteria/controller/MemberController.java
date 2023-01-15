@@ -83,7 +83,7 @@ public class MemberController {
     }
 
     @GetMapping("/update/{id}")
-    public String getEditMember(@PathVariable(value = "id", required=true) String id, Model model){
+    public String getEditMember(@PathVariable(value = "id") String id, Model model){
         MemberDTO member = service.getById(id);
         if (member==null){
             return "redirect:/members";
