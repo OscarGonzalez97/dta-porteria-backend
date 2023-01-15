@@ -1,6 +1,6 @@
 package com.roshka.dtaporteria.controller;
 import com.roshka.dtaporteria.dto.MemberDTO;
-import com.roshka.dtaporteria.reporte.ImportMembersExcel;
+import com.roshka.dtaporteria.service.ImportMembersExcelService;
 import com.roshka.dtaporteria.service.MemberService;
 import com.roshka.dtaporteria.service.TypeService;
 import org.springframework.stereotype.Controller;
@@ -18,12 +18,12 @@ public class MemberController {
 
     private final MemberService service;
     private final TypeService typeService;
-    private final ImportMembersExcel importMembersExcel;
+    private final ImportMembersExcelService importMembersExcelService;
 
-    public MemberController(MemberService service, TypeService typeService, ImportMembersExcel importMembersExcel) {
+    public MemberController(MemberService service, TypeService typeService, ImportMembersExcelService importMembersExcelService) {
         this.service = service;
         this.typeService = typeService;
-        this.importMembersExcel = importMembersExcel;
+        this.importMembersExcelService = importMembersExcelService;
     }
 
     @GetMapping
@@ -62,12 +62,12 @@ public class MemberController {
             redirAttr.addFlashAttribute("err", "No se ha elegido ningun archivo");
             return "redirect:/members/import?error";
         }
-        List<String> err= importMembersExcel.validarExcel(file);
+        List<String> err= importMembersExcelService.validarExcel(file);
         if (!err.isEmpty()){
             redirAttr.addFlashAttribute("err", err);
             return "redirect:/members/import?error";
         }
-        List<MemberDTO> miembros = importMembersExcel.obtenerMiembros(file);
+        List<MemberDTO> miembros = importMembersExcelService.obtenerMiembros(file);
         System.out.println(miembros);
         service.AddMembersByList(miembros);
         return "redirect:/members";

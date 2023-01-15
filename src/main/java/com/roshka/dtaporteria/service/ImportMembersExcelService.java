@@ -1,4 +1,4 @@
-package com.roshka.dtaporteria.reporte;
+package com.roshka.dtaporteria.service;
 import com.roshka.dtaporteria.dto.MemberDTO;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class ImportMembersExcel {
+public class ImportMembersExcelService {
     public List<String> validarExcel(MultipartFile file) throws IOException {
         List<String> mensaje = new ArrayList<>();
         Sheet hoja = getHoja1(file);
