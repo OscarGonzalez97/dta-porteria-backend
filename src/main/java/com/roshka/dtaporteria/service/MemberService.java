@@ -1,25 +1,21 @@
 package com.roshka.dtaporteria.service;
-
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
 import com.roshka.dtaporteria.dto.MemberDTO;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 @Service
 public class MemberService {
 
-    @Autowired
-    private FirebaseInitializer firebase;
+    private final FirebaseInitializer firebase;
+
+    public MemberService(FirebaseInitializer firebase) {
+        this.firebase = firebase;
+    }
 
     public MemberDTO getById(String id) {
         DocumentReference docRef = getCollection().document(id);
@@ -27,8 +23,7 @@ public class MemberService {
         try {
             DocumentSnapshot document = future.get();
             if (document.exists()) {
-                MemberDTO member = document.toObject(MemberDTO.class);
-                return member;
+                return document.toObject(MemberDTO.class);
             }
             return null;
         } catch (InterruptedException | ExecutionException e) {
@@ -129,8 +124,10 @@ public class MemberService {
     public void AddMembersByList(List<MemberDTO> miembros) {
         Firestore db = getCollection().getFirestore();
         WriteBatch batch = db.batch();
-        DocumentReference memberReference = db.collection("MEMBERS").document();
-        miembros.forEach(memberDTO -> batch.set(memberReference, memberDTO));
-        ApiFuture<List<WriteResult>> future = batch.commit();
+        for(MemberDTO miembro : miembros){
+            DocumentReference memberReference = db.collection("MEMBERS").document();
+            batch.set(memberReference, miembro);
+        }
+        batch.commit();
     }
 }

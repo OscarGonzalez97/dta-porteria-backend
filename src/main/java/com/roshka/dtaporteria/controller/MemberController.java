@@ -60,12 +60,17 @@ public class MemberController {
     }
     @PostMapping("/import")
     public String cargarMiembrosExcel(@RequestParam("file") MultipartFile file, RedirectAttributes redirAttr) throws IOException {
-        List<String> err= importMembersExcel.validateExcel(file);
+        if (file.isEmpty()){
+            redirAttr.addFlashAttribute("err", "No se ha elegido ningun archivo");
+            return "redirect:/members/import?error";
+        }
+        List<String> err= importMembersExcel.validarExcel(file);
         if (!err.isEmpty()){
             redirAttr.addFlashAttribute("err", err);
             return "redirect:/members/import?error";
         }
         List<MemberDTO> miembros = importMembersExcel.obtenerMiembros(file);
+        System.out.println(miembros);
         service.AddMembersByList(miembros);
         return "redirect:/members";
     }
