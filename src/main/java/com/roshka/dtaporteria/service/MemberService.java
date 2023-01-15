@@ -61,21 +61,6 @@ public class MemberService {
         }
     }
 
-    public Boolean edit(String id, MemberDTO post) {
-        Map<String, Object> docData = getDocData(post);
-        docData.values().removeAll(Collections.singleton(null));
-        CollectionReference posts = getCollection();
-        ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).update(docData);
-        try {
-            if (writeResultApiFuture.get() != null) {
-                return Boolean.TRUE;
-            }
-            return Boolean.FALSE;
-        } catch (InterruptedException | ExecutionException e) {
-            return Boolean.FALSE;
-        }
-    }
-
     public Boolean update(MemberDTO member) {
         Map<String, Object> docData = getDocData(member);
         docData.values().remove(Collections.singleton(null));
@@ -91,16 +76,12 @@ public class MemberService {
         }
     }
 
-    public Boolean delete(String id) {
+    public void delete(String id) {
         CollectionReference posts = getCollection();
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).delete();
         try {
-            if (writeResultApiFuture.get() != null) {
-                return Boolean.TRUE;
-            }
-            return Boolean.FALSE;
-        } catch (InterruptedException | ExecutionException e) {
-            return Boolean.FALSE;
+            writeResultApiFuture.get();
+        } catch (InterruptedException | ExecutionException ignored) {
         }
     }
 

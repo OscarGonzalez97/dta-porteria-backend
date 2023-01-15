@@ -68,7 +68,6 @@ public class MemberController {
             return "redirect:/members/import?error";
         }
         List<MemberDTO> miembros = importMembersExcelService.obtenerMiembros(file);
-        System.out.println(miembros);
         service.AddMembersByList(miembros);
         return "redirect:/members";
     }
