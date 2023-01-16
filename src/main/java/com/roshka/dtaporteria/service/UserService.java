@@ -6,6 +6,9 @@ import com.google.cloud.firestore.DocumentReference;
 import com.google.cloud.firestore.DocumentSnapshot;
 import com.google.cloud.firestore.QuerySnapshot;
 import com.google.cloud.firestore.WriteResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
 import com.roshka.dtaporteria.dto.UserDTO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,10 @@ import java.util.concurrent.ExecutionException;
 
 @Service
 public class UserService{
+
+    @Autowired
+    private FirebaseAuth auth;
+
     @Autowired
     private FirebaseInitializer firebase;
     public UserDTO getById(String id) {
@@ -51,6 +58,29 @@ public class UserService{
         } catch (Exception e) {
             return null;
         }
+    }
+
+
+    public Boolean deleteAuth(String email) throws FirebaseAuthException {
+        UserRecord usuario = auth.getUserByEmail(email);
+        auth.deleteUser(usuario.getUid());
+        return Boolean.TRUE;
+    }
+
+    public Boolean crearAuth(UserDTO user) throws FirebaseAuthException {
+        UserRecord.CreateRequest request = new UserRecord.CreateRequest()
+                .setEmail(user.getId())
+                .setEmailVerified(false)
+                .setPassword("Club123456")
+                .setDisplayName(user.getName() + user.getSurname())
+                .setPhotoUrl("http://www.example.com/12345678/photo.png")
+                .setDisabled(false);
+
+        UserRecord userRecord = FirebaseAuth.getInstance().createUser(request);
+        System.out.println("Successfully created new user: " + userRecord.getUid());
+
+        return Boolean.TRUE;
+
     }
 
     public Boolean crear(UserDTO post){

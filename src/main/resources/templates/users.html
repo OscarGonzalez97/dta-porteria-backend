@@ -21,6 +21,26 @@
                 </div>
             </div>
         </div>
+    <div th:if=${param.err500}>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>No se pudo crear un nuevo usuario</strong>
+        </div>
+    </div>
+    <div th:if=${param.err501}>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>No se pudo borrar usuario</strong>
+        </div>
+    </div>
+    <div th:if=${param.success1}>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Se ha eliminado al usuario con exito</strong>
+        </div>
+    </div>
+    <div th:if=${param.success2}>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Se ha eliminado al usuario con exito</strong>
+        </div>
+    </div>
 
     <div class="container-fluid">
         <table id="example" class="table table-striped">

@@ -47,11 +47,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable();
         http
                 .authorizeRequests()
-                .antMatchers("/error","/login","/js/**","/css/**","/img/**")
+                .antMatchers("/forgotPass","/sendEmail","/login","/js/**","/css/**","/img/**")
                 .permitAll()
-                .antMatchers("/base","/members","/records" , "/records/**")
+                .antMatchers("/base","/members","/records" ,"/sectores", "/records/**")
                 .hasAnyAuthority("admin","espectador")
-                .antMatchers("/users","/users/**" , "/members/**","/sectores" , "/sectores/**", "/type" ,"/type/**")
+                .antMatchers("/users","/users/**" , "/members/**" , "/sectores/**", "/type" ,"/type/**")
                 .hasAuthority("admin")
                 .anyRequest()
                 .authenticated()

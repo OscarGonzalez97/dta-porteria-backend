@@ -1,5 +1,7 @@
 package com.roshka.dtaporteria.controller;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.roshka.dtaporteria.dto.UserDTO;
 import com.roshka.dtaporteria.service.RolService;
 import com.roshka.dtaporteria.service.UserService;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/users")
 public class UserController {
+
+
     @Autowired
     private UserService service;
 
@@ -68,16 +72,22 @@ public class UserController {
     
     @PostMapping("/new")
     public String postCreateUser(UserDTO user, Model model){
+        try {
+            service.crearAuth(user);
+        } catch (FirebaseAuthException e) {
+            return "redirect:/users?err500";
+        }
         service.crear(user);
         List<UserDTO> userModel = service.list();
         model.addAttribute("user", userModel);
-        return "redirect:/users";
+        return "redirect:/users?success1";
     }
 
 
 
     @PostMapping("/delete/{id}")
     public String postDeleteUser(@PathVariable(value = "id",required = true) String id, Model model){
+
         service.delete(id);
         List<UserDTO> userModel = service.list();
         model.addAttribute("user", userModel);
@@ -86,10 +96,16 @@ public class UserController {
     
     @GetMapping("/delete/{id}")
     public String getDeleteUser(@PathVariable(value = "id",required = true) String id, Model model){
+        try {
+            System.out.println(id);
+            service.deleteAuth(id);
+        } catch (FirebaseAuthException e) {
+            return "redirect:/users?err501";
+        }
         service.delete(id);
         List<UserDTO> userModel = service.list();
         model.addAttribute("user", userModel);
-        return "redirect:/users";
+        return "redirect:/users?success2";
     }
 
     @GetMapping("/{id}")
@@ -106,6 +122,8 @@ public class UserController {
     // public ResponseEntity crear(@RequestBody UserDTO post){
     //     return new ResponseEntity(service.crear(post), HttpStatus.OK);
     // }
+
+
 
 
 
