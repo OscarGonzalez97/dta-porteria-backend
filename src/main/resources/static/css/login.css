@@ -213,7 +213,7 @@ a:hover{
 	}
 }
 
-@media screen and (max-width: 900px){
+@media screen and (max-width: 850px){
 	.container{
 		grid-template-columns: 1fr;
 	}
@@ -225,9 +225,20 @@ a:hover{
 	.wave{
 		display: none;
 	}
-
+    .cuadrar{
+        margin-left:27%;
+    }
 	.login-content{
-		justify-content: center;
+
+
+	}
+}
+@media screen and (max-width: 540px){
+	.cuadrar{
+            margin-left:15%;
+        }
+
+
 	}
 }
 .checkbox {
@@ -274,8 +285,9 @@ a:hover{
     overflow:hidden;
 }
 .form-primero{
-    margin-top:35%;
+    margin-top:30%;
 }
+
 .mostrar{
     transform:translateY(-103%);
 }
