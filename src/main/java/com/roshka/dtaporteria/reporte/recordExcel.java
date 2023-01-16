@@ -160,7 +160,7 @@ public class recordExcel {
 
         ServletOutputStream outputStream = response.getOutputStream();
         excel.write(outputStream);
-
+        
         excel.close();
         outputStream.close();
     }
