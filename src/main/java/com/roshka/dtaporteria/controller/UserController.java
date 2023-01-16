@@ -45,10 +45,10 @@ public class UserController {
 
     @PostMapping("/update")
     public String postUpdateUser(UserDTO user, Model model){
-        service.update(user);
+        String status = service.update(user);
         List<UserDTO> userModel = service.list();
         model.addAttribute("user", userModel);
-        return "redirect:/users";
+        return "redirect:/users" + status;
     }
 
     @GetMapping("/disable/{id}")
@@ -68,28 +68,28 @@ public class UserController {
     
     @PostMapping("/new")
     public String postCreateUser(UserDTO user, Model model){
-        service.crear(user);
+        String state = service.crear(user);
         List<UserDTO> userModel = service.list();
         model.addAttribute("user", userModel);
-        return "redirect:/users";
+        return "redirect:/users" + state;
     }
 
 
 
     @PostMapping("/delete/{id}")
     public String postDeleteUser(@PathVariable(value = "id",required = true) String id, Model model){
-        service.delete(id);
+        String status = service.delete(id);
         List<UserDTO> userModel = service.list();
         model.addAttribute("user", userModel);
-        return "redirect:/users";
+        return "redirect:/users" + status;
     }
     
     @GetMapping("/delete/{id}")
     public String getDeleteUser(@PathVariable(value = "id",required = true) String id, Model model){
-        service.delete(id);
+        String status = service.delete(id);
         List<UserDTO> userModel = service.list();
         model.addAttribute("user", userModel);
-        return "redirect:/users";
+        return "redirect:/users" + status;
     }
 
     @GetMapping("/{id}")
