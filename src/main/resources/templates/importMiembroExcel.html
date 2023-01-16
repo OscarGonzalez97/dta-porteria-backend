@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragmento/base::base}">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin DTA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+<div layout:fragment="contenido">
+    <form th:action="@{/members/import}" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+        <div class="container-fluid central" style="padding-top: 1em;">
+        <div class="mb-3">
+            <div class="col-1 g-2"><a type="button" class="btn btn-warning" href="/members" aria-label="Close">Cancelar</a></div>
+            <div class="row justify-content-center align-items-center g-2">
+                <div class="col-8">
+                    <h1 class="text-center smt">
+                        Importar desde Excel
+                    </h1>
+                </div>
+            </div>
+<!--            El input solo acepta formato .xlsx, el formato del excel para cargar-->
+            <input class="form-control" type="file" id="formFile" name="file" accept=".xlsx" required>
+            <div class="invalid-feedback">
+                Es necesario un Excel .xlsx antes de enviar.
+            </div>
+            <button id="submit" type="submit" class="btn btn-primary btn-lg col-md-2 offset-10">Enviar</button>
+            <div th:if=${param.error}>
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <strong>Errores</strong>
+                    <p th:each="error : ${err}"
+                        th:text="${error}"></p>
+                </div>
+            </div>
+        </div>
+        </div>
+    </form>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script th:src="@{/js/importarMiembroExcel.js}"></script>
+</div>
+</body>
+</html>

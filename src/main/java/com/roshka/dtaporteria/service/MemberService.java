@@ -1,10 +1,8 @@
 package com.roshka.dtaporteria.service;
-
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
 import com.roshka.dtaporteria.dto.MemberDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -13,8 +11,11 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class MemberService {
 
-    @Autowired
-    private FirebaseInitializer firebase;
+    private final FirebaseInitializer firebase;
+
+    public MemberService(FirebaseInitializer firebase) {
+        this.firebase = firebase;
+    }
 
     public MemberDTO getById(String id) {
         DocumentReference docRef = getCollection().document(id);
@@ -22,23 +23,23 @@ public class MemberService {
         try {
             DocumentSnapshot document = future.get();
             if (document.exists()) {
-                MemberDTO member = document.toObject(MemberDTO.class);
-                return member;
+                return document.toObject(MemberDTO.class);
             }
             return null;
         } catch (InterruptedException | ExecutionException e) {
             return null;
         }
     }
-
-    public Boolean getByIdIfExists(String id) {
-        DocumentReference docRef = getCollection().document(id);
-        ApiFuture<DocumentSnapshot> future = docRef.get();
+    public Boolean getByIdmember(String id) {
+        ApiFuture<QuerySnapshot> future = getCollection().whereEqualTo("id_member", id).get();
         try {
-            DocumentSnapshot document = future.get();
-            return document.exists();
+            QuerySnapshot document = future.get();
+            if (document.getDocuments().isEmpty()) {
+                return false;
+            }
+            return true;
         } catch (InterruptedException | ExecutionException e) {
-            return null;
+            return false;
         }
     }
 
@@ -72,21 +73,6 @@ public class MemberService {
         }
     }
 
-    public Boolean edit(String id, MemberDTO post) {
-        Map<String, Object> docData = getDocData(post);
-        docData.values().removeAll(Collections.singleton(null));
-        CollectionReference posts = getCollection();
-        ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).update(docData);
-        try {
-            if (writeResultApiFuture.get() != null) {
-                return Boolean.TRUE;
-            }
-            return Boolean.FALSE;
-        } catch (InterruptedException | ExecutionException e) {
-            return Boolean.FALSE;
-        }
-    }
-
     public Boolean update(MemberDTO member) {
         Map<String, Object> docData = getDocData(member);
         docData.values().remove(Collections.singleton(null));
@@ -102,16 +88,12 @@ public class MemberService {
         }
     }
 
-    public Boolean delete(String id) {
+    public void delete(String id) {
         CollectionReference posts = getCollection();
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).delete();
         try {
-            if (writeResultApiFuture.get() != null) {
-                return Boolean.TRUE;
-            }
-            return Boolean.FALSE;
-        } catch (InterruptedException | ExecutionException e) {
-            return Boolean.FALSE;
+            writeResultApiFuture.get();
+        } catch (InterruptedException | ExecutionException ignored) {
         }
     }
 
@@ -128,22 +110,17 @@ public class MemberService {
         docData.put("fecha_vencimiento", post.getFecha_vencimiento());
         return docData;
     }
-
-    public boolean someAttributeIsNull(MemberDTO member) {
-        if ((member.getId_member() == null)
-                || (member.getCreated_by() == "")
-                || (member.getFecha_vencimiento() == "" && !Objects.equals(member.getType(), "Socio"))
-                || (member.getName() == "")
-                || (member.getSurname() == "")
-                || (member.getPhoto() == "")
-                || (member.getType() == "")
-                || (member.getIs_defaulter() == "")) {
-            return true;
-        }
-        return false;
-    }
-
     private CollectionReference getCollection() {
         return firebase.getFirestore().collection("MEMBERS");
+    }
+
+    public void AddMembersByList(List<MemberDTO> miembros) {
+        Firestore db = getCollection().getFirestore();
+        WriteBatch batch = db.batch();
+        for(MemberDTO miembro : miembros){
+            DocumentReference memberReference = db.collection("MEMBERS").document();
+            batch.set(memberReference, miembro);
+        }
+        batch.commit();
     }
 }

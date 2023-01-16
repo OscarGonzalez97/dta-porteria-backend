@@ -22,14 +22,11 @@ public class FechaVencimientoService {
 
     @Scheduled(cron = "0 0 0 * * *")
     public void checkFecha_Vencimiento(){
-        //Todos los miembros
         List<MemberDTO>members = memberService.list();
-        //convertir lista a hashmap
         Map<String, MemberDTO> fecha_vencimiento = members.stream().collect(Collectors.toMap(MemberDTO::getId, Function.identity()));
 
         fecha_vencimiento.forEach(
                 (key, value) -> {
-                    //Por cada miembro chequear su fecha de vencimiento y si es mayor a la fecha actual borrar miembro
                     if (!Objects.equals(value.getType(), "Socio") && !isAfterCurrentDate(value.getFecha_vencimiento())){
                         memberService.delete(key);
                     }

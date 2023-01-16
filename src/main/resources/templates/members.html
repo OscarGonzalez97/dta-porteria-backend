@@ -20,15 +20,15 @@
         <div class="container-fluid text-center">
            
             <div class="row justify-content-center align-items-center g-2">
-                <div class="col-10      ">
+                <div class="col-7">
                     <h1 style="padding: 0.5em;">Miembros</h1>
                 </div>
-<!--                <div sec:authorize="hasAuthority('admin')">-->
-                    <div class="col-2">
-                        <a sec:authorize="hasAuthority('admin')" type="button" class="btn btn-success" th:href="@{/members/add-form}" target="_self">Nuevo</a>
-                        <a type="button" class="btn btn-secondary" th:href="@{/members}" target="_self">Actualizar</a>
-                    </div>
-<!--                </div>-->
+                <div class="col-5">
+                    <a sec: authorize="hasAuthority('admin')" type="button" class="btn btn-success" th:href="@{/members/import}" target="_self">Importar</a>
+                    <a  sec: authorize="hasAuthority('admin')" type="button" class="btn btn-success" th:href="@{/members/add-form}" target="_self">Nuevo</a>
+                    <a  type="button" class="btn btn-secondary" th:href="@{/members}" target="_self">Actualizar</a>
+                </div>
+
             </div>
         </div>
 
@@ -113,6 +113,26 @@
         </table>
     </div>
     <!-- Modal -->
+<!--    ELEGIR ARCHIVO DESDE EXCEL-->
+    <div class="modal fade" id="excelModal" tabindex="-1" aria-labelledby="excelModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="excelModalLabel">Seleccionar archivo</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Estas seguro de que quieres cargar estos datos?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" id="cargarMiembros" class="btn btn-danger">Cargar miembros</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!--    ELIMINAR MIEMBRO-->
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
           <div class="modal-content">
@@ -139,6 +159,9 @@
     <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
     <script th:src="@{/js/datatableScript.js}"></script>
     <script th:src="@{/js/memberDelete.js}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
 
 </div>
 </body>
