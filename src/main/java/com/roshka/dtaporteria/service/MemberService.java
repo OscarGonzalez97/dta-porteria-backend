@@ -30,6 +30,18 @@ public class MemberService {
             return null;
         }
     }
+    public Boolean getByIdmember(String id) {
+        ApiFuture<QuerySnapshot> future = getCollection().whereEqualTo("id_member", id).get();
+        try {
+            QuerySnapshot document = future.get();
+            if (document.getDocuments().isEmpty()) {
+                return false;
+            }
+            return true;
+        } catch (InterruptedException | ExecutionException e) {
+            return false;
+        }
+    }
 
     public List<MemberDTO> list() {
         List<MemberDTO> response = new ArrayList<>();

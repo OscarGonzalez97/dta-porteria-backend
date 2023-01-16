@@ -1,17 +1,30 @@
 $(document).ready(() => {
     const fecha = document.getElementById("fecha_vencimiento")
     const tipo = document.getElementById("type")
+    const tipoOriginal = document.getElementById("type").value
     const id = document.getElementById("id_member")
+    const valorId = id.value;
     function validateType(){
-        if (tipo.value === "Socio") {
+        if (tipo.value === "Socio" && tipoOriginal === "Socio") {
+            id.value = valorId;
+            id.readOnly = true;
+            fecha.required = false;
+            fecha.disabled = true;
+            fecha.value = "";
+            id.required = true;
+            id.disabled = true;
+        }
+        if (tipo.value === "Socio" && tipoOriginal !== "Socio")
+        {
+            id.disabled = false;
+            id.required = true;
+            id.readOnly = false;
+            id.value = "";
             fecha.required = false;
             fecha.value = "";
             fecha.disabled = true;
-            id.required = true;
-            id.disabled = false
-            id.readOnly = false;
         }
-        else {
+        if (tipo.value !== "Socio"){
             id.readOnly = true;
             id.value = "";
             id.required = false;

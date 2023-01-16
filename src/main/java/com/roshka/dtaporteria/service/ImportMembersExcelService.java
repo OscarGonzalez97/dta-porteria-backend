@@ -59,8 +59,17 @@ public class ImportMembersExcelService {
                 checkMiembroSocioConIdRepetido(id_miembro, mapaID);
             }
             checkNullCreadoporNombreApellido(row);
+            checkSocioIdMiembroVacio(row, tipo);
             checkMiembroSocioConFechavencimiento(row, tipo);
             checkMiembroNoSocioSinFechavencimiento(row, tipo);
+        }
+    }
+
+    private static void checkSocioIdMiembroVacio(Row row, String tipo) {
+        if (Objects.equals(tipo, "Socio") && row.getCell(0) == null)
+        {
+            mensaje.add("Fila "+(posicion+1) +": Campo 'ID miembro' vacio para tipo Socio.");
+
         }
     }
 
@@ -69,10 +78,10 @@ public class ImportMembersExcelService {
             mensaje.add("Fila "+(posicion+1) +": Campo 'Creado por' vacio.");
         }
         if (row.getCell(3) == null){
-            mensaje.add("Fila "+(posicion+1) +": Campo 'Nombre' vacio.");
+            mensaje.add("Fila "+(posicion+1) +": Campo 'Apellido' vacio.");
         }
         if (row.getCell(4) == null){
-            mensaje.add("Fila "+(posicion+1) +": Campo 'Apellido' vacio.");
+            mensaje.add("Fila "+(posicion+1) +": Campo 'Nombre' vacio.");
         }
     }
 
@@ -92,11 +101,11 @@ public class ImportMembersExcelService {
 
     private void checkMiembroSocioConIdRepetido(Double id_miembro, HashMap<Double, Integer> ID) {
         if (ID.containsKey(id_miembro)){
-            mensaje.add("Fila "+(posicion+1)+": ID de miembro repetido: "+ id_miembro +".");
+            mensaje.add("Fila "+(posicion+1)+": ID de miembro repetido: "+ id_miembro.intValue() +".");
         }
         else {
             ID.put(id_miembro, 1);
-            if (memberService.getById(String.valueOf(id_miembro)) == null)
+            if (memberService.getByIdmember(String.valueOf(id_miembro.intValue())))
             {
                 mensaje.add("Fila "+(posicion+1)+": ID de miembro "+id_miembro.intValue()+" ya existe en la base de datos.");
             }
@@ -106,7 +115,7 @@ public class ImportMembersExcelService {
     private void checkMiembroNoSocioConIdMiembro(String tipo, Double id_miembro) {
         if (!Objects.equals(tipo, "Socio"))
         {
-            mensaje.add("Fila "+(posicion+1)+": La combinacion ID de miembro "+ id_miembro +" y tipo "+ tipo +" no es valida.");
+            mensaje.add("Fila "+(posicion+1)+": La combinacion ID de miembro "+ id_miembro.intValue() +" y tipo "+ tipo +" no es valida.");
         }
     }
 
@@ -127,8 +136,8 @@ public class ImportMembersExcelService {
             MemberDTO memberDTO = new MemberDTO();
             memberDTO.setId_member(row.getCell(0)!= null ? String.valueOf((int) row.getCell(0).getNumericCellValue()) : null);
             memberDTO.setCi(row.getCell(1)!=null ? String.valueOf((int) row.getCell(1).getNumericCellValue()) : null);
-            memberDTO.setName(String.valueOf(row.getCell(2)));
-            memberDTO.setSurname(String.valueOf(row.getCell(3)));
+            memberDTO.setSurname(String.valueOf(row.getCell(2)));
+            memberDTO.setName(String.valueOf(row.getCell(3)));
             memberDTO.setCreated_by(String.valueOf(row.getCell(4)));
             memberDTO.setType(String.valueOf(row.getCell(5)));
             memberDTO.setFecha_vencimiento(row.getCell(6)!=null

@@ -78,6 +78,10 @@ public class MemberController {
         {
             member.setId_member(null);
         }
+        if (service.getByIdmember(member.getId_member()))
+        {
+            return "redirect:/members/add-form?error002";
+        }
         service.add(member);
         return "redirect:/members";
     }
@@ -95,6 +99,21 @@ public class MemberController {
 
     @PostMapping ("/update")
     public String updateMember(MemberDTO member){
+        MemberDTO memberDTO = service.getById(member.getId());
+        if (memberDTO.getType().equals("Socio")
+            && member.getType().equals("Socio"))
+        {
+            if (!memberDTO.getId_member().equals(member.getId_member())){
+                return "redirect:/members/update/"+member.getId()+"?error002";
+            }
+        }
+        if (!memberDTO.getType().equals("Socio")
+                && member.getType().equals("Socio"))
+        {
+            if (service.getByIdmember(member.getId_member())){
+                return "redirect:/members/update/"+member.getId()+"?error002";
+            }
+        }
         service.update(member);
         return "redirect:/members";
     }
