@@ -99,7 +99,6 @@ public class UserController {
     @GetMapping("/delete/{id}")
     public String getDeleteUser(@PathVariable(value = "id",required = true) String id, Model model){
         try {
-            System.out.println(id);
             service.deleteAuth(id);
         } catch (FirebaseAuthException e) {
             return "redirect:/users?err501";

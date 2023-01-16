@@ -46,7 +46,6 @@ public class ApplicationConfig {
                 }
                 List<SimpleGrantedAuthority> rol = new ArrayList<SimpleGrantedAuthority>();
                 rol.add(new SimpleGrantedAuthority(userDTO.getRol()));
-                System.out.println(rol);
                 return new UserRecordCustom(username, userRecord.getEmail(), true, rol);
             }
         };

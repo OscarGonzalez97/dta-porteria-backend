@@ -71,20 +71,17 @@
 
    const form = document.getElementById("form");
     form.addEventListener("submit", (e)=>{
-        console.log("hola")
         e.preventDefault();
         const botonSubmit = document.getElementById("btnLogin")
         const email = document.getElementById("username")
         const password = document.getElementById("password")
         signInWithEmailAndPassword(auth, email.value, password.value).then(({ user } ) => {
             return user.getIdToken().then(idToken => {
-                console.log("hola")
                 botonSubmit.setAttribute('disabled','')
                 document.getElementById("token").value = idToken;
                 form.submit();
             });
         }).catch( (e) => {
-            console.log("Error: ", e);
             email.value = "";
             password.value = "";
             botonSubmit.removeAttribute('disabled')
