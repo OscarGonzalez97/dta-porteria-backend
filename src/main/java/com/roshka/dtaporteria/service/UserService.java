@@ -53,52 +53,58 @@ public class UserService{
         }
     }
 
-    public Boolean crear(UserDTO post){
+    public String crear(UserDTO post){
+        if (getById(post.getId()) != null){
+            return "?err001";
+        }
         Map<String, Object> docData = getDocData(post);
         CollectionReference posts = getCollection();
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(String.valueOf(post.getId())).set(docData);
         try {
             if (writeResultApiFuture.get() != null){
-                return Boolean.TRUE;
+                return "?createSuccess";
             }
-            return Boolean.FALSE;
+            return "?err";
         } catch (InterruptedException | ExecutionException e) {
-            return Boolean.FALSE;
+            return "?err";
         }
     }
 
-    public Boolean update(UserDTO post) {
+    public String update(UserDTO post) {
+        if (getById(post.getId()) == null){
+            return "?err002";
+        }
         Map<String, Object> docData = getDocData(post);
         docData.values().removeAll(Collections.singleton(null));
         CollectionReference posts = getCollection();
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(String.valueOf(post.getId())).update(docData);
         try {
             if (writeResultApiFuture.get() != null){
-                return Boolean.TRUE;
+                return "?editSuccess";
             }
-            return Boolean.FALSE;
+            return "?err";
         } catch (InterruptedException | ExecutionException e) {
-            return Boolean.FALSE;
+            return "?err";
         }
     }
 
-    public Boolean disable(String id){
+    public String disable(String id){
         UserDTO user = getById(id);
         user.setActive("disabled");
         return update(user);
     }
 
-    public Boolean delete(String id){
+    public String delete(String id){
         CollectionReference posts = getCollection();
-        if (id == null) return Boolean.FALSE;
+        if (id == null || getById(id) == null) return "?err002";
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).delete();
         try {
             if (writeResultApiFuture.get() != null){
-                return Boolean.TRUE;
+                return "?deleteSuccess";
             }
-            return Boolean.FALSE;
+            return "?err001";
         } catch (InterruptedException | ExecutionException e) {
-            return Boolean.FALSE;
+            return "?err001";
         }
     }
 
