@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragmento/base::base}">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragmento/base::base}" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title> Sectores </title>
@@ -15,7 +16,7 @@
                     <h1 style="padding: 0.5em;">Sectores</h1>
                 </div>
                 <div class="col-2">
-                    <a type="button" class="btn btn-success text-end" th:href="@{/sectores/addSectores}" target="_self">Nuevo</a>
+                    <a sec:authorize="hasAuthority('admin')" type="button" class="btn btn-success text-end" th:href="@{/sectores/addSectores}" target="_self">Nuevo</a>
                     <a type="button" class="btn btn-secondary text-end" th:href="@{/sectores}" target="_self">Actualizar</a>
                 </div>
             </div>
@@ -27,13 +28,13 @@
                         <thead class = "table-dark">
                         <tr>
                             <th>Sector</th>
-                            <th>Acciones</th>
+                            <th sec:authorize="hasAuthority('admin')">Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr th:each = "sector:${sector}">
                             <td th:text = "${sector.id}">Sector</td>
-                            <td>
+                            <td sec:authorize="hasAuthority('admin')">
                                 <a th:href="@{/sectores/{id}(id=${sector.id})}" class="btn btn-danger">Eliminar</a>
                             </td>
                         </tr>
