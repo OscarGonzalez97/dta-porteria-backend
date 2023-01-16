@@ -79,6 +79,10 @@ public class recordExcel {
         celda = fila.createCell(9);
         celda.setCellValue("Lugar");
         celda.setCellStyle(estilo);
+
+        celda = fila.createCell(10);
+        celda.setCellValue("Is defaulter");
+        celda.setCellStyle(estilo);
     }
     private void EscribirDatos(){
         int numeroFilas=1;
@@ -141,6 +145,11 @@ public class recordExcel {
             celda.setCellValue(record.getSector());
             hoja.autoSizeColumn(9);
             celda.setCellStyle(estilo);
+
+            celda = fila.createCell(10);
+            celda.setCellValue(record.getIs_defaulter());
+            hoja.autoSizeColumn(10);
+            celda.setCellStyle(estilo);
         }
     }
 
@@ -158,12 +167,12 @@ public class recordExcel {
 
     public String CambiarFormatoFecha(String fechalong){
 
-        long fechaL= Long.parseLong(fechalong.substring(0,9));
+        long fechaL= Long.parseLong(fechalong.substring(0,10)); //extrae los numeros necesarios para que sea fecha y hora
 
         Date Fecha = new Date(fechaL*1000L);
 
         SimpleDateFormat jdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        jdf.setTimeZone(TimeZone.getTimeZone("GMT-4"));
+        jdf.setTimeZone(TimeZone.getDefault()); //define la zona horaria
 
         String java_date = jdf.format(Fecha);
 
