@@ -9,6 +9,7 @@
     <link th:href="@{/css/dashboard.css}" rel = "stylesheet">
     <link rel="stylesheet" th:href="@{/css/loader.css}">
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
+    <script src="https://kit.fontawesome.com/24a8bfd4a4.js" crossorigin="anonymous"></script>
     
 </head>
 <body>
@@ -37,31 +38,31 @@
                     <!-- Agregar mas li si quieres mas opciones aqui abajo -->
                     <li class="nav-item box recuadro">
                         <a th:classappend="${#httpServletRequest.getRequestURI() == '/' ? 'active':''}" class="nav-link" aria-current="page" href="/">
-                            <span data-feather="home" class="align-text-bottom"></span>
+                            <span data-feather="home" class="align-text-bottom"></span><i class="fa-solid fa-house"></i>
                             Dashboard
                         </a>
                     </li>
                     <li class="nav-item box recuadro">
                         <a th:classappend="${#httpServletRequest.getRequestURI() == '/members' ? 'active':''}" class="nav-link" aria-current="page" href="/members">
-                            <span data-feather="home" class="align-text-bottom"></span> 
+                            <span data-feather="home" class="align-text-bottom"></span><i class="fa-solid fa-user-tie"></i>
                             Miembros
                         </a>
                     </li>
                     <li class="nav-item box recuadro">
                         <a th:classappend="${#httpServletRequest.getRequestURI() == '/users' ? 'active':''}" class="nav-link" aria-current="page" href="/users">
-                            <span data-feather="home" class="align-text-bottom"></span>
+                            <span data-feather="home" class="align-text-bottom"></span><i class="fa-solid fa-user"></i>
                             Usuarios
                         </a>
                     </li>
                     <li class="nav-item box recuadro">
                         <a th:classappend="${#httpServletRequest.getRequestURI() == '/records' ? 'active':''}" class="nav-link" aria-current="page" href="/records">
-                            <span data-feather="home" class="align-text-bottom"></span>
+                            <span data-feather="home" class="align-text-bottom"></span><i class="fa-solid fa-clipboard"></i>
                             Records
                         </a>
                     </li>
                     <li class="nav-item box recuadro">
                         <a th:classappend="${#httpServletRequest.getRequestURI() == '/sectores' ? 'active':''}" class="nav-link" aria-current="page" href="/sectores">
-                            <span data-feather="home" class="align-text-bottom"></span>
+                            <span data-feather="home" class="align-text-bottom"></span><i class="fa-solid fa-volleyball"></i>
                             Sectores
                         </a>
                     </li>
