@@ -15,10 +15,17 @@ import java.util.Objects;
 
 @Service
 public class ImportMembersExcelService {
-    int posicion = 0;
-    List<String> mensaje = new ArrayList<>();
-    HashMap<Double, Integer> ID  = new HashMap<>();
+    private final MemberService memberService;
+    public ImportMembersExcelService(MemberService memberService) {
+        this.memberService = memberService;
+    }
+
+    private static int posicion = 0;
+    private static final List<String> mensaje = new ArrayList<>();
+
+
     public List<String> validarExcel(MultipartFile file) throws IOException {
+        mensaje.clear();
         Sheet hoja = getHoja1(file);
         conseguirNumeroDeFilas(hoja);
         int filas = hoja.getLastRowNum();
@@ -37,6 +44,7 @@ public class ImportMembersExcelService {
     }
 
     private void validacionesExcel(Sheet hoja, int filas) {
+        HashMap<Double, Integer> mapaID  = new HashMap<>();
         if (filas ==0)
         {
             mensaje.add("No hay filas validas en el Excel.");
@@ -48,10 +56,23 @@ public class ImportMembersExcelService {
             if (row.getCell(0) != null){
                 Double id_miembro = row.getCell(0).getNumericCellValue();
                 checkMiembroNoSocioConIdMiembro(tipo, id_miembro);
-                checkMiembroSocioConIdRepetido(id_miembro);
+                checkMiembroSocioConIdRepetido(id_miembro, mapaID);
             }
+            checkNullCreadoporNombreApellido(row);
             checkMiembroSocioConFechavencimiento(row, tipo);
             checkMiembroNoSocioSinFechavencimiento(row, tipo);
+        }
+    }
+
+    private void checkNullCreadoporNombreApellido(Row row) {
+        if (row.getCell(2) == null){
+            mensaje.add("Fila "+(posicion+1) +": Campo 'Creado por' vacio.");
+        }
+        if (row.getCell(3) == null){
+            mensaje.add("Fila "+(posicion+1) +": Campo 'Nombre' vacio.");
+        }
+        if (row.getCell(4) == null){
+            mensaje.add("Fila "+(posicion+1) +": Campo 'Apellido' vacio.");
         }
     }
 
@@ -69,12 +90,16 @@ public class ImportMembersExcelService {
         }
     }
 
-    private void checkMiembroSocioConIdRepetido(Double id_miembro) {
+    private void checkMiembroSocioConIdRepetido(Double id_miembro, HashMap<Double, Integer> ID) {
         if (ID.containsKey(id_miembro)){
             mensaje.add("Fila "+(posicion+1)+": ID de miembro repetido: "+ id_miembro +".");
         }
         else {
             ID.put(id_miembro, 1);
+            if (memberService.getById(String.valueOf(id_miembro)) == null)
+            {
+                mensaje.add("Fila "+(posicion+1)+": ID de miembro "+id_miembro.intValue()+" ya existe en la base de datos.");
+            }
         }
     }
 
