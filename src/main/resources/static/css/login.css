@@ -42,9 +42,7 @@ body{
 
 
 .login-content{
-	display: flex;
-	justify-content: flex-start;
-	align-items: center;
+	margin:auto
 	text-align: center;
 }
 
@@ -232,11 +230,6 @@ a:hover{
 		justify-content: center;
 	}
 }
-body.dark {
-	background: #292C35;
-}
-
-
 .checkbox {
 	opacity: 0;
 	position: absolute;
@@ -275,19 +268,22 @@ body.dark {
 	transform: translateX(24px);
 }
 
-
-.fa-moon {
-	color: #b6b6b5;
+	 .esconder{
+    z-index:-1;
+    opacity:0;
+    overflow:hidden;
 }
-
-.fa-sun {
-	color: #ffd500;
+.form-primero{
+    margin-top:35%;
 }
-.darkmode{
-	margin-top: 50px;
-	margin-left: 43%;
-	
+.mostrar{
+    transform:translateY(-103%);
 }
+  .mostrar, .esconder { -webkit-transition:all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 
 
   

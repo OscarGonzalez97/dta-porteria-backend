@@ -14,7 +14,7 @@
         <img src="">
     </div>
     <div class="login-content">
-        <form id="form" action="/login"  method="POST">
+        <form id="form" action="/login"  method="POST" class="form-primero">
             <img class="logo" th:src="@{/img/zyro-image.png}">
             <h2 id="welcome" class="title">Bienvenido</h2>
             <div class="input-div one">
@@ -36,8 +36,24 @@
                     <input type="password" class="input" name="password" id="password" >
                 </div>
             </div>
-            <a th:href="@{/forgotPass}">Olvide mi contraseña</a>
+            <a href="#" class="forget">Olvide mi contraseña</a>
             <button id="btnLogin" type="submit" class="btn" >Ingresar</button>
+        </form>
+
+        <form action="/sendEmail"  method="POST" class="olvide-cont esconder">
+            <img class="logo" th:src="@{/img/zyro-image.png}">
+            <h2 class="title">Recuperar contraseña</h2>
+            <div class="input-div one">
+                <div class="i">
+                    <i class="fas fa-user"></i>
+                </div>
+                <div class="div">
+                    <h5>Correo electrónico</h5>
+                    <input type="email" class="input" name="username" >
+                </div>
+            </div>
+            <a href="#" class="recorde">Recorde mi contraseña</a>
+            <button  type="submit" class="btn recu" >Recuperar Contraseña</button>
         </form>
     </div>
 </div>
