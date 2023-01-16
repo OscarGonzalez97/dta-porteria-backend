@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragmento/base::base}">
 <head>
     <meta charset="UTF-8">
-    <title>Club Deportivo Aleman</title>
+    <title>Admin DTA</title>
 </head>
 
 <body>
@@ -23,6 +23,11 @@
             <div th:if=${param.error001}>
                 <div class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>Un campo esta vacio</strong> Por favor rellene los campos necesarios.
+                </div>
+            </div>
+            <div th:if=${param.error002}>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>ID de miembro invalido</strong> El id de miembro ya existe.
                 </div>
             </div>
             <input th:field="*{id}" type="hidden" name="id" id="id" th:value="${m.id}" readonly>
@@ -119,7 +124,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script th:src="@{/js/updateMiembro.js}"></script>
-    <script th:src="@{/js/memberDelete.js}"></script> 
 </div>
 </body>
 </html>
