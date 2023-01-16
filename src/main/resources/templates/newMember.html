@@ -8,6 +8,11 @@
 
 <body>
 <div layout:fragment="contenido">
+    <nav class="breadcrumbs">
+        <a href="/" class="breadcrumbs__item">Dashboard</a>
+        <a href="/members" class="breadcrumbs__item">Miembros</a>
+        <a th:href="@{/members/add-form}"class="breadcrumbs__item is-active">Nuevo miembro</a> 
+      </nav>
     <div class="container-fluid central"style="padding-top: 1em;">
         <div class="col-1 g-2"><a type="button" class="btn btn-warning" href="/members" aria-label="Close">Cancelar</a></div>
         <div class="row justify-content-center align-items-center g-2">
