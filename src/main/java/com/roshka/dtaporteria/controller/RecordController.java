@@ -49,7 +49,7 @@ public class RecordController {
         String fechaActual = dateFormatter.format(new Date());
 
         String Cabecera = "Content-Disposition";
-        String Valor = "attachment; filename=Report_"+fechaActual+".xlsx";
+        String Valor = "attachment; filename=Reporte_"+fechaActual+".xlsx";
 
         response.setHeader(Cabecera,Valor);
 
