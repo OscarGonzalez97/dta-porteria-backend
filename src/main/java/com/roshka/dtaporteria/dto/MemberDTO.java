@@ -3,10 +3,17 @@ package com.roshka.dtaporteria.dto;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+import com.google.auto.value.AutoValue.Builder;
 import com.google.cloud.firestore.annotation.DocumentId;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberDTO {
     @DocumentId
     private String id;

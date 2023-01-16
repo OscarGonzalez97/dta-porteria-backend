@@ -3,6 +3,8 @@ import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
 import com.roshka.dtaporteria.dto.MemberDTO;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -11,11 +13,8 @@ import java.util.concurrent.ExecutionException;
 @Service
 public class MemberService {
 
-    private final FirebaseInitializer firebase;
-
-    public MemberService(FirebaseInitializer firebase) {
-        this.firebase = firebase;
-    }
+    @Autowired
+    private FirebaseInitializer firebase;
 
     public MemberDTO getById(String id) {
         DocumentReference docRef = getCollection().document(id);
@@ -88,12 +87,17 @@ public class MemberService {
         }
     }
 
-    public void delete(String id) {
+    public String delete(String id) {
         CollectionReference posts = getCollection();
+        if (id == null || getById(id) == null) return "?err002";
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).delete();
         try {
-            writeResultApiFuture.get();
+            if (writeResultApiFuture.get() != null){
+                return "?deleteSuccess";
+            }
+            return "?err001";
         } catch (InterruptedException | ExecutionException ignored) {
+            return "?err";
         }
     }
 

@@ -3,6 +3,8 @@ import com.roshka.dtaporteria.dto.MemberDTO;
 import com.roshka.dtaporteria.service.ImportMembersExcelService;
 import com.roshka.dtaporteria.service.MemberService;
 import com.roshka.dtaporteria.service.TypeService;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -15,16 +17,12 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/members")
 public class MemberController {
-
-    private final MemberService service;
-    private final TypeService typeService;
-    private final ImportMembersExcelService importMembersExcelService;
-
-    public MemberController(MemberService service, TypeService typeService, ImportMembersExcelService importMembersExcelService) {
-        this.service = service;
-        this.typeService = typeService;
-        this.importMembersExcelService = importMembersExcelService;
-    }
+    @Autowired
+    private MemberService service;
+    @Autowired
+    private TypeService typeService;
+    @Autowired
+    private ImportMembersExcelService importMembersExcelService;
 
     @GetMapping
     public String Miembros(Model model) {
@@ -46,10 +44,10 @@ public class MemberController {
         return service.list();
     }
 
-    @GetMapping("/add")
-    public String getMiembroFormulario(){
-        return "newMember";
-    }
+    // @GetMapping("/add")
+    // public String getMiembroFormulario(){
+    //     return "newMember";
+    // }
 
     @GetMapping("/import")
     public String getMiembroImportarExcel(){
@@ -69,7 +67,7 @@ public class MemberController {
         }
         List<MemberDTO> miembros = importMembersExcelService.obtenerMiembros(file);
         service.AddMembersByList(miembros);
-        return "redirect:/members";
+        return "redirect:/members?importSuccess";
     }
 
     @PostMapping("/add-form")
@@ -78,19 +76,19 @@ public class MemberController {
         {
             member.setId_member(null);
         }
-        if (service.getByIdmember(member.getId_member()))
+        if (service.getByIdmember(member.getId_member()) && member.getId_member() != null)
         {
             return "redirect:/members/add-form?error002";
         }
         service.add(member);
-        return "redirect:/members";
+        return "redirect:/members?createSuccess";
     }
 
     @GetMapping("/update/{id}")
     public String getEditMember(@PathVariable(value = "id") String id, Model model){
         MemberDTO member = service.getById(id);
         if (member==null){
-            return "redirect:/members";
+            return "redirect:/members?err002";
         }
         model.addAttribute("m", member);
         model.addAttribute("tipos", typeService.list());
@@ -100,6 +98,9 @@ public class MemberController {
     @PostMapping ("/update")
     public String updateMember(MemberDTO member){
         MemberDTO memberDTO = service.getById(member.getId());
+        if(memberDTO == null){
+            return "redirect:/members?err002";
+        }
         if (memberDTO.getType().equals("Socio")
             && member.getType().equals("Socio"))
         {
@@ -115,17 +116,17 @@ public class MemberController {
             }
         }
         service.update(member);
-        return "redirect:/members";
+        return "redirect:/members?editSuccess";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteMember(@PathVariable(value = "id") String id){
-        service.delete(id);
-        return "redirect:/members";
+        String res = service.delete(id);
+        return "redirect:/members" + res;
     }
     @GetMapping("/delete/{id}")
     public String getDeleteMember(@PathVariable(value = "id") String id){
-        service.delete(id);
-        return "redirect:/members";
+        String res = service.delete(id);
+        return "redirect:/members" + res;
     }
 }

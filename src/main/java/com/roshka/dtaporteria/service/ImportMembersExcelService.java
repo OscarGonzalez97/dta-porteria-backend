@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
@@ -15,10 +16,8 @@ import java.util.Objects;
 
 @Service
 public class ImportMembersExcelService {
-    private final MemberService memberService;
-    public ImportMembersExcelService(MemberService memberService) {
-        this.memberService = memberService;
-    }
+    @Autowired
+    private MemberService memberService;
 
     private static int posicion = 0;
     private static final List<String> mensaje = new ArrayList<>();
