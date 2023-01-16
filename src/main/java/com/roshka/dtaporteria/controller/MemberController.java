@@ -29,6 +29,7 @@ public class MemberController {
     @GetMapping
     public String Miembros(Model model) {
         List<MemberDTO> miembros = service.list();
+        System.out.println(miembros);
         model.addAttribute("miembros", miembros);
         model.addAttribute("tipos", typeService.list());
         return "members";

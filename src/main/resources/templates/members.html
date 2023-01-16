@@ -24,8 +24,8 @@
                     <h1 style="padding: 0.5em;">Miembros</h1>
                 </div>
                 <div class="col-5">
-                    <a sec: authorize="hasAuthority('admin')" type="button" class="btn btn-success" th:href="@{/members/import}" target="_self">Importar</a>
-                    <a  sec: authorize="hasAuthority('admin')" type="button" class="btn btn-success" th:href="@{/members/add-form}" target="_self">Nuevo</a>
+                    <a sec:authorize="hasAuthority('admin')" type="button" class="btn btn-success" th:href="@{/members/import}" target="_self">Importar</a>
+                    <a  sec:authorize="hasAuthority('admin')" type="button" class="btn btn-success" th:href="@{/members/add-form}" target="_self">Nuevo</a>
                     <a  type="button" class="btn btn-secondary" th:href="@{/members}" target="_self">Actualizar</a>
                 </div>
 
