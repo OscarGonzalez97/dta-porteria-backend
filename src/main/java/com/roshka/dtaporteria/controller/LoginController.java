@@ -27,8 +27,6 @@ public class LoginController {
     @Autowired
     private ServiceMail mail;
 
-    @GetMapping("/forgotPass")
-    public String olvideContra() {return "olvideContraseña";}
 
     @PostMapping("/sendEmail")
     public String PassResetEmail(@RequestParam("email") String email){
@@ -36,14 +34,14 @@ public class LoginController {
         try {
             link = auth.generatePasswordResetLink(email);
         } catch (FirebaseAuthException e) {
-            return "redirect:/forgotPass?err";
+            return "redirect:/login?err";
         }
         Map<String, Object> parametros =new HashMap<>();
         parametros.put("linkRecuperacion", link);
 
         mail.sendEmailWithHTML(email, "Cambio de contraseña" , parametros);
 
-        return "redirect:/forgotPass?success";
+        return "redirect:/login?success";
     }
 
 
