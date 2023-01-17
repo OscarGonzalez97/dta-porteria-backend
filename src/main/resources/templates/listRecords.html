@@ -28,11 +28,10 @@
     </nav>
     <div class="container-fluid text-center">
         <div class="row justify-content-center align-items-center g-2">
-            <div class="col-9">
+            <div class="col-10">
                 <h1 style="padding: 0.5em;">Records</h1>
             </div>
-            <div class="col-3">
-                <a class="btn btn-primary" href="/">Filtros</a>
+            <div class="col-2">
                 <a class="btn btn-success" th:href="@{/records/ReporteExcel}" target="_blank">Reporte</a>
                 <a th:href="@{/records}" class="btn btn-secondary">Actualizar</a>
             </div>
@@ -54,7 +53,7 @@
         </table>
 
 
-        <a th:href="@{/records}" class="btn btn-success">Limpiar Filtro</a>
+        <a th:href="@{/records}" class="btn btn-warning">Limpiar Filtro</a>
         <br>
         <br>
         <table id="example" class="table table-striped">

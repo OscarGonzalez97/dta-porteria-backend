@@ -10,6 +10,7 @@
     <div class = "container py-4">
         <div class="card bg-light">
             <div class="card-body" th:each = "m : ${records}">
+                <a type="button" class="btn btn-outline-dark" href="/records"aria-label="Close"><h2 class="text-center">←</h2></a>
                 <div class = "row">
                     <p style="text-align:center;"><img th:src="${records.fotoDefault()}" style="height: 250px; width:250px">
                 </div>
