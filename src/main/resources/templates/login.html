@@ -40,7 +40,7 @@
             <button id="btnLogin" type="submit" class="btn" >Ingresar</button>
         </form>
 
-        <form action="/sendEmail"  method="POST" class="olvide-cont esconder cuadrar">
+        <form th:action="@{/sendEmail}"  method="POST" class="olvide-cont esconder cuadrar">
             <img class="logo" th:src="@{/img/zyro-image.png}">
             <h2 class="title">Recuperar contraseña</h2>
             <div class="input-div one">
