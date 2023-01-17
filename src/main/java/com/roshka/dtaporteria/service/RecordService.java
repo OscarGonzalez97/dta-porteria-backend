@@ -11,6 +11,7 @@ import com.roshka.dtaporteria.dto.RecordDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
@@ -19,7 +20,7 @@ public class RecordService {
     @Autowired
     private FirebaseInitializer firebase;
 
-    public RecordDTO getById(String id) {
+    public RecordDTO getById(String id) { //metodo para obtener un record por su id
         DocumentReference docRef = getCollection().document(id);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         try {
@@ -34,7 +35,7 @@ public class RecordService {
         }
     }
 
-    public List<RecordDTO> list(){
+    public List<RecordDTO> list(){ //metodo para listar todos los records
         List<RecordDTO> response = new ArrayList<>();
         RecordDTO post;
         ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
@@ -48,7 +49,9 @@ public class RecordService {
             return null;
         }
     }
+
+
     private CollectionReference getCollection() {
         return firebase.getFirestore().collection("RECORDS");
-    }
+    } //coleccion de records
 }

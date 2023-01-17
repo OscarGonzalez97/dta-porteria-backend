@@ -6,7 +6,29 @@
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <!-- Table to Datatable CSS -->
+    <!--
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/dataTables.bootstrap5.min.css">
+
+
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+    <script src = "https://cdn.datatables.net/datetime/1.2.0/js/dataTables.dateTime.min.js"></script>
+
+
+    <script src = "https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src = "https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
+    <link href = "https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+    <link href = "https://cdn.datatables.net/datetime/1.2.0/css/dataTables.dateTime.min.css">
+    -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.2.0/css/dataTables.dateTime.min.css">
+    <script src = "https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src = "https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+    <script src = "https://cdn.datatables.net/datetime/1.2.0/js/dataTables.dateTime.min.js"></script>
+    <script th:src="@{/js/fecha.js}"></script>
+
 </head>
 <body>
 <div layout:fragment="contenido">
@@ -23,54 +45,77 @@
         </div>
     </div>
     <div class="container-fluid">
-        <table id="example" class="table table-striped">
-            <thead>
-            <tr>
-                <th>
-                    Numero de Socio
-                </th>
-                <th>
-                    Nombre
-                </th>
-                <th>
-                    Apellido
-                </th>
-                <th>
-                    Cédula
-                </th>
-                <th>
-                    Tipo
-                </th>
-                <th>
-                    Sector
-                </th>
-                <th>
-                    Detalles
-                </th>
-            </tr>
-            </thead>
+
+        <table border="0" cellspacing="5" cellpadding="5">
             <tbody>
-            <tr th:each = "m : ${records}">
-                <td th:text = "${m.id_member}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
-                <td th:text = "${m.name_member}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
-                <td th:text = "${m.surname_member}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
-                <td th:text = "${m.ci_member}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
-                <td th:text = "${m.type}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
-                <td th:text = "${m.sector}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
-                <td>
-                    <a th:href="@{/records/ver/{id}(id=${m.id})}" class="btn btn-info">Detalles</a>
-                </td>
+            <tr>
+                <td>Fecha inicio:</td>
+                <td><input type="text" id="min" name="min"></td>
+            </tr>
+            <tr>
+                <td>Fecha fin:</td>
+                <td><input type="text" id="max" name="max"></td>
             </tr>
             </tbody>
         </table>
+
+
+        <a th:href="@{/records}" class="btn btn-success">Limpiar Filtro</a>
+        <br>
+        <br>
+        <table id="example" class="table table-striped">
+            <thead>
+                <tr>
+                    <th>
+                        Numero de Socio
+                    </th>
+                    <th>
+                        Nombre
+                    </th>
+                    <th>
+                        Apellido
+                    </th>
+                    <th>
+                        Cédula
+                    </th>
+                    <th>
+                        Tipo
+                    </th>
+                    <th>
+                        Sector
+                    </th>
+                    <th>
+                        Fecha
+                    </th>
+                    <th>
+                        Detalles
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each = "m : ${records}">
+                    <td th:text = "${m.id_member}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
+                    <td th:text = "${m.name_member}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
+                    <td th:text = "${m.surname_member}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
+                    <td th:text = "${m.ci_member}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
+                    <td th:text = "${m.type}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
+                    <td th:text = "${m.sector}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
+                    <td th:text = "${m.CambiarFormatoFecha2()}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
+                    <td>
+                        <a th:href="@{/records/ver/{id}(id=${m.id})}" class="btn btn-info">Detalles</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+
     <!-- Bootstrap Js -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+    <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>-->
     <!-- Table to Datatable scripts -->
     <!-- <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script> -->
-    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.1/js/dataTables.bootstrap5.min.js"></script>
-    <script th:src="@{/js/datatableScript.js}"></script>
+
+  <!--  <script th:src="@{/js/datatableScript.js}"></script>-->
+
 </div>
 </body>
 </html>
