@@ -1,10 +1,13 @@
 package com.roshka.dtaporteria.controller;
+import com.roshka.dtaporteria.config.UserRecordCustom;
 import com.roshka.dtaporteria.dto.MemberDTO;
 import com.roshka.dtaporteria.service.ImportMembersExcelService;
 import com.roshka.dtaporteria.service.MemberService;
 import com.roshka.dtaporteria.service.TypeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -72,6 +75,8 @@ public class MemberController {
 
     @PostMapping("/add-form")
     public String agregarFormMember(MemberDTO member) {
+        UserRecordCustom usr = (UserRecordCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        member.setCreated_by(usr.getPassword());
         if (!Objects.equals(member.getType(), "Socio"))
         {
             member.setId_member(null);
@@ -129,4 +134,5 @@ public class MemberController {
         String res = service.delete(id);
         return "redirect:/members" + res;
     }
+
 }
