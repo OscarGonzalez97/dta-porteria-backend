@@ -41,7 +41,20 @@ public class MemberService {
             return false;
         }
     }
-
+    public int[] dataGraficoPie(){
+        ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
+        int[] members={0,0,0,0,0,0,0,0,0};  //Iniciamos el array con 9 datos que serian los tipos
+        try {
+            for (DocumentSnapshot doc : querySnapshotApiFuture.get().getDocuments()) {
+                String tipo_miembro = String.valueOf(doc.get("type"));  //aqui obtnemos la fecha exacta en milisegundos
+                //getMonthofdatetime nos traera el mes de la fecha que esta en milisegundo
+                arrayMiembros(tipo_miembro,members);
+            }
+            return members;
+        } catch (Exception e) {
+            return null;
+        }
+    }
     public List<MemberDTO> list() {
         List<MemberDTO> response = new ArrayList<>();
         MemberDTO post;
@@ -116,6 +129,37 @@ public class MemberService {
     }
     private CollectionReference getCollection() {
         return firebase.getFirestore().collection("MEMBERS");
+    }
+    private void arrayMiembros(String tipo,int[] arrayMembers){
+        switch (tipo) {
+            case "Socio":
+                arrayMembers[0] += 1;
+                break;
+            case "Staff":
+                arrayMembers[1] += 1;
+                break;
+            case "Guarderia":
+                arrayMembers[2] += 1;
+                break;
+            case "Piscina":
+                arrayMembers[3] += 1;
+                break;
+            case "Tenis":
+                arrayMembers[4] += 1;
+                break;
+            case "Restaurante":
+                arrayMembers[5] += 1;
+                break;
+            case "Gimnasio":
+                arrayMembers[6] += 1;
+                break;
+            case "Eventos":
+                arrayMembers[7] += 1;
+                break;
+            case "Invitado":
+                arrayMembers[8] += 1;
+                break;
+        }
     }
 
     public void AddMembersByList(List<MemberDTO> miembros) {
