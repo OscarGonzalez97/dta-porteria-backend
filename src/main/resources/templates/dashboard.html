@@ -60,8 +60,6 @@
                     <span class="text-primary font-weight-bold" th:text="${miembros}">0</span>
                 </div>
 
-
-
             </div>
 
             <div class="charts">
@@ -78,59 +76,58 @@
 
             </div>
         </main>
-    <script type="text/javascript" th:inline="javascript">
-var barChartOptions = {
-  series: [{
-    data: [[${dataLinea}]]
-  }],
-  chart: {
-    type: 'bar',
-    height: 350,
-    toolbar: {
-      show: false
+        <script type="text/javascript" th:inline="javascript">
+        var barChartOptions = {
+        series: [{
+        data: [[${dataLinea}]]
+        }],
+        chart: {
+        type: 'bar',
+        height: 350,
+        toolbar: {
+        show: false
+        },
+        },
+        colors: [
+            "#246dec",
+            "#cc3c43",
+            "#367952",
+            "#f5b74f",
+            "#4f35a1",
+            "#CACBF6",
+            "#106009",
+            "#9B0FD7",
+            "#CD3793",
+            "#DD8800",
+            "#00a76d",
+            "#BDC58F"
+        ],
+        plotOptions: {
+        bar: {
+        distributed: true,
+        borderRadius: 4,
+        horizontal: false,
+        columnWidth: '40%',
+        }
     },
-  },
-  colors: [
-    "#246dec",
-    "#cc3c43",
-    "#367952",
-    "#f5b74f",
-    "#4f35a1",
-     "#CACBF6",
-     "#106009",
-     "#9B0FD7",
-     "#CD3793",
-     "#DD8800",
-     "#00a76d",
-     "#BDC58F",
-  ],
-  plotOptions: {
-    bar: {
-      distributed: true,
-      borderRadius: 4,
-      horizontal: false,
-      columnWidth: '40%',
-    }
-  },
-  dataLabels: {
-    enabled: false
-  },
-  legend: {
-    show: false
-  },
-  xaxis: {
-    categories: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre","Diciembre"]
-  },
-  yaxis: {
-    title: {
-      text: "Count"
-    }
-  }
-};
-
-var barChart = new ApexCharts(document.querySelector("#bar-chart"), barChartOptions);
-barChart.render();
-    </script>
+        dataLabels: {
+        enabled: false
+        },
+    legend: {
+        show: false
+    },
+    xaxis: {
+        categories: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre","Diciembre"]
+    },
+    yaxis: {
+        title: {
+        text: "Count"
+         }
+      }
+    };
+    var barChart = new ApexCharts(document.querySelector("#bar-chart"), barChartOptions);
+    barChart.render();
+</script>
     <script type="text/javascript"  th:inline="javascript">
 var options = {
           series: [[${dataPie}]],
@@ -167,8 +164,8 @@ var options = {
         chart.render();
     </script>
 
+    </div>
 </div>
-
 </body>
 
 </html>
