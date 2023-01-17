@@ -195,7 +195,8 @@ body {
     }
 
     .nav-item a.active{
-      font-size: 27px;
+      font-size: 26px;
+      margin-left: 15px;
 
 
     }
@@ -292,6 +293,13 @@ body {
     }
     .icon{
         height: 3rem
+    }
+
+    .imgholder { filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.7)); }
+    #cerrarSesion :hover{
+
+      color: black !important;
+
     }
 
     /* Dark theme */
