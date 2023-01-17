@@ -6,15 +6,16 @@
 });*/
 
 $(document).ready(function() {
-            $('#example').DataTable( {
-                dom: 'Bfrtip',
-                buttons: [
-                    'excel'
-                ]
-            } );
-        } );
-
-var minDate, maxDate;
+    $('#example').DataTable( {
+        dom: 'Blfrtip',
+        buttons: [
+            'excel'
+        ],
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+        }
+    });
+    var minDate, maxDate;
 
     // Custom filtering function which will search data in column four between two values
     $.fn.dataTable.ext.search.push(
@@ -34,21 +35,23 @@ var minDate, maxDate;
             return false;
         }
     );
+    // Create date inputs
+    minDate = new DateTime($('#min'), {
+        format: 'MMMM Do YYYY'
+    });
+    maxDate = new DateTime($('#max'), {
+        format: 'MMMM Do YYYY'
+    });
 
-    $(document).ready(function() {
-        // Create date inputs
-        minDate = new DateTime($('#min'), {
-            format: 'MMMM Do YYYY'
-        });
-        maxDate = new DateTime($('#max'), {
-            format: 'MMMM Do YYYY'
-        });
+    // DataTables initialisation
+    var table = $('#example').DataTable();
 
-        // DataTables initialisation
-        var table = $('#example').DataTable();
+    // Refilter the table
+    $('#min, #max').on('change', function () {
+        table.draw();
+    });
 
-        // Refilter the table
-        $('#min, #max').on('change', function () {
-            table.draw();
-        });
+
+
+
 });
