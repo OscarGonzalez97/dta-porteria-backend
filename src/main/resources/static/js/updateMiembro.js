@@ -34,6 +34,7 @@ $(document).ready(() => {
         }
     }
     validateType()
+    fecha.min =  new Date().toISOString().split("T")[0];
     tipo.addEventListener('change', function(){
         validateType();
     })

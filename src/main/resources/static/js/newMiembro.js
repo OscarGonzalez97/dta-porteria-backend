@@ -1,8 +1,8 @@
 $(document).ready(() => {
     const type = document.getElementById("type")
-    const ci = document.getElementById("ci")
     const id = document.getElementById("id_member")
     const fecha = document.getElementById("fecha_vencimiento")
+    fecha.min =  new Date().toISOString().split("T")[0];
     function seleccion(){
         if (type.value !== "Socio"){
             id.value = ""
