@@ -8,6 +8,11 @@
 </head>
 <body>
 <div layout:fragment="contenido">
+    <nav class="breadcrumbs">
+        <a href="/" class="breadcrumbs__item">Dashboard</a>
+        <a href="/sectores" class="breadcrumbs__item">Sectores</a>
+        <a th:href="@{/sectores/addSectores}" class="breadcrumbs__item is-active">Nuevo sector</a> 
+    </nav>
     <div class = "container" style="padding-top: 1em;">
         <div class="col-1 g-2"><a type="button" class="btn btn-warning" href="/sectores" aria-label="Close">Cancelar</a></div>
         <div class = "row text-center">
