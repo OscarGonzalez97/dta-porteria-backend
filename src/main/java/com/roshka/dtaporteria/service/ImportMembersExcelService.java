@@ -56,7 +56,6 @@ public class ImportMembersExcelService {
             checkMiembroNoSocioCiVacio(row, tipo);
             if (row.getCell(0) != null){
                 Double id_miembro = row.getCell(0).getNumericCellValue();
-                checkMiembroNoSocioConIdMiembro(tipo, id_miembro);
                 checkMiembroSocioConIdRepetido(id_miembro, mapaID);
             }
             checkNullNombreApellido(row);
@@ -110,13 +109,6 @@ public class ImportMembersExcelService {
         }
     }
 
-    private void checkMiembroNoSocioConIdMiembro(String tipo, Double id_miembro) {
-        if (!Objects.equals(tipo, "Socio"))
-        {
-            mensaje.add("Fila "+(posicion+1)+": La combinacion ID de miembro "+ id_miembro.intValue() +" y tipo "+ tipo +" no es valida.");
-        }
-    }
-
     private void checkMiembroNoSocioCiVacio(Row row, String tipo) {
         if (!Objects.equals(tipo, "Socio") && row.getCell(1) == null )
         {
@@ -133,7 +125,18 @@ public class ImportMembersExcelService {
         for (posicion =1; posicion<=filas; posicion++){
             Row row = hoja.getRow(posicion);
             MemberDTO memberDTO = new MemberDTO();
-            memberDTO.setId_member(row.getCell(0)!= null ? String.valueOf((int) row.getCell(0).getNumericCellValue()) : null);
+            if (row.getCell(0)!= null){
+                if (!String.valueOf(row.getCell(4)).equals("Socio"))
+                {
+                    memberDTO.setId_member(null);
+                }
+                else {
+                    memberDTO.setId_member(String.valueOf((int) row.getCell(0).getNumericCellValue()));
+                }
+            }
+            else{
+                memberDTO.setId_member(null);
+            }
             memberDTO.setCi(row.getCell(1)!=null ? String.valueOf((int) row.getCell(1).getNumericCellValue()) : null);
             memberDTO.setSurname(String.valueOf(row.getCell(2)));
             memberDTO.setName(String.valueOf(row.getCell(3)));
