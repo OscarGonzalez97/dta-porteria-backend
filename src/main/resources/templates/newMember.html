@@ -29,7 +29,7 @@
                     </div>
                 </div>
             <div class="row justify-content-center align-items-center smt">
-              <div class="col-md-6">
+              <div class="col-md-4">
                   <label for="id_member" class="form-label">ID miembro</label>
                    <input class="form-control form-control-lg" type="number" name="id_member" id="id_member" th:field="*{id_member}" required>
                   <div class="invalid-feedback">
@@ -43,9 +43,9 @@
                         Es necesario un valor en este campo.
                     </div>
                 </div>
-                <div class="col-md-2">
-                    <label for="created_by" class="form-label">Creado por</label>
-                    <input class="form-control form-control-lg" type="text" name="created_by" id="created_by" th:field="*{created_by}" required>
+                <div class="col-md-4">
+                    <label for="fecha_vencimiento" class="form-label">Fecha de vencimiento</label>
+                    <input class="form-control form-control-lg" type="date" name="fecha_vencimiento" placeholder="yyyy-MM-dd" id="fecha_vencimiento" th:field="*{fecha_vencimiento}" required>
                     <div class="invalid-feedback">
                         Es necesario un valor en este campo.
                     </div>
@@ -53,20 +53,13 @@
             </div>
             <div class="row justify-content-center align-items-center smt">
                 <div class="col-md-6">
-                    <label for="fecha_vencimiento" class="form-label">Fecha de vencimiento</label>
-                    <input class="form-control form-control-lg" type="date" name="fecha_vencimiento" placeholder="yyyy-MM-dd" id="fecha_vencimiento" th:field="*{fecha_vencimiento}" required>
-                    <div class="invalid-feedback">
-                        Es necesario un valor en este campo.
-                    </div>
-                </div>
-                <div class="col-md-3">
                     <label for="name" class="form-label">Nombre</label>
                     <input class="form-control form-control-lg" type="text" name="name" id="name" th:field="*{name}" required>
                     <div class="invalid-feedback">
                         Es necesario un valor en este campo.
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-6">
                     <label for="surname" class="form-label">Apellido</label>
                     <input class="form-control form-control-lg" type="text" name="surname" id="surname" th:field="*{surname}" required>
                     <div class="invalid-feedback">
