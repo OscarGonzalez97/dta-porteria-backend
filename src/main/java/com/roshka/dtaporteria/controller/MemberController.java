@@ -106,6 +106,7 @@ public class MemberController {
         if(memberDTO == null){
             return "redirect:/members?err002";
         }
+        member.setCreated_by(memberDTO.getCreated_by());
         if (memberDTO.getType().equals("Socio")
             && member.getType().equals("Socio"))
         {

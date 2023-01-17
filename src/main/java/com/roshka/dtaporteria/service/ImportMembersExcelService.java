@@ -147,7 +147,7 @@ public class ImportMembersExcelService {
                         .getLocalDateTimeCellValue()
                         .toLocalDate()
                         .toString() : null);
-            memberDTO.setIs_defaulter(Objects.equals(String.valueOf(row.getCell(6)), "Si") ? String.valueOf(row.getCell(7)) : null);
+            memberDTO.setIs_defaulter(Objects.equals(String.valueOf(row.getCell(6)), "Si") ? String.valueOf(row.getCell(6)) : null);
             miembros.add(memberDTO);
             }
         return miembros;

@@ -2,7 +2,8 @@
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragmento/base::base}">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title id="pageTitle">Dashboard</title>
+    
     <script defer src="https://cdn.jsdelivr.net/npm/chart.js" ></script>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
@@ -28,6 +29,9 @@
 </head>
 <body>
 <div layout:fragment="contenido">
+    <nav class="breadcrumbs">
+        <a href="/" class="breadcrumbs__item is-active">Dashboard</a>
+    </nav>
     <div class="container-fluid">
         <main class="main-container ">
             <div class="main-title">
@@ -146,7 +150,7 @@ var options = {
      "#9B0FD7",
      "#CD3793",
   ],
-        labels: ['Socio', 'Staff', 'Guarderia', 'Piscina', 'Tenia','Restaurante', 'Gimnasio','Eventos','Invitado' ],
+        labels: ['Socio', 'Staff', 'Guarderia', 'Piscina', 'Tenis','Restaurante', 'Gimnasio','Eventos','Invitado' ],
         responsive: [{
           breakpoint: 480,
           options: {
