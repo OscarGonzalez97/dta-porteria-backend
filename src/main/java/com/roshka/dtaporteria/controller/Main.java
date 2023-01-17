@@ -8,7 +8,7 @@ public class Main {
 
     @GetMapping
     public String main(){
-        return "fragmento/base";
+        return "dashboard";
     }
 
 }
