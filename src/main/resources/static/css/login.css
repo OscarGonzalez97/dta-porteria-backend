@@ -295,4 +295,9 @@ a:hover{
 	  transition: all 0.3s ease-in-out;
 
   }
+  @media screen and (max-height: 700px){
+    .form-primero{
+        margin-top:0;
+    }
+  }
   
