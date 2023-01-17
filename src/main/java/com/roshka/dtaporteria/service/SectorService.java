@@ -40,17 +40,20 @@ public class SectorService {
             return null;
         }
     }
-    public Boolean add(SectorDTO post) { //metodo para agregar sectores
+    public String add(SectorDTO post) { //metodo para agregar sectores
+        if (getById(post.getId()) != null){
+            return "?err001";
+        }
         Map<String, Object> docData = getDocData(post);
         CollectionReference posts = getCollection();
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(String.valueOf(post.getId())).set(docData);
         try {
             if (writeResultApiFuture.get() != null){
-                return Boolean.TRUE;
+                return "?createSuccess";
             }
-            return Boolean.FALSE;
+            return "?err";
         } catch (InterruptedException | ExecutionException e) {
-            return Boolean.FALSE;
+            return "?err";
         }
     }
 
@@ -69,16 +72,19 @@ public class SectorService {
         }
     }
 
-    public Boolean delete(String id) { //metodo para eliminar sectores
+    public String delete(String id) { //metodo para eliminar sectores
+        if (getById(id) == null){
+            return "?err002";
+        }
         CollectionReference posts = getCollection();
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).delete();
         try {
             if (writeResultApiFuture.get() != null){
-                return Boolean.TRUE;
+                return "?deleteSuccess";
             }
-            return Boolean.FALSE;
+            return "?err";
         } catch (InterruptedException | ExecutionException e) {
-            return Boolean.FALSE;
+            return "?err";
         }
     }
 

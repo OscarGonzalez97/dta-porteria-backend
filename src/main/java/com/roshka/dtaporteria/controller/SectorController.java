@@ -27,12 +27,12 @@ public class SectorController { //controlador de sectores
     }
     @PostMapping("/add")
     public String aggSectores(SectorDTO post){ //metodo el cual se encarga de guardar lo cargado en el formulario
-        service.add(post);
-        return "redirect:/sectores"; //redirecciona al listado de sectores para ver que se actualizo
+        String status = service.add(post);
+        return "redirect:/sectores" + status; //redirecciona al listado de sectores para ver que se actualizo
     }
     @GetMapping("/{id}")
     public String formDelete (@PathVariable(value = "id") String id) { //metodo para eliminar un sector
-        service.delete(id);
-        return "redirect:/sectores"; //redirecciona al listado de sectores para ver que se actualizo
+        String status = service.delete(id);
+        return "redirect:/sectores" + status; //redirecciona al listado de sectores para ver que se actualizo
     }
 }
