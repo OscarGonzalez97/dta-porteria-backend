@@ -27,6 +27,7 @@ public class RecordController {
 
     @GetMapping
     public String list(Model modelo){ //metodo para listar todos los records
+
         modelo.addAttribute("records", service.list());
         return "listRecords";
     }
@@ -35,10 +36,6 @@ public class RecordController {
     public String verDetalles (@PathVariable(value = "id") String id, Model modelo) { //metodo para mostrar los detalles de cada record
         modelo.addAttribute("records", service.getById(id));
         return "ver";
-    }
-    @GetMapping("/list")
-    public ResponseEntity list(){
-        return new ResponseEntity(service.list(), HttpStatus.OK);
     }
 
     @GetMapping("/ReporteExcel")
