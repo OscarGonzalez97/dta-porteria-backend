@@ -1,4 +1,5 @@
 package com.roshka.dtaporteria.service;
+import com.roshka.dtaporteria.config.UserRecordCustom;
 import com.roshka.dtaporteria.dto.MemberDTO;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
@@ -6,6 +7,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
@@ -50,14 +52,14 @@ public class ImportMembersExcelService {
         }
         for (posicion=1; posicion<= filas; posicion++){
             Row row = hoja.getRow(posicion);
-            String tipo = row.getCell(5).getStringCellValue();
+            String tipo = row.getCell(4).getStringCellValue();
             checkMiembroNoSocioCiVacio(row, tipo);
             if (row.getCell(0) != null){
                 Double id_miembro = row.getCell(0).getNumericCellValue();
                 checkMiembroNoSocioConIdMiembro(tipo, id_miembro);
                 checkMiembroSocioConIdRepetido(id_miembro, mapaID);
             }
-            checkNullCreadoporNombreApellido(row);
+            checkNullNombreApellido(row);
             checkSocioIdMiembroVacio(row, tipo);
             checkMiembroSocioConFechavencimiento(row, tipo);
             checkMiembroNoSocioSinFechavencimiento(row, tipo);
@@ -72,10 +74,7 @@ public class ImportMembersExcelService {
         }
     }
 
-    private void checkNullCreadoporNombreApellido(Row row) {
-        if (row.getCell(2) == null){
-            mensaje.add("Fila "+(posicion+1) +": Campo 'Creado por' vacio.");
-        }
+    private void checkNullNombreApellido(Row row) {
         if (row.getCell(3) == null){
             mensaje.add("Fila "+(posicion+1) +": Campo 'Apellido' vacio.");
         }
@@ -85,14 +84,14 @@ public class ImportMembersExcelService {
     }
 
     private void checkMiembroNoSocioSinFechavencimiento(Row row, String tipo) {
-        if(!Objects.equals(tipo, "Socio") && row.getCell(6) == null){
+        if(!Objects.equals(tipo, "Socio") && row.getCell(5) == null){
             mensaje.add("Fila "+(posicion+1) +": Miembro no Socio sin fecha de vencimiento.");
             }
     }
 
     private void checkMiembroSocioConFechavencimiento(Row row, String tipo) {
-        if(Objects.equals(tipo, "Socio") && row.getCell(6) != null){
-            mensaje.add("Fila "+(posicion+1)+": Miembro Socio con fecha de vencimiento " + row.getCell(6)
+        if(Objects.equals(tipo, "Socio") && row.getCell(5) != null){
+            mensaje.add("Fila "+(posicion+1)+": Miembro Socio con fecha de vencimiento " + row.getCell(5)
                     .getLocalDateTimeCellValue()
                     .toLocalDate().toString()+".");
         }
@@ -126,6 +125,7 @@ public class ImportMembersExcelService {
     }
 
     public List<MemberDTO> obtenerMiembros(MultipartFile file) throws IOException {
+        UserRecordCustom usr = (UserRecordCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Sheet hoja = getHoja1(file);
         conseguirNumeroDeFilas(hoja);
         int filas = hoja.getLastRowNum();
@@ -137,14 +137,14 @@ public class ImportMembersExcelService {
             memberDTO.setCi(row.getCell(1)!=null ? String.valueOf((int) row.getCell(1).getNumericCellValue()) : null);
             memberDTO.setSurname(String.valueOf(row.getCell(2)));
             memberDTO.setName(String.valueOf(row.getCell(3)));
-            memberDTO.setCreated_by(String.valueOf(row.getCell(4)));
-            memberDTO.setType(String.valueOf(row.getCell(5)));
-            memberDTO.setFecha_vencimiento(row.getCell(6)!=null
-                    ? row.getCell(6)
+            memberDTO.setCreated_by(usr.getPassword());
+            memberDTO.setType(String.valueOf(row.getCell(4)));
+            memberDTO.setFecha_vencimiento(row.getCell(5)!=null
+                    ? row.getCell(5)
                         .getLocalDateTimeCellValue()
                         .toLocalDate()
                         .toString() : null);
-            memberDTO.setIs_defaulter(Objects.equals(String.valueOf(row.getCell(7)), "Si") ? String.valueOf(row.getCell(7)) : null);
+            memberDTO.setIs_defaulter(Objects.equals(String.valueOf(row.getCell(6)), "Si") ? String.valueOf(row.getCell(7)) : null);
             miembros.add(memberDTO);
             }
         return miembros;
