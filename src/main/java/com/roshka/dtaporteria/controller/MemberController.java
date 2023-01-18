@@ -1,6 +1,7 @@
 package com.roshka.dtaporteria.controller;
 import com.roshka.dtaporteria.config.UserRecordCustom;
 import com.roshka.dtaporteria.dto.MemberDTO;
+import com.roshka.dtaporteria.service.HistorialService;
 import com.roshka.dtaporteria.service.ImportMembersExcelService;
 import com.roshka.dtaporteria.service.MemberService;
 import com.roshka.dtaporteria.service.TypeService;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Controller
@@ -27,6 +29,9 @@ public class MemberController {
     @Autowired
     private ImportMembersExcelService importMembersExcelService;
 
+    @Autowired
+    private HistorialService historialService;
+
     @GetMapping
     public String Miembros(Model model) {
         List<MemberDTO> miembros = service.list();
@@ -35,6 +40,14 @@ public class MemberController {
         return "members";
     }
 
+
+    @GetMapping("/historial/{id}")
+    public String showHistorial(Model model , @PathVariable(value = "id") String id){
+        List<Map<String,Object>> miembros = historialService.list(id);
+        System.out.println(miembros);
+        model.addAttribute("historia", miembros);
+        return "historial";
+    }
     @GetMapping("/add-form")
     public String addForm(Model model){
         model.addAttribute("tipos", typeService.list());
