@@ -1,5 +1,6 @@
 package com.roshka.dtaporteria.service;
 import com.roshka.dtaporteria.dto.MemberDTO;
+import com.roshka.dtaporteria.repository.MembersRepository;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -8,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -15,9 +17,12 @@ import java.util.stream.Collectors;
 @EnableScheduling
 public class FechaVencimientoService {
     private final MemberService memberService;
+    private final MembersRepository membersRepository;
 
-    public FechaVencimientoService(MemberService memberService) {
+    public FechaVencimientoService(MemberService memberService,
+                                   MembersRepository membersRepository) {
         this.memberService = memberService;
+        this.membersRepository = membersRepository;
     }
 
     @Scheduled(cron = "0 0 0 * * *")
@@ -28,7 +33,12 @@ public class FechaVencimientoService {
         fecha_vencimiento.forEach(
                 (key, value) -> {
                     if (!Objects.equals(value.getType(), "Socio") && !isAfterCurrentDate(value.getFecha_vencimiento())){
-                        memberService.delete(key);
+
+                        try {
+                            memberService.delete(key);
+                        } catch (ExecutionException | InterruptedException e) {
+                            System.out.println("errorrrrrr");
+                        }
                     }
                 }
         );
