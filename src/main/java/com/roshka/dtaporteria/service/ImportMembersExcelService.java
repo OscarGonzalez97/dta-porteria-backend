@@ -1,6 +1,7 @@
 package com.roshka.dtaporteria.service;
 import com.roshka.dtaporteria.config.UserRecordCustom;
 import com.roshka.dtaporteria.dto.MemberDTO;
+import com.roshka.dtaporteria.repository.MembersRepository;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
@@ -17,10 +18,9 @@ import java.util.List;
 import java.util.Objects;
 
 @Service
-public class ImportMembersExcelService {
+public class ImportMembersExcelService{
     @Autowired
-    private MemberService memberService;
-
+    private MembersRepository membersRepository;
     private static int posicion = 0;
     private static final List<String> mensaje = new ArrayList<>();
 
@@ -102,7 +102,7 @@ public class ImportMembersExcelService {
         }
         else {
             ID.put(id_miembro, 1);
-            if (memberService.getByIdmember(String.valueOf(id_miembro.intValue())))
+            if (membersRepository.existsByIdMember(String.valueOf(id_miembro.intValue())))
             {
                 mensaje.add("Fila "+(posicion+1)+": ID de miembro "+id_miembro.intValue()+" ya existe en la base de datos.");
             }

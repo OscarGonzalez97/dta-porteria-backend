@@ -15,33 +15,33 @@ import java.time.format.DateTimeFormatter;
 public class Member{
     @Id
     private String id;
-    private String created_by;
+    private String createdBy;
     private String ci;
-    private String id_member;
-    private String is_defaulter;
+    private String idMember;
+    private String isDefaulter;
     private String name;
     private String photo;
     private String surname;
     private String type;
-    private String fecha_vencimiento;
+    private String fechaVencimiento;
 
     public Member(String id, String created_by, String ci, String id_member, String is_defaulter, String name, String photo, String surname, String type, String fecha_vencimiento) {
         this.id = id;
-        this.created_by = created_by;
+        this.createdBy = created_by;
         this.ci = ci;
-        this.id_member = id_member;
-        this.is_defaulter = is_defaulter;
+        this.idMember = id_member;
+        this.isDefaulter = is_defaulter;
         this.name = name;
         this.photo = photo;
         this.surname = surname;
         this.type = type;
-        this.fecha_vencimiento = fecha_vencimiento;
+        this.fechaVencimiento = fecha_vencimiento;
     }
     public String getFecha_vencimiento() {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-            LocalDate.parse(this.fecha_vencimiento, formatter);
-            return fecha_vencimiento;
+            LocalDate.parse(this.fechaVencimiento, formatter);
+            return fechaVencimiento;
         } catch (Exception e){
             return null;
         }
