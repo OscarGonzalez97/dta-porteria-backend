@@ -172,6 +172,7 @@
                 </td>
                 <td sec:authorize="hasAuthority('admin')" class="d-flex gap-1">
                     <a type="button" class="btn btn-sm btn-primary" th:href="@{/members/update/{id}(id=${m.id})}" target="_self">Editar</a>
+                    <a type="button" class="btn btn-sm btn-secondary" th:href="@{/members/historial/{id}(id=${m.ci})}" target="_self">Historial</a>
                     <button type="button" class="btn btn-sm btn-danger" th:data-id="${m.id}" data-bs-toggle="modal" data-bs-target="#exampleModal" target="_self">Eliminar</button>
                 </td>
             </tr>
