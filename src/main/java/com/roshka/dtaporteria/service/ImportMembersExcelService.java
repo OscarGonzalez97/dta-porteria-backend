@@ -74,10 +74,10 @@ public class ImportMembersExcelService {
     }
 
     private void checkNullNombreApellido(Row row) {
-        if (row.getCell(3) == null){
+        if (row.getCell(2) == null){
             mensaje.add("Fila "+(posicion+1) +": Campo 'Apellido' vacio.");
         }
-        if (row.getCell(4) == null){
+        if (row.getCell(3) == null){
             mensaje.add("Fila "+(posicion+1) +": Campo 'Nombre' vacio.");
         }
     }
