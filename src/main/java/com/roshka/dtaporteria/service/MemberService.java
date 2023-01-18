@@ -23,6 +23,11 @@ public class MemberService {
 
     public List<Member> listMemberPg(){return membersRepository.findAll();}
 
+    public Boolean present(String id){
+        Optional<Member> member = membersRepository.findById(id);
+        return member.isPresent();
+    }
+
     public MemberDTO getById(String id) {
         DocumentReference docRef = getCollection().document(id);
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -77,8 +82,8 @@ public class MemberService {
             return null;
         }
     }
-
-    public Boolean add(MemberDTO post) {
+    @Transactional(rollbackFor={ExecutionException.class, InterruptedException.class})
+    public void add(MemberDTO post) throws ExecutionException, InterruptedException {
         Map<String, Object> docData = getDocData(post);
         CollectionReference posts = getCollection();
         String id = posts.document().getId();
@@ -92,46 +97,33 @@ public class MemberService {
                 post.getSurname(),
                 post.getType(),
                 post.getFecha_vencimiento()));
-        try {
-            if (writeResultApiFuture.get() != null) {
-                return Boolean.TRUE;
-            }
-            return Boolean.FALSE;
-        } catch (InterruptedException | ExecutionException e) {
-            return Boolean.FALSE;
-        }
+        writeResultApiFuture.get();
     }
 
 
-
-    public Boolean update(MemberDTO member) {
+    @Transactional(rollbackFor={ExecutionException.class, InterruptedException.class})
+    public void update(MemberDTO member) throws ExecutionException, InterruptedException {
         Map<String, Object> docData = getDocData(member);
         docData.values().remove(Collections.singleton(null));
         CollectionReference posts = getCollection();
-        ApiFuture<WriteResult> writeResultApiFuture = posts.document(String.valueOf(member.getId())).update(docData);
-        try {
-            if (writeResultApiFuture.get() != null) {
-                return Boolean.TRUE;
-            }
-            return Boolean.FALSE;
-        } catch (InterruptedException | ExecutionException e) {
-            return Boolean.FALSE;
+        ApiFuture<WriteResult> writeResultApiFuture = posts.document(member.getId()).update(docData);
+        String id = member.getId();
+        Optional<Member> present = membersRepository.findById(id);
+        if(!present.isPresent()){
+            return;
         }
+        Member memberPg = present.get();
+        writeResultApiFuture.get();
     }
 
-    public String delete(String id) {
+    @Transactional(rollbackFor={ExecutionException.class, InterruptedException.class})
+    public String delete(String id) throws ExecutionException, InterruptedException {
         CollectionReference posts = getCollection();
-        if (id == null || getById(id) == null) return "?err002";
+        if (id == null || !membersRepository.findById(id).isPresent()) return "?err002";
+        membersRepository.deleteById(id);
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).delete();
-        try {
-            if (writeResultApiFuture.get() != null){
-                membersRepository.deleteById(id);
-                return "?deleteSuccess";
-            }
-            return "?err001";
-        } catch (InterruptedException | ExecutionException ignored) {
-            return "?err";
-        }
+        writeResultApiFuture.get();
+        return "deleteSuccess";
     }
 
     private static Map<String, Object> getDocData(MemberDTO post) {
