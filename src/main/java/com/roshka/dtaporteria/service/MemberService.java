@@ -2,11 +2,17 @@ package com.roshka.dtaporteria.service;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
+import com.roshka.dtaporteria.config.UserRecordCustom;
+import com.roshka.dtaporteria.dto.HistorialDTO;
 import com.roshka.dtaporteria.dto.MemberDTO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
@@ -15,6 +21,9 @@ public class MemberService {
 
     @Autowired
     private FirebaseInitializer firebase;
+
+    @Autowired
+    private HistorialService historialService;
 
     public MemberDTO getById(String id) {
         DocumentReference docRef = getCollection().document(id);
@@ -56,6 +65,7 @@ public class MemberService {
         }
     }
     public List<MemberDTO> list() {
+        historialService.list("112");
         List<MemberDTO> response = new ArrayList<>();
         MemberDTO post;
         ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
@@ -75,8 +85,14 @@ public class MemberService {
         Map<String, Object> docData = getDocData(post);
         CollectionReference posts = getCollection();
         ApiFuture<WriteResult> writeResultApiFuture = posts.document().set(docData);
+
         try {
             if (writeResultApiFuture.get() != null) {
+                docData.values().removeAll(Collections.singleton(null));
+                docData.values().removeAll(Collections.singleton(""));
+                System.out.println(docData);
+                HistorialDTO historialDTO = new HistorialDTO(post.getCi(), "creacion: " + docData, post.getCreated_by(), LocalDateTime.now().toString());
+                historialService.addHistorial(historialDTO);
                 return Boolean.TRUE;
             }
             return Boolean.FALSE;
@@ -87,11 +103,15 @@ public class MemberService {
 
     public Boolean update(MemberDTO member) {
         Map<String, Object> docData = getDocData(member);
-        docData.values().remove(Collections.singleton(null));
+        docData.values().removeAll(Collections.singleton(null));
+        docData.values().removeAll(Collections.singleton(""));
         CollectionReference posts = getCollection();
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(String.valueOf(member.getId())).update(docData);
+        UserRecordCustom user = (UserRecordCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         try {
             if (writeResultApiFuture.get() != null) {
+                HistorialDTO historialDTO = new HistorialDTO(member.getCi(), "modificacion: " + docData,user.getPassword(), LocalDateTime.now().toString());
+                historialService.addHistorial(historialDTO);
                 return Boolean.TRUE;
             }
             return Boolean.FALSE;
@@ -101,11 +121,15 @@ public class MemberService {
     }
 
     public String delete(String id) {
+        UserRecordCustom user = (UserRecordCustom) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         CollectionReference posts = getCollection();
-        if (id == null || getById(id) == null) return "?err002";
+        MemberDTO member = getById(id);
+        if (id == null || member == null) return "?err002";
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).delete();
         try {
             if (writeResultApiFuture.get() != null){
+                HistorialDTO historialDTO = new HistorialDTO(member.getCi(), "se ha eliminado" ,user.getPassword(), LocalDateTime.now().toString());
+                historialService.addHistorial(historialDTO);
                 return "?deleteSuccess";
             }
             return "?err001";
