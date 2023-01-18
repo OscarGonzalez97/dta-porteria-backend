@@ -1,6 +1,7 @@
 package com.roshka.dtaporteria.controller;
 import com.roshka.dtaporteria.config.UserRecordCustom;
 import com.roshka.dtaporteria.dto.MemberDTO;
+import com.roshka.dtaporteria.model.Member;
 import com.roshka.dtaporteria.service.ImportMembersExcelService;
 import com.roshka.dtaporteria.service.MemberService;
 import com.roshka.dtaporteria.service.TypeService;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 @Controller
 @RequestMapping("/members")
@@ -29,7 +31,7 @@ public class MemberController {
 
     @GetMapping
     public String Miembros(Model model) {
-        List<MemberDTO> miembros = service.list();
+        List<Member> miembros = service.listMemberPg();
         model.addAttribute("miembros", miembros);
         model.addAttribute("tipos", typeService.list());
         return "members";
@@ -69,7 +71,12 @@ public class MemberController {
             return "redirect:/members/import?error";
         }
         List<MemberDTO> miembros = importMembersExcelService.obtenerMiembros(file);
-        service.AddMembersByList(miembros);
+
+        try {
+            service.AddMembersByList(miembros);
+        } catch (ExecutionException | InterruptedException e) {
+            return "redirect:/members/import?error=baseDeDatosMurio";
+        }
         return "redirect:/members?importSuccess";
     }
 
