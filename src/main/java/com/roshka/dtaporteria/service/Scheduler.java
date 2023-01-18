@@ -6,9 +6,14 @@ import com.roshka.dtaporteria.repository.LogErroresRepository;
 import com.roshka.dtaporteria.repository.MembersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -23,8 +28,10 @@ public class Scheduler {
     private MembersRepository membersRepository;
     @Autowired
     private LogErroresRepository logErroresRepository;
+    @PersistenceContext
+    private EntityManager manager;
 
-    @Scheduled(cron = " 35 10 17 * * *")
+    @Scheduled(cron = " 35 32 17 * * *")
     public void tasks(){
         syncDatabases();
         checkFechaVencimiento();
@@ -47,7 +54,7 @@ public class Scheduler {
         membersRepository.saveAll(memberpg);
     }
     void checkFechaVencimiento() {
-        membersRepository.deleteFecha(LocalDate.now().toString());
+
     }
 
     public Boolean isAfterCurrentDate(String fecha){

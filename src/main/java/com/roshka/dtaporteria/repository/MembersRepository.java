@@ -8,11 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-@Transactional
 @Repository
+@Transactional
 public interface MembersRepository  extends JpaRepository<Member, String> {
     boolean existsByIdMember(String id_miembro);
     @Modifying
-    @Query(value = "DELETE FROM Member u WHERE u.fechaVencimiento<:fecha")
+    @Query("DELETE FROM Member AS u WHERE u.fechaVencimiento<:fecha")
     void deleteFecha(@Param("fecha")String fecha);
 }
