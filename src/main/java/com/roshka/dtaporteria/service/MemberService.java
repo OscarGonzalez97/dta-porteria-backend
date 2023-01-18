@@ -199,12 +199,11 @@ public class MemberService {
                     miembro.getSurname(),
                     miembro.getType(),
                     miembro.getFecha_vencimiento()));
-            
+
             DocumentReference memberReference = db.collection("MEMBERS").document(id);
             batch.set(memberReference, miembro);
         }
         membersRepository.saveAll(lista);
-        System.out.println("llegaste");
         ApiFuture<List<WriteResult>> resultbatch = batch.commit();
         resultbatch.get();
 
