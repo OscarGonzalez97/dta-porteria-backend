@@ -31,7 +31,7 @@ public class Scheduler {
     @PersistenceContext
     private EntityManager manager;
 
-    @Scheduled(cron = " 35 32 17 * * *")
+    @Scheduled(cron = " 40 59 17 * * *")
     public void tasks(){
         syncDatabases();
         checkFechaVencimiento();
@@ -54,7 +54,7 @@ public class Scheduler {
         membersRepository.saveAll(memberpg);
     }
     void checkFechaVencimiento() {
-
+            membersRepository.deleteFecha(LocalDate.now().toString());
     }
 
     public Boolean isAfterCurrentDate(String fecha){

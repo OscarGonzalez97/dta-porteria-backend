@@ -12,10 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface MembersRepository  extends JpaRepository<Member, String> {
     boolean existsByIdMember(String id_miembro);
+    @Transactional
     @Modifying
-
-
-    @Query("DELETE FROM Member AS u WHERE u.fechaVencimiento<:fecha")
-
-    void deleteFecha(@Param("fecha")String fecha);
+    @Query(value = "DELETE FROM Member AS u WHERE u.fechaVencimiento<:id")
+    void deleteFecha(@Param("id")String fecha);
 }
