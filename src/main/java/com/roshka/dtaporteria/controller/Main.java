@@ -18,9 +18,9 @@ public class Main {
     public String main(Model model) throws Exception {
         model.addAttribute("dataLinea",service.dataGraficoLinea(2023));
         model.addAttribute("dataPie",mService.dataGraficoPie());
-//        model.addAttribute("chartData",mservice.listadelista());
+        model.addAttribute("personas",service.dataTarjeta());
         model.addAttribute("miembros",mService.list().size());
-//        model.addAttribute("personas",service.dataGrafico(2024)); //falta
+        model.addAttribute("personas_defaulter",mService.dataTarjetaM());
         return "dashboard";
     }
 

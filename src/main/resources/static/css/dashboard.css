@@ -223,7 +223,7 @@ body {
       margin: 20px 0;
     }
 
-    .card {
+    .card_dash {
       display: flex;
       flex-direction: column;
       justify-content: space-around;
@@ -235,21 +235,21 @@ body {
       box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
     }
 
-    .card:first-child {
+    .card_dash:first-child {
       border-left: 7px solid #246dec;
     }
 
-    .card:nth-child(2) {
+    .card_dash:nth-child(2) {
       border-left: 7px solid #f5b74f;
     }
 
-    .card:nth-child(3) {
+    .card_dash:nth-child(3) {
       border-left: 7px solid #367952;
     }
 
 
 
-    .card > span {
+    .card_dash > span {
       font-size: 20px;
       font-weight: 600;
     }
@@ -301,7 +301,38 @@ body {
       color: black !important;
 
     }
+    .icon_grl{
+        height:24px
+    }
 
+    .icon-btn{
+    width:38px;
+    }
+    .contenedor_table::-webkit-scrollbar {
+        -webkit-appearance: none;
+    }
+
+    .contenedor_table::-webkit-scrollbar:vertical {
+        width:10px;
+    }
+
+    .contenedor_table::-webkit-scrollbar-button:increment,.contenedor::-webkit-scrollbar-button {
+        display: none;
+    }
+
+    .contenedor_table::-webkit-scrollbar:horizontal {
+        height: 10px;
+    }
+
+    .contenedor_table::-webkit-scrollbar-thumb {
+        background-color: #797979;
+        border-radius: 20px;
+        border: 2px solid #f1f2f3;
+    }
+
+    .contenedor_table::-webkit-scrollbar-track {
+        border-radius: 10px;
+    }
     /* Dark theme */
    
     

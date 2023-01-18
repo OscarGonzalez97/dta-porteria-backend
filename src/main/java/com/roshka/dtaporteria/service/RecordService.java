@@ -50,9 +50,24 @@ public class RecordService {
             return null;
         }
     }
+//    public int[] dataGraficoLinea(int ano){
+//        ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
+//        int[] mesArray={0,0,0,0,0,0,0,0,0,0,0,0};  //Iniciamos el array con 12 datos que serian los meses
+//        int persona_dia=0;
+//        try {
+//            for (DocumentSnapshot doc : querySnapshotApiFuture.get().getDocuments()) {
+//                Long fecha_ingreso = Long.parseLong(String.valueOf(doc.get("date_time")));  //aqui obtnemos la fecha exacta en milisegundos
+//                int mes=getMonthofdatetime(fecha_ingreso,ano,persona_dia);//getMonthofdatetime nos traera el mes de la fecha que esta en milisegundo
+//                arraymes(mes,mesArray);
+//            }
+//            return mesArray;
+//        } catch (Exception e) {
+//            return null;
+//        }
+//    }
     public int[] dataGraficoLinea(int ano){
         ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
-        int[] mesArray={0,0,0,0,0,0,0,0,0,0,0,0};  //Iniciamos el array con 12 datos que serian los meses
+        int[] mesArray={0,0,0,0,0,0,0,0,0,0,0,0,0};  //Iniciamos el array con 12 datos que serian los meses
         try {
             for (DocumentSnapshot doc : querySnapshotApiFuture.get().getDocuments()) {
                 Long fecha_ingreso = Long.parseLong(String.valueOf(doc.get("date_time")));  //aqui obtnemos la fecha exacta en milisegundos
@@ -64,19 +79,48 @@ public class RecordService {
             return null;
         }
     }
-    public int getMonthofdatetime(Long l,int ano ){  //para el grafico mes a mes :)
+    public int dataTarjeta(){
+        ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
+        int persona_dia=0;
+        try {
+            for (DocumentSnapshot doc : querySnapshotApiFuture.get().getDocuments()) {
+                Long fecha_ingreso = Long.parseLong(String.valueOf(doc.get("date_time")));  //aqui obtnemos la fecha exacta en milisegundos
+                getPersonaDia(fecha_ingreso,persona_dia);
+            }
+            return persona_dia;
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+public int getMonthofdatetime(Long l,int ano){  //para el grafico mes a mes :)
+        Calendar date = new GregorianCalendar();
+    date.setTimeInMillis(l);
+    date.setTimeZone(TimeZone.getDefault());
+    SimpleDateFormat dateFormatt = new SimpleDateFormat("dd-MM-yyyy");
 
+    Date datee = new Date();
+    DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
+
+
+    if(date.get(Calendar.YEAR)==ano){
+        return date.get(Calendar.MONTH);
+    }
+    return 99;
+}
+    public void getPersonaDia(Long l,int persona_dia){  //para el grafico mes a mes :)
         Calendar date = new GregorianCalendar();
         date.setTimeInMillis(l);
         date.setTimeZone(TimeZone.getDefault());
+        SimpleDateFormat dateFormatt = new SimpleDateFormat("dd-MM-yyyy");
 
+        Date datee = new Date();
+        DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
 
-        if(date.get(Calendar.YEAR)==ano){
-            return date.get(Calendar.MONTH);
+        persona_dia++;
+            if(dateFormatt.format(date.getTime()).equals(dateFormat.format(datee))){
+                 persona_dia++;
         }
 
-//        System.out.println(new SimpleDateFormat().format(date));
-        return 99;
     }
 //    private int obtenerUsuarioDia(){
 //        Date datee = new Date();
