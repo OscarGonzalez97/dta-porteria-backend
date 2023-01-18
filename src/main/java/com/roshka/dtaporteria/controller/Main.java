@@ -16,11 +16,12 @@ public class Main {
     MemberService mService;
     @GetMapping
     public String main(Model model) throws Exception {
-        model.addAttribute("dataLinea",service.dataGraficoLinea(2023));
+        int[] meses=service.dataGraficoLinea(2023);
+        model.addAttribute("dataLinea",meses);
         model.addAttribute("dataPie",mService.dataGraficoPie());
-        model.addAttribute("personas",service.dataTarjeta());
         model.addAttribute("miembros",mService.list().size());
         model.addAttribute("personas_defaulter",mService.dataTarjetaM());
+        model.addAttribute("personas",meses[12]);
         return "dashboard";
     }
 
