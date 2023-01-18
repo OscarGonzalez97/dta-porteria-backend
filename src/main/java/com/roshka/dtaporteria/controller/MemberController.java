@@ -92,7 +92,12 @@ public class MemberController {
         {
             return "redirect:/members/add-form?error002";
         }
-        service.add(member);
+
+        try {
+            service.add(member);
+        } catch (ExecutionException | InterruptedException e) {
+            return "redirect:/members/add-form?error002";
+        }
         return "redirect:/members?createSuccess";
     }
 
@@ -128,18 +133,34 @@ public class MemberController {
                 return "redirect:/members/update/"+member.getId()+"?error002";
             }
         }
-        service.update(member);
+
+        try {
+            service.update(member);
+        } catch (ExecutionException | InterruptedException e) {
+            return "redirect:/members/update/"+member.getId()+"?error002";
+        }
         return "redirect:/members?editSuccess";
     }
 
     @PostMapping("/delete/{id}")
     public String deleteMember(@PathVariable(value = "id") String id){
-        String res = service.delete(id);
+
+        String res = null;
+        try {
+            res = service.delete(id);
+        } catch (ExecutionException | InterruptedException e) {
+            return "redirect:/members?err002";
+        }
         return "redirect:/members" + res;
     }
     @GetMapping("/delete/{id}")
     public String getDeleteMember(@PathVariable(value = "id") String id){
-        String res = service.delete(id);
+        String res = null;
+        try {
+            res = service.delete(id);
+        } catch (ExecutionException | InterruptedException e) {
+            return "redirect:/members?err002";
+        }
         return "redirect:/members" + res;
     }
 
