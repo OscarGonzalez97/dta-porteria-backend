@@ -40,23 +40,23 @@
 
             <div class="main-cards row">
 
-                <div class="card ">
+                <div class="card_dash ">
                     <div class="card-inner">
-                        <p class="text-primary">Personas Hoy</p>
+                        <p class="text-primary" >Personas Hoy</p>
                         <img th:src="@{/img/Person.svg}" class="icon">
                     </div>
-                    <span class="text-primary font-weight-bold">2</span>
+                    <span class="text-primary font-weight-bold" th:text="${personas}">1</span>
                 </div>
 
-                <div class="card ">
+                <div class="card_dash">
                     <div class="card-inner">
                         <p class="text-primary">Miembro en falta</p>
                         <img th:src="@{/img/blockk.svg}" class="icon">
                     </div>
-                    <span class="text-primary font-weight-bold">1</span>
+                    <span class="text-primary font-weight-bold" th:text="${personas_defaulter}">0</span>
                 </div>
 
-                <div class="card ">
+                <div class="card_dash ">
                     <div class="card-inner">
                         <p class="text-primary">Miembros</p>
                         <img th:src="@{/img/users.svg}" class="icon">
