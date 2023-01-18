@@ -66,7 +66,7 @@
 
             </div>
 
-            <div class="charts">
+            <div class="charts" style="overflow-x:auto">
 
                 <div class="charts-card">
                     <p class="chart-title">Entrada de miembros por mes</p>
@@ -75,12 +75,17 @@
 
                 <div class="charts-card">
                     <p class="chart-title">Tipos de miembros</p>
-                    <div id="area-chart"></div>
+                    <div id="area-chart" style="    display: flex;
+    justify-content: center;"></div>
                 </div>
 
             </div>
         </main>
         <script type="text/javascript" th:inline="javascript">
+        array=[[${dataLinea}]];
+        console.log(array);
+        array.pop();
+        console.log(array);
         var barChartOptions = {
         series: [{
         data: [[${dataLinea}]]

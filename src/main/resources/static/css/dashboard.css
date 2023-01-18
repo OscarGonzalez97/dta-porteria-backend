@@ -269,9 +269,10 @@ body {
     }
     .charts {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: minmax(585px,1fr);
       gap: 20px;
     }
+
 
     .charts-card {
       background-color: #ffffff;
@@ -282,6 +283,11 @@ body {
       border: 1px solid #d2d2d3;
       border-radius: 5px;
       box-shadow: 0 6px 7px -4px rgba(0, 0, 0, 0.2);
+    }
+    .charts-card:nth-child(2){
+        border:none;
+        border-radius:none;
+        box-shadow:none;
     }
 
     .chart-title {
