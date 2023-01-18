@@ -4,8 +4,11 @@ import com.google.cloud.firestore.*;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
 import com.roshka.dtaporteria.dto.MemberDTO;
 
+import com.roshka.dtaporteria.model.Member;
+import com.roshka.dtaporteria.repository.MembersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -15,6 +18,10 @@ public class MemberService {
 
     @Autowired
     private FirebaseInitializer firebase;
+    @Autowired
+    private MembersRepository membersRepository;
+
+    public List<Member> listMemberPg(){return membersRepository.findAll();}
 
     public MemberDTO getById(String id) {
         DocumentReference docRef = getCollection().document(id);
@@ -74,7 +81,17 @@ public class MemberService {
     public Boolean add(MemberDTO post) {
         Map<String, Object> docData = getDocData(post);
         CollectionReference posts = getCollection();
-        ApiFuture<WriteResult> writeResultApiFuture = posts.document().set(docData);
+        String id = posts.document().getId();
+        ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).set(docData);
+        membersRepository.save(new Member(id, post.getCreated_by(),
+                post.getCi(),
+                post.getId_member(),
+                post.getIs_defaulter(),
+                post.getName(),
+                post.getPhoto(),
+                post.getSurname(),
+                post.getType(),
+                post.getFecha_vencimiento()));
         try {
             if (writeResultApiFuture.get() != null) {
                 return Boolean.TRUE;
@@ -84,6 +101,8 @@ public class MemberService {
             return Boolean.FALSE;
         }
     }
+
+
 
     public Boolean update(MemberDTO member) {
         Map<String, Object> docData = getDocData(member);
@@ -106,6 +125,7 @@ public class MemberService {
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).delete();
         try {
             if (writeResultApiFuture.get() != null){
+                membersRepository.deleteById(id);
                 return "?deleteSuccess";
             }
             return "?err001";
@@ -162,13 +182,31 @@ public class MemberService {
         }
     }
 
-    public void AddMembersByList(List<MemberDTO> miembros) {
+    @Transactional(rollbackFor={ExecutionException.class, InterruptedException.class})
+    public void AddMembersByList(List<MemberDTO> miembros) throws ExecutionException, InterruptedException {
         Firestore db = getCollection().getFirestore();
         WriteBatch batch = db.batch();
+        List<Member> lista = new LinkedList<>();
         for(MemberDTO miembro : miembros){
-            DocumentReference memberReference = db.collection("MEMBERS").document();
+            String id = db.collection("MEMBERS").document().getId();
+            System.out.println(id);
+            lista.add(new Member(id, miembro.getCreated_by(),
+                    miembro.getCi(),
+                    miembro.getId_member(),
+                    miembro.getIs_defaulter(),
+                    miembro.getName(),
+                    miembro.getPhoto(),
+                    miembro.getSurname(),
+                    miembro.getType(),
+                    miembro.getFecha_vencimiento()));
+            
+            DocumentReference memberReference = db.collection("MEMBERS").document(id);
             batch.set(memberReference, miembro);
         }
-        batch.commit();
+        membersRepository.saveAll(lista);
+        System.out.println("llegaste");
+        ApiFuture<List<WriteResult>> resultbatch = batch.commit();
+        resultbatch.get();
+
     }
 }
