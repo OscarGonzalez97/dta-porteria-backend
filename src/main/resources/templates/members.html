@@ -137,36 +137,36 @@
             </thead>
             <tbody>   
             <tr th:each = "m : ${miembros}">
-                <td th:text = "${m.ci}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                <td th:text = "${m.ci}" th:style="${m.isDefaulter == 'Si' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <td th:text = "${m.id_member}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                <td th:text = "${m.idMember}" th:style="${m.isDefaulter == 'Si' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <td th:text = "${m.created_by}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                <td th:text = "${m.createdBy}" th:style="${m.isDefaulter == 'Si' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <td th:text = "${m.name}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                <td th:text = "${m.name}" th:style="${m.isDefaulter == 'Si' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <td th:text = "${m.surname}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                <td th:text = "${m.surname}" th:style="${m.isDefaulter == 'Si' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <td th:text = "${m.fecha_vencimiento}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                <td th:text = "${m.fechaVencimiento}" th:style="${m.isDefaulter == 'Si' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <th:block th:if="${m.is_defaulter == null}" >
-                    <td th:text="No" th:classappend="moroso" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}"></td>
+                <th:block th:if="${m.isDefaulter == null}" >
+                    <td th:text="No" th:classappend="moroso" th:style="${m.isDefaulter == 'Si' ? 'color : red;' : ''}"></td>
                 </th:block>
-                <th:block th:if="${m.is_defaulter != null}">
-                    <td th:text="${m.is_defaulter}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                <th:block th:if="${m.isDefaulter != null}">
+                    <td th:text="${m.isDefaulter}" th:style="${m.isDefaulter == 'Si' ? 'color : red;' : ''}">
                         Default
                     </td>
                 </th:block>
-                <td th:text = "${m.photo}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                <td th:text = "${m.photo}" th:style="${m.isDefaulter == 'Si' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <td th:text = "${m.type}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
+                <td th:text = "${m.type}" th:style="${m.isDefaulter == 'Si' ? 'color : red;' : ''}">
                     Default
                 </td>
                 <td sec:authorize="hasAuthority('admin')" class="d-flex gap-1">

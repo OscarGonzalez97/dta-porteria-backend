@@ -71,8 +71,8 @@ public class MemberController {
             return "redirect:/members/import?error";
         }
         List<MemberDTO> miembros = importMembersExcelService.obtenerMiembros(file);
-
         try {
+
             service.AddMembersByList(miembros);
         } catch (ExecutionException | InterruptedException e) {
             return "redirect:/members/import?error=baseDeDatosMurio";
