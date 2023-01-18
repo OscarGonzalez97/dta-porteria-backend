@@ -90,14 +90,14 @@
                 <h1>Miembros</h1>
             </div>
             <div class="col-3">
-                <a sec:authorize="hasAuthority('admin')" type="button" class="btn btn-primary" th:href="@{/members/import}" target="_self">Importar</a>
-                <a  sec:authorize="hasAuthority('admin')" type="button" class="btn btn-success" th:href="@{/members/add-form}" target="_self">Nuevo</a>
-                <a  type="button" class="btn btn-secondary" th:href="@{/members}" target="_self">Actualizar</a>
+                <a sec:authorize="hasAuthority('admin')" type="button" class="btn btn-primary" th:href="@{/members/import}" target="_self" title="Importar miembro"><img th:src="@{/img/importIcon.svg}" class="icon_grl"></a>
+                <a  sec:authorize="hasAuthority('admin')" type="button" class="btn btn-success" th:href="@{/members/add-form}" target="_self" title="Agregar miembro"><img th:src="@{/img/new-user-Icon.svg}" class="icon_grl"></a>
+                <a  type="button" class="btn btn-secondary" th:href="@{/members}" target="_self" title="Actualizar tabla"><img th:src="@{/img/refreshIcon.svg}" class="icon_grl"></a>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid contenedor_table" style="overflow-x:auto;">
         <table id="example" class="table table-striped">
             <thead>
             <tr>
@@ -135,7 +135,7 @@
 
             </tr>
             </thead>
-            <tbody>   
+            <tbody style="vertical-align:middle">
             <tr th:each = "m : ${miembros}">
                 <td th:text = "${m.ci}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
                     Default
@@ -169,9 +169,9 @@
                 <td th:text = "${m.type}" th:style="${m.is_defaulter == 'Si' ? 'color : red;' : ''}">
                     Default
                 </td>
-                <td sec:authorize="hasAuthority('admin')" class="d-flex gap-1">
-                    <a type="button" class="btn btn-sm btn-primary" th:href="@{/members/update/{id}(id=${m.id})}" target="_self">Editar</a>
-                    <button type="button" class="btn btn-sm btn-danger" th:data-id="${m.id}" data-bs-toggle="modal" data-bs-target="#exampleModal" target="_self">Eliminar</button>
+                <td sec:authorize="hasAuthority('admin')" >
+                    <a type="button" class="btn btn-sm btn-primary icon-btn" th:href="@{/members/update/{id}(id=${m.id})}" target="_self" title="Editar miembro"><img th:src="@{/img/edit.svg}" class="icon_grl"></a>
+                    <button type="button" class="btn btn-sm btn-danger icon-btn" th:data-id="${m.id}" data-bs-toggle="modal" data-bs-target="#exampleModal" target="_self" title="Eliminar miembro"><img th:src="@{/img/delete2.svg}" class="icon_grl"></button>
                 </td>
             </tr>
             </tbody>

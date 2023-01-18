@@ -41,20 +41,6 @@ public class MemberService {
             return false;
         }
     }
-    public int[] dataGraficoPie(){
-        ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
-        int[] members={0,0,0,0,0,0,0,0,0};  //Iniciamos el array con 9 datos que serian los tipos
-        try {
-            for (DocumentSnapshot doc : querySnapshotApiFuture.get().getDocuments()) {
-                String tipo_miembro = String.valueOf(doc.get("type"));  //aqui obtnemos la fecha exacta en milisegundos
-                //getMonthofdatetime nos traera el mes de la fecha que esta en milisegundo
-                arrayMiembros(tipo_miembro,members);
-            }
-            return members;
-        } catch (Exception e) {
-            return null;
-        }
-    }
     public List<MemberDTO> list() {
         List<MemberDTO> response = new ArrayList<>();
         MemberDTO post;
@@ -127,8 +113,37 @@ public class MemberService {
         docData.put("fecha_vencimiento", post.getFecha_vencimiento());
         return docData;
     }
-    private CollectionReference getCollection() {
-        return firebase.getFirestore().collection("MEMBERS");
+
+
+    //GRAFICO
+    public int[] dataGraficoPie(){
+        ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
+        int[] members={0,0,0,0,0,0,0,0,0};  //Iniciamos el array con 9 datos que serian los tipos
+        try {
+            for (DocumentSnapshot doc : querySnapshotApiFuture.get().getDocuments()) {
+                String tipo_miembro = String.valueOf(doc.get("type"));  //aqui obtnemos la fecha exacta en milisegundos
+                //getMonthofdatetime nos traera el mes de la fecha que esta en milisegundo
+                arrayMiembros(tipo_miembro,members);
+            }
+            return members;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public int dataTarjetaM(){
+        ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
+        int canti_defaulter=0;
+        try {
+            for (DocumentSnapshot doc : querySnapshotApiFuture.get().getDocuments()) {
+                String tipo_miembro = String.valueOf(doc.get("is_defaulter"));
+                if (tipo_miembro.equals("Si")){
+                    canti_defaulter++;
+                }
+            }
+            return canti_defaulter;
+        } catch (Exception e) {
+            return -99;
+        }
     }
     private void arrayMiembros(String tipo,int[] arrayMembers){
         switch (tipo) {
@@ -161,7 +176,6 @@ public class MemberService {
                 break;
         }
     }
-
     public void AddMembersByList(List<MemberDTO> miembros) {
         Firestore db = getCollection().getFirestore();
         WriteBatch batch = db.batch();
@@ -170,5 +184,8 @@ public class MemberService {
             batch.set(memberReference, miembro);
         }
         batch.commit();
+    }
+    private CollectionReference getCollection() {
+        return firebase.getFirestore().collection("MEMBERS");
     }
 }
