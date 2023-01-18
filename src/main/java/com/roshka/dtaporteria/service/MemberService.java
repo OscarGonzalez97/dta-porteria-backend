@@ -113,6 +113,16 @@ public class MemberService {
             return;
         }
         Member memberPg = present.get();
+        memberPg.setCreatedBy(member.getCreated_by());
+        memberPg.setCi(member.getCi());
+        memberPg.setIdMember(member.getId_member());
+        memberPg.setIsDefaulter(member.getIs_defaulter());
+        memberPg.setName(member.getName());
+        memberPg.setPhoto(member.getPhoto());
+        memberPg.setSurname(member.getSurname());
+        memberPg.setType(member.getType());
+        memberPg.setFechaVencimiento(member.getFecha_vencimiento());
+        membersRepository.save(memberPg);
         writeResultApiFuture.get();
     }
 
