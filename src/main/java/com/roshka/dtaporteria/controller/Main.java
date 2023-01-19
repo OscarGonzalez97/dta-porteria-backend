@@ -24,7 +24,6 @@ public class Main {
         model.addAttribute("dataPie",mService.dataGraficoPie());
         model.addAttribute("miembros",membersRepository.findAll().size());
         model.addAttribute("morosos", membersRepository.countAllByIsDefaulterIsNotNull());
-        model.addAttribute("personas_defaulter",mService.dataTarjetaM());
         model.addAttribute("personas",meses[12]);  //le asigno el ultimo valor del array pq ahi esta la cantidad de persona que entraron ese dia (codigo en RecordService)
         return "dashboard";
     }
