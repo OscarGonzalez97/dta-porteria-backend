@@ -14,6 +14,6 @@ public interface MembersRepository  extends JpaRepository<Member, String> {
     boolean existsByIdMember(String id_miembro);
     @Transactional
     @Modifying
-    @Query(value = "DELETE FROM Member AS u WHERE u.fechaVencimiento<:id")
-    void deleteFecha(@Param("id")String fecha);
+    @Query(value = "DELETE FROM Member AS u WHERE u.fechaVencimiento<?1")
+    void deleteFecha(String fecha);
 }

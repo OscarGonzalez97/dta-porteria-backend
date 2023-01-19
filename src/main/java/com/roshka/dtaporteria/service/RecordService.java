@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
@@ -20,6 +21,22 @@ import java.util.concurrent.ExecutionException;
 public class RecordService {
     @Autowired
     private FirebaseInitializer firebase;
+
+    public List<RecordDTO> listToSync(){
+        List<RecordDTO> response = new LinkedList<>();
+        RecordDTO post;
+        ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().whereGreaterThanOrEqualTo("date_time", String.valueOf(Instant.now().minusSeconds(86400).toEpochMilli())).get();
+        try {
+            for (DocumentSnapshot doc : querySnapshotApiFuture.get().getDocuments()) {
+                post = doc.toObject(RecordDTO.class);
+                response.add(post);
+            }
+            return response;
+        } catch (Exception e) {
+            return null;
+        }
+
+    }
 
     public RecordDTO getById(String id) { //metodo para obtener un record por su id
         DocumentReference docRef = getCollection().document(id);

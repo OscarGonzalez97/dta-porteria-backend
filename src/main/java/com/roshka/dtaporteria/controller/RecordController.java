@@ -27,7 +27,7 @@ public class RecordController {
 
     @GetMapping
     public String list(Model modelo){ //metodo para listar todos los records
-
+        service.listToSync();
         modelo.addAttribute("records", service.list());
         return "listRecords";
     }

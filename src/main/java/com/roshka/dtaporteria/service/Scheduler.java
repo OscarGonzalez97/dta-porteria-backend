@@ -1,9 +1,11 @@
 package com.roshka.dtaporteria.service;
 import com.roshka.dtaporteria.dto.MemberDTO;
+import com.roshka.dtaporteria.dto.RecordDTO;
 import com.roshka.dtaporteria.model.LogErrores;
 import com.roshka.dtaporteria.model.Member;
 import com.roshka.dtaporteria.repository.LogErroresRepository;
 import com.roshka.dtaporteria.repository.MembersRepository;
+import com.roshka.dtaporteria.repository.RecordsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.Modifying;
@@ -28,10 +30,14 @@ public class Scheduler {
     private MembersRepository membersRepository;
     @Autowired
     private LogErroresRepository logErroresRepository;
+    @Autowired
+    private RecordsRepository recordsRepository;
+    @Autowired
+    private RecordService recordService;
     @PersistenceContext
     private EntityManager manager;
 
-    @Scheduled(cron = " 40 59 17 * * *")
+    @Scheduled(cron = " 59 01 20 * * *")
     public void tasks(){
         syncDatabases();
         checkFechaVencimiento();
@@ -53,8 +59,13 @@ public class Scheduler {
         }
         membersRepository.saveAll(memberpg);
     }
+
+    public void syncRecords(){
+        List<RecordDTO> listaRecords = recordService.listToSync();
+    }
     void checkFechaVencimiento() {
-            membersRepository.deleteFecha(LocalDate.now().toString());
+        String fecha = LocalDate.now().toString();
+        membersRepository.deleteFecha(fecha);
     }
 
     public Boolean isAfterCurrentDate(String fecha){
