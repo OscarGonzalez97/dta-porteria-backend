@@ -67,7 +67,7 @@ public class Scheduler {
         member.setIdMember(memberDTO.getId_member());
         member.setIsDefaulter(memberDTO.getIs_defaulter());
         member.setName(memberDTO.getName());
-        member.setPhoto(memberDTO.getPhoto());
+        member.setPhoto("");
         member.setSurname(memberDTO.getSurname());
         member.setType(memberDTO.getType());
         member.setFechaVencimiento(memberDTO.getFecha_vencimiento());

@@ -33,20 +33,13 @@
             </div>
             <input th:field="*{id}" type="hidden" name="id" id="id" th:value="${m.id}" readonly>
             <div class="row justify-content-center align-items-center smt">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label for="id_member" class="form-label">ID miembro</label>
                     <input class="form-control form-control-lg" th:field="*{id_member}" type="text" name="id_member" id="id_member" th:value="${m.id_member}" readonly>
                 </div>
-                <div class="col-md-4">
-                    <label for="created_by" class="form-label">Cédula</label>
+                <div class="col-md-6">
+                    <label for="ci" class="form-label">Cédula</label>
                     <input class="form-control form-control-lg" th:field="*{ci}" type="text" name="ci" id="ci" th:value="${m.ci}">
-                </div>
-                <div class="col-md-4">
-                    <label for="fecha_vencimiento" class="form-label">Fecha de vencimiento</label>
-                    <input class="form-control form-control-lg" th:field="*{fecha_vencimiento}" type="date" name="fecha_vencimiento" placeholder="yyyy-MM-dd" id="fecha_vencimiento"  th:value="${m.fecha_vencimiento}" required>
-                    <div class="invalid-feedback">
-                        Es necesario un valor en este campo.
-                    </div>
                 </div>
             </div>
             <div class="row justify-content-center align-items-center smt">
@@ -67,10 +60,12 @@
             </div>
             <div class="row justify-content-center align-items-center smt">
                 <div class="col-md-5">
-                    <label for="photo" class="form-label">Foto</label>
-                    <input class="form-control form-control-lg" th:field="*{photo}" type="text" name="photo" id="photo"  th:value="${m.photo}">
+                    <label for="fecha_vencimiento" class="form-label">Fecha de vencimiento</label>
+                    <input class="form-control form-control-lg" th:field="*{fecha_vencimiento}" type="date" name="fecha_vencimiento" placeholder="yyyy-MM-dd" id="fecha_vencimiento"  th:value="${m.fecha_vencimiento}" required>
+                    <div class="invalid-feedback">
+                        Es necesario un valor en este campo.
+                    </div>
                 </div>
-
                 <div class="col-md-5">
                     <label for="type" class="form-label">Tipo</label>
                     <select class="form-select form-select-lg" name="type" id="type" th:field="*{type}">

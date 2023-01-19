@@ -118,7 +118,7 @@ public class MemberService {
         memberPg.setIdMember(member.getId_member());
         memberPg.setIsDefaulter(member.getIs_defaulter());
         memberPg.setName(member.getName());
-        memberPg.setPhoto(member.getPhoto());
+        memberPg.setPhoto("");
         memberPg.setSurname(member.getSurname());
         memberPg.setType(member.getType());
         memberPg.setFechaVencimiento(member.getFecha_vencimiento());
