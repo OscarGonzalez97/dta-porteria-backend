@@ -33,14 +33,34 @@ public class Scheduler {
     @Autowired
     private RecordService recordService;
     
-    @Scheduled(cron = "20 19 9 * * *")
+    @Scheduled(cron = "00 16 10 * * *")
 
     public void tasks(){
+        syncMembers();
         checkFechaAndSync();
         syncRecords();
     }
     
 
+
+    public void syncMembers(){
+        List<MemberDTO> listaMember;
+        if(!membersRepository.findAll().isEmpty())
+            return;
+
+        listaMember = memberService.list();
+        if(listaMember==null){
+            Date now = new Date();
+            String fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(now);
+            logErroresRepository.save(new LogErrores(fecha,
+                    "Hubo un Error en la sincronizacion"));
+            return;
+        }
+        List<Member> listaMemberPg = new LinkedList<>();
+        for(MemberDTO member : listaMember)
+            listaMemberPg.add(membersPg(member));
+        membersRepository.saveAll(listaMemberPg);
+    }
     public void syncRecords(){
         List<RecordDTO> listaRecords;
         if(recordsRepository.findAll().isEmpty())
@@ -55,7 +75,6 @@ public class Scheduler {
             return;
         }
         List<Records> listaRecordsPg = toListRecord(listaRecords);
-        System.out.println(listaRecordsPg);
         recordsRepository.saveAll(listaRecordsPg);
     }
 
