@@ -23,7 +23,7 @@
 
             <div class="main-cards row">
 
-                <div class="card_dash ">
+                <div class="card_dash c1">
                     <div class="card-inner">
                         <p class="text-primary" >Personas Hoy</p>
                         <img th:src="@{/img/Person.svg}" class="icon">
@@ -31,7 +31,7 @@
                     <span class="text-primary font-weight-bold" th:text="${personas}">1</span>
                 </div>
 
-                <div class="card_dash">
+                <div class="card_dash c2">
                     <div class="card-inner">
                         <p class="text-primary">Miembro en falta</p>
                         <img th:src="@{/img/blockk.svg}" class="icon">
@@ -39,7 +39,7 @@
                     <span class="text-primary font-weight-bold" th:text="${personas_defaulter}">0</span>
                 </div>
 
-                <div class="card_dash ">
+                <div class="card_dash c3">
                     <div class="card-inner">
                         <p class="text-primary">Miembros</p>
                         <img th:src="@{/img/users.svg}" class="icon">
@@ -66,9 +66,7 @@
         </main>
         <script type="text/javascript" th:inline="javascript">
         array=[[${dataLinea}]];
-        console.log(array);
         array.pop();
-        console.log(array);
         var barChartOptions = {
         series: [{
         data: [[${dataLinea}]]
@@ -124,7 +122,7 @@
 var options = {
           series: [[${dataPie}]],
           chart: {
-          width: 380,
+          width: 450,
           type: 'pie',
         },
         colors: [
@@ -143,7 +141,7 @@ var options = {
           breakpoint: 480,
           options: {
             chart: {
-              width: 200
+              width: 350
             },
             legend: {
               position: 'bottom'

@@ -226,16 +226,15 @@ a:hover{
 		display: none;
 	}
     .cuadrar{
-        margin-left:27%;
+        margin-left:0;
     }
 	.login-content{
 	}
 }
 @media screen and (max-width: 540px){
 	.cuadrar{
-            margin-left:15%;
+            margin-left:0%;
         }
-
 }
 .checkbox {
 	opacity: 0;
