@@ -179,7 +179,6 @@ public class MemberService {
         List<Member> lista = new LinkedList<>();
         for(MemberDTO miembro : miembros){
             String id = db.collection("MEMBERS").document().getId();
-            System.out.println(id);
             lista.add(new Member(id, miembro.getCreated_by(),
                     miembro.getCi(),
                     miembro.getId_member(),
