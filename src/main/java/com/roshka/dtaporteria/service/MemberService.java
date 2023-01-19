@@ -23,11 +23,6 @@ public class MemberService {
 
     public List<Member> listMemberPg(){return membersRepository.findAll();}
 
-    public Boolean present(String id){
-        Optional<Member> member = membersRepository.findById(id);
-        return member.isPresent();
-    }
-
     public MemberDTO getById(String id) {
         DocumentReference docRef = getCollection().document(id);
         ApiFuture<DocumentSnapshot> future = docRef.get();
@@ -45,10 +40,7 @@ public class MemberService {
         ApiFuture<QuerySnapshot> future = getCollection().whereEqualTo("id_member", id).get();
         try {
             QuerySnapshot document = future.get();
-            if (document.getDocuments().isEmpty()) {
-                return false;
-            }
-            return true;
+            return !document.getDocuments().isEmpty();
         } catch (InterruptedException | ExecutionException e) {
             return false;
         }
@@ -148,21 +140,6 @@ public class MemberService {
         docData.put("type", post.getType());
         docData.put("fecha_vencimiento", post.getFecha_vencimiento());
         return docData;
-    }
-    public int dataTarjetaM(){
-        ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
-        int canti_defaulter=0;
-        try {
-            for (DocumentSnapshot doc : querySnapshotApiFuture.get().getDocuments()) {
-                String tipo_miembro = String.valueOf(doc.get("is_defaulter"));
-                if (tipo_miembro.equals("Si")){
-                    canti_defaulter++;
-                }
-            }
-            return canti_defaulter;
-        } catch (Exception e) {
-            return -99;
-        }
     }
     private void arrayMiembros(String tipo,int[] arrayMembers){
         switch (tipo) {
