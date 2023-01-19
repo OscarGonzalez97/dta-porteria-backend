@@ -39,8 +39,14 @@ public class Main {
     }
     @GetMapping("/sync")
     public String getSync(){
-        syncRepository.updateCantidad();
         List<Sync> sync = syncRepository.findAll();
+        if (sync.isEmpty())
+        {
+            Sync sincronizacion = new Sync(1, 0);
+            syncRepository.save(sincronizacion);
+            sync.add(sincronizacion);
+        }
+        syncRepository.updateCantidad();
         if (!sync.isEmpty() && sync.get(0).getCantidad() <=3){
             scheduler.syncMembers();
             scheduler.checkFechaAndSync();
