@@ -8,6 +8,8 @@ import com.google.cloud.firestore.QuerySnapshot;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
 import com.roshka.dtaporteria.dto.MemberDTO;
 import com.roshka.dtaporteria.dto.RecordDTO;
+import com.roshka.dtaporteria.model.Records;
+import com.roshka.dtaporteria.repository.RecordsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +23,8 @@ import java.util.concurrent.ExecutionException;
 public class RecordService {
     @Autowired
     private FirebaseInitializer firebase;
+    @Autowired
+    private RecordsRepository recordsRepository;
 
     public List<RecordDTO> listToSync(){
         List<RecordDTO> response = new LinkedList<>();
@@ -68,21 +72,18 @@ public class RecordService {
         }
     }
     public int[] dataGraficoLinea(int ano){
-        ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
+        List<Records> docs = recordsRepository.findAll();
         int[] mesArray={0,0,0,0,0,0,0,0,0,0,0,0,0};  //Iniciamos el array con 13 datos. los primeros 12, son los meses y el ultimo es la
         int canti_perso=0;                           // cantidad de personas que ingresaron ese mismo dia. (Por cuestion de rapidez se hizo asi.)
         try {
-            for (DocumentSnapshot doc : querySnapshotApiFuture.get().getDocuments()) {
-                Long fecha_ingreso = Long.parseLong(String.valueOf(doc.get("date_time")));  //aqui obtnemos la fecha exacta en milisegundos
+            for (Records doc : docs) {
+                Long fecha_ingreso = Long.parseLong(String.valueOf(doc.getDate_time()));  //aqui obtnemos la fecha exacta en milisegundos
                 int mes=getMonthofdatetime(fecha_ingreso,ano,canti_perso);//getMonthofdatetime nos traera el mes de la fecha que esta en milisegundo
                 arraymes(mes,mesArray);
-                System.out.println(canti_perso);
             }
-            System.out.println(canti_perso);
             mesArray[12]=canti_perso;
             return mesArray;
         } catch (Exception e) {
-            System.out.println("ffffffffff");
             return null;
 
         }
