@@ -54,11 +54,11 @@ public class MemberService {
         }
     }
     public int[] dataGraficoPie(){
-        ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
+        List<Member> docs = membersRepository.findAll();
         int[] members={0,0,0,0,0,0,0,0,0};  //Iniciamos el array con 9 datos que serian los tipos
         try {
-            for (DocumentSnapshot doc : querySnapshotApiFuture.get().getDocuments()) {
-                String tipo_miembro = String.valueOf(doc.get("type"));  //aqui obtnemos la fecha exacta en milisegundos
+            for (Member doc : docs) {
+                String tipo_miembro = doc.getType();  //aqui obtnemos la fecha exacta en milisegundos
                 //getMonthofdatetime nos traera el mes de la fecha que esta en milisegundo
                 arrayMiembros(tipo_miembro,members);
             }
@@ -118,7 +118,7 @@ public class MemberService {
         memberPg.setIdMember(member.getId_member());
         memberPg.setIsDefaulter(member.getIs_defaulter());
         memberPg.setName(member.getName());
-        memberPg.setPhoto(member.getPhoto());
+        memberPg.setPhoto("");
         memberPg.setSurname(member.getSurname());
         memberPg.setType(member.getType());
         memberPg.setFechaVencimiento(member.getFecha_vencimiento());
@@ -133,7 +133,7 @@ public class MemberService {
         membersRepository.deleteById(id);
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).delete();
         writeResultApiFuture.get();
-        return "deleteSuccess";
+        return "?deleteSuccess";
     }
 
     private static Map<String, Object> getDocData(MemberDTO post) {

@@ -8,18 +8,14 @@ import com.roshka.dtaporteria.repository.MembersRepository;
 import com.roshka.dtaporteria.repository.RecordsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Configuration
 @EnableScheduling
@@ -30,42 +26,45 @@ public class Scheduler {
     private MembersRepository membersRepository;
     @Autowired
     private LogErroresRepository logErroresRepository;
+
     @Autowired
     private RecordsRepository recordsRepository;
     @Autowired
     private RecordService recordService;
-    @PersistenceContext
-    private EntityManager manager;
+    
+    @Scheduled(cron = "0 0 0 * * *")
 
-    @Scheduled(cron = " 59 01 20 * * *")
     public void tasks(){
-        syncDatabases();
-        checkFechaVencimiento();
+        checkFechaAndSync();
     }
-
-    public void syncDatabases(){
-        List<Member> memberpg = new LinkedList<>();
-        List<MemberDTO> members = memberService.list();
-        if (members == null)
-        {
-            Date now = new Date();
-            String fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(now);
-            logErroresRepository.save(new LogErrores(fecha,
-                    "No se pudo obtener la lista de miembros almacenada en Firestore"));
-            return;
-        }
-        for (MemberDTO member : members){
-            memberpg.add(membersPg(member));
-        }
-        membersRepository.saveAll(memberpg);
-    }
+    
 
     public void syncRecords(){
         List<RecordDTO> listaRecords = recordService.listToSync();
     }
-    void checkFechaVencimiento() {
-        String fecha = LocalDate.now().toString();
-        membersRepository.deleteFecha(fecha);
+
+    public void checkFechaAndSync(){
+        List<MemberDTO>members = memberService.list();
+        List<Member>resultMembers = new LinkedList<>();
+        Map<String, MemberDTO> fecha_vencimiento = members.stream().collect(Collectors.toMap(MemberDTO::getId, Function.identity()));
+        fecha_vencimiento.forEach(
+                (key, value) -> {
+                    if (!Objects.equals(value.getType(), "Socio") && !isAfterCurrentDate(value.getFecha_vencimiento())){
+                        try {
+                            memberService.delete(key);
+                        } catch (Exception e) {
+                            Date now = new Date();
+                            String fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(now);
+                            logErroresRepository.save(new LogErrores(fecha,
+                                    "No se pudo borrar un miembro con fecha de vencimiento invalida"));
+                        }
+                    }
+                    else{
+                        resultMembers.add(membersPg(value));
+                    }
+                }
+        );
+        membersRepository.saveAll(resultMembers);
     }
 
     public Boolean isAfterCurrentDate(String fecha){
@@ -81,7 +80,7 @@ public class Scheduler {
         member.setIdMember(memberDTO.getId_member());
         member.setIsDefaulter(memberDTO.getIs_defaulter());
         member.setName(memberDTO.getName());
-        member.setPhoto(memberDTO.getPhoto());
+        member.setPhoto("");
         member.setSurname(memberDTO.getSurname());
         member.setType(memberDTO.getType());
         member.setFechaVencimiento(memberDTO.getFecha_vencimiento());
