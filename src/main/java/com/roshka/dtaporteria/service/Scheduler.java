@@ -4,9 +4,11 @@ import com.roshka.dtaporteria.dto.RecordDTO;
 import com.roshka.dtaporteria.model.LogErrores;
 import com.roshka.dtaporteria.model.Member;
 import com.roshka.dtaporteria.model.Records;
+import com.roshka.dtaporteria.model.Sync;
 import com.roshka.dtaporteria.repository.LogErroresRepository;
 import com.roshka.dtaporteria.repository.MembersRepository;
 import com.roshka.dtaporteria.repository.RecordsRepository;
+import com.roshka.dtaporteria.repository.SyncRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
@@ -32,13 +34,19 @@ public class Scheduler {
     private RecordsRepository recordsRepository;
     @Autowired
     private RecordService recordService;
-    
-    @Scheduled(cron = "00 16 10 * * *")
 
+    @Autowired
+    private SyncRepository syncRepository;
+    @Scheduled(cron = "00 00 00 * * *")
     public void tasks(){
+        if (syncRepository.findAll().isEmpty()){
+            syncRepository.save(new Sync(1,0));
+        }
+        syncRepository.resetCantidad();
         syncMembers();
         checkFechaAndSync();
         syncRecords();
+
     }
     
 

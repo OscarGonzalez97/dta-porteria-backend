@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragmento/base::base}">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragmento/base::base}" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title id="pageTitle">Dashboard</title>
@@ -60,8 +61,8 @@
                     <p class="chart-title">Tipos de miembros</p>
                     <div id="area-chart" style="    display: flex;
     justify-content: center;"></div>
+                <a  sec:authorize="hasAuthority('admin')" type="button" class="btn btn-success" th:href="@{/sync}" target="_self" title="Agregar miembro">Actualizar</a>
                 </div>
-
             </div>
         </main>
         <script type="text/javascript" th:inline="javascript">
