@@ -1,7 +1,9 @@
 package com.roshka.dtaporteria.controller;
 
 import com.roshka.dtaporteria.dto.RecordDTO;
+import com.roshka.dtaporteria.model.Records;
 import com.roshka.dtaporteria.reporte.recordExcel;
+import com.roshka.dtaporteria.repository.RecordsRepository;
 import com.roshka.dtaporteria.service.RecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,23 +20,26 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/records")
 public class RecordController {
     @Autowired
     private RecordService service;
+    @Autowired
+    private RecordsRepository recordsRepository;
 
     @GetMapping
     public String list(Model modelo){ //metodo para listar todos los records
-        service.listToSync();
-        modelo.addAttribute("records", service.list());
+        modelo.addAttribute("records", recordsRepository.findAll());
         return "listRecords";
     }
 
     @GetMapping("/ver/{id}")
     public String verDetalles (@PathVariable(value = "id") String id, Model modelo) { //metodo para mostrar los detalles de cada record
-        modelo.addAttribute("records", service.getById(id));
+        Optional<Records> verificacion = recordsRepository.findById(id);
+        modelo.addAttribute("records", verificacion.isPresent()?verificacion.get(): null);
         return "ver";
     }
 

@@ -39,7 +39,6 @@ public class MemberController {
 
     @GetMapping("/add-form")
     public String addForm(Model model){
-        model.addAttribute("tipos", typeService.list());
         model.addAttribute("member", new MemberDTO());
         return "newMember";
     }

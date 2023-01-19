@@ -8,6 +8,7 @@ import com.google.cloud.firestore.QuerySnapshot;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
 import com.roshka.dtaporteria.dto.MemberDTO;
 import com.roshka.dtaporteria.dto.RecordDTO;
+import com.roshka.dtaporteria.model.Records;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

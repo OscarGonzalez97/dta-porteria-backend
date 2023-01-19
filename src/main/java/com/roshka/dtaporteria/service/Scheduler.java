@@ -3,6 +3,7 @@ import com.roshka.dtaporteria.dto.MemberDTO;
 import com.roshka.dtaporteria.dto.RecordDTO;
 import com.roshka.dtaporteria.model.LogErrores;
 import com.roshka.dtaporteria.model.Member;
+import com.roshka.dtaporteria.model.Records;
 import com.roshka.dtaporteria.repository.LogErroresRepository;
 import com.roshka.dtaporteria.repository.MembersRepository;
 import com.roshka.dtaporteria.repository.RecordsRepository;
@@ -32,15 +33,53 @@ public class Scheduler {
     @Autowired
     private RecordService recordService;
     
-    @Scheduled(cron = "0 0 0 * * *")
+    @Scheduled(cron = "20 19 9 * * *")
 
     public void tasks(){
         checkFechaAndSync();
+        syncRecords();
     }
     
 
     public void syncRecords(){
-        List<RecordDTO> listaRecords = recordService.listToSync();
+        List<RecordDTO> listaRecords;
+        if(recordsRepository.findAll().isEmpty())
+            listaRecords = recordService.list();
+        else
+            listaRecords = recordService.listToSync();
+        if(listaRecords==null){
+            Date now = new Date();
+            String fecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH).format(now);
+            logErroresRepository.save(new LogErrores(fecha,
+                    "Hubo un Error en la sincronizacion"));
+            return;
+        }
+        List<Records> listaRecordsPg = toListRecord(listaRecords);
+        System.out.println(listaRecordsPg);
+        recordsRepository.saveAll(listaRecordsPg);
+    }
+
+    private List<Records> toListRecord(List<RecordDTO> lista){
+        List<Records> listToReturn = new LinkedList<>();
+        for(RecordDTO record : lista)
+            listToReturn.add(transformer(record));
+        return listToReturn;
+    }
+    private Records transformer(RecordDTO record){
+        return new Records(record.getId(),record.getCi_member(),record.getCi_portero(),
+                record.getDate_time(),
+                record.getEmail_portero(),
+                record.getId_member(),
+                record.getIs_defaulter(),
+                record.getIs_exit(),
+                record.getIs_walk(),
+                record.getName_member(),
+                record.getName_portero(),
+                record.getPhoto(),
+                record.getSurname_member(),
+                record.getSurname_portero(),
+                record.getType(),
+                record.getSector());
     }
 
     public void checkFechaAndSync(){
