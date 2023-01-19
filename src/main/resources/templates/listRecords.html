@@ -32,8 +32,8 @@
                 <h1 style="padding: 0.5em;">Records</h1>
             </div>
             <div class="col-2">
-                <a class="btn btn-success" th:href="@{/records/ReporteExcel}" target="_blank">Reporte</a>
-                <a th:href="@{/records}" class="btn btn-secondary">Actualizar</a>
+                <a class="btn btn-success" th:href="@{/records/ReporteExcel}" target="_blank" title="Exportar excel"><img th:src="@{/img/export.svg}" class="icon_grl"></a>
+                <a th:href="@{/records}" class="btn btn-secondary" title="Actualizar tabla"><img th:src="@{/img/refreshIcon.svg}" class="icon_grl"></a>
             </div>
         </div>
     </div>
@@ -85,7 +85,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody style="vertical-align:middle">
                 <tr th:each = "m : ${records}">
                     <td th:text = "${m.id_member}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
                     <td th:text = "${m.name_member}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>

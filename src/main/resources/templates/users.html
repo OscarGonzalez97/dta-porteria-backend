@@ -81,8 +81,8 @@
                 <h1 style="padding: 0.5em;">Usuarios</h1>
             </div>
             <div class="col-2">
-                <a type="button" class="btn btn-success" th:href="@{/users/new}" target="_self">Nuevo</a>
-                <a type="button" class="btn btn-secondary" th:href="@{/users}" target="_self">Actualizar</a>
+                <a type="button" class="btn btn-success" th:href="@{/users/new}" target="_self" title="Agregar usuario"><img th:src="@{/img/new-user-Icon.svg}" class="icon_grl"></a>
+                <a type="button" class="btn btn-secondary" th:href="@{/users}" target="_self" title="Actualizar tabla"><img th:src="@{/img/refreshIcon.svg}" class="icon_grl"></a>
             </div>
         </div>
 
@@ -115,7 +115,7 @@
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid contenedor_table" style="overflow-x:auto;">
         <table id="example" class="table table-striped">
             <thead>
             <tr>
@@ -142,7 +142,7 @@
                 </th>
             </tr>
             </thead>
-            <tbody>
+            <tbody style="vertical-align:middle">
             <tr th:each = "m : ${users}">
                 <td th:text = "${m.id}">
                     Default
@@ -163,9 +163,9 @@
                     Default
                 </td>
                 <td class="d-flex gap-1">
-                    <a type="button" class="btn btn-sm btn-primary" th:href="@{/users/update/{id}(id=${m.id})}" target="_self">Editar</a> 
-                    <a type="button" class="btn btn-sm btn-secondary" th:href="@{/users/disable/{id}(id=${m.id})}" target="_self">Inhabilitar</a>
-                    <button type="button" class="btn btn-sm btn-danger" th:data-id="${m.id}" data-bs-toggle="modal" data-bs-target="#exampleModal">Eliminar</button>
+                    <a type="button" class="btn btn-sm btn-primary" th:href="@{/users/update/{id}(id=${m.id})}" target="_self" title="Editar usuario"><img th:src="@{/img/edit.svg}" class="icon_grl"></a>
+                    <a type="button" class="btn btn-sm btn-secondary" th:href="@{/users/disable/{id}(id=${m.id})}" target="_self" title="Bloquear usuario"><img th:src="@{/img/block.svg}" class="icon_grl"></a>
+                    <button type="button" class="btn btn-sm btn-danger" th:data-id="${m.id}" data-bs-toggle="modal" data-bs-target="#exampleModal" title="Eliminar usuario"><img th:src="@{/img/delete2.svg}" class="icon_grl"></button>
                 </td>
             </tr>
             </tbody>
@@ -189,9 +189,7 @@
           </div>
         </div>
     </div>
-    
-    <!-- Bootstrap Js -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
     <!-- Table to Datatable scripts -->
     <!-- <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script> -->
     <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>

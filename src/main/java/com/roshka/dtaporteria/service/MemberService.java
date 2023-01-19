@@ -149,8 +149,20 @@ public class MemberService {
         docData.put("fecha_vencimiento", post.getFecha_vencimiento());
         return docData;
     }
-    private CollectionReference getCollection() {
-        return firebase.getFirestore().collection("MEMBERS");
+    public int dataTarjetaM(){
+        ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
+        int canti_defaulter=0;
+        try {
+            for (DocumentSnapshot doc : querySnapshotApiFuture.get().getDocuments()) {
+                String tipo_miembro = String.valueOf(doc.get("is_defaulter"));
+                if (tipo_miembro.equals("Si")){
+                    canti_defaulter++;
+                }
+            }
+            return canti_defaulter;
+        } catch (Exception e) {
+            return -99;
+        }
     }
     private void arrayMiembros(String tipo,int[] arrayMembers){
         switch (tipo) {
@@ -183,7 +195,6 @@ public class MemberService {
                 break;
         }
     }
-
     @Transactional(rollbackFor={ExecutionException.class, InterruptedException.class})
     public void AddMembersByList(List<MemberDTO> miembros) throws ExecutionException, InterruptedException {
         Firestore db = getCollection().getFirestore();
@@ -209,5 +220,8 @@ public class MemberService {
         ApiFuture<List<WriteResult>> resultbatch = batch.commit();
         resultbatch.get();
 
+    }
+    private CollectionReference getCollection() {
+        return firebase.getFirestore().collection("MEMBERS");
     }
 }
