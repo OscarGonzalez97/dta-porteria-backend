@@ -134,6 +134,10 @@ public class Scheduler {
     }
 
     public Boolean isAfterCurrentDate(String fecha){
+        if (fecha == null)
+        {
+            return false;
+        }
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate ld = LocalDate.parse(fecha, formatter);
         return ld.isAfter(LocalDate.now());

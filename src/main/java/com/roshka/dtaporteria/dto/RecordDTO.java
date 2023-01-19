@@ -34,6 +34,9 @@ public class RecordDTO { //para el registro de entradas y salidas
     private String type;
     private String sector;
 
+    public void setIs_defaulter(Object object){
+        this.is_defaulter = object.toString();
+    }
     public String CambiarFormatoFecha(){ //formato para fecha y hora
 
         long fechaL= Long.parseLong(this.date_time.substring(0,10)); //extrae los numeros necesarios para que sea fecha y hora

@@ -27,6 +27,7 @@ public class MemberDTO {
     private String type;
     private String fecha_vencimiento;
 
+
     public String getFecha_vencimiento() {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -35,6 +36,9 @@ public class MemberDTO {
         } catch (Exception e){
             return null;
         }
+    }
+    public void setIs_defaulter(Object object){
+        this.is_defaulter = object.toString();
     }
 
 }
