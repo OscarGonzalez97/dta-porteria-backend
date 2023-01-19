@@ -38,6 +38,11 @@ public class MemberDTO {
         }
     }
     public void setIs_defaulter(Object object){
+        if (object == null)
+        {
+            this.is_defaulter = null;
+            return;
+        }
         this.is_defaulter = object.toString();
     }
 

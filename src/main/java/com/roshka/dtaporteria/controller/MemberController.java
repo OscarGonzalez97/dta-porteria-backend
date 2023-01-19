@@ -33,13 +33,13 @@ public class MemberController {
     public String Miembros(Model model) {
         List<Member> miembros = service.listMemberPg();
         model.addAttribute("miembros", miembros);
-        model.addAttribute("tipos", typeService.list());
         return "members";
     }
 
     @GetMapping("/add-form")
     public String addForm(Model model){
         model.addAttribute("member", new MemberDTO());
+        model.addAttribute("tipos", typeService.list());
         return "newMember";
     }
 
