@@ -85,7 +85,7 @@ public class RecordService {
             mesArray[12]=canti_perso;
             return mesArray;
         } catch (Exception e) {
-            return null;
+            return new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
         }
     }
