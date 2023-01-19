@@ -78,7 +78,6 @@ public class RecordService {
         Date datee = new Date();  //fecha actual
         DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");  //formateamos la fecha
 
-        persona_dia++;
         if(date.get(Calendar.YEAR)==ano){
 
             if(dateFormatt.format(date.getTime()).equals(dateFormat.format(datee))){  //si las fechar formateadas son iguales suma 1 persona
