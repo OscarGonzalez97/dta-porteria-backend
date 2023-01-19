@@ -44,11 +44,10 @@
             <tr>
                 <td>Fecha inicio:</td>
                 <td><input type="text" id="min" name="min"></td>
-            </tr>
-            <tr>
                 <td>Fecha fin:</td>
                 <td><input type="text" id="max" name="max"></td>
             </tr>
+
             </tbody>
         </table>
 
@@ -80,9 +79,25 @@
                     <th>
                         Fecha
                     </th>
+                    <th >
+                        Hora
+                    </th>
+                    <th >
+                        Portero
+                    </th>
+                    <th >
+                        Apellido Portero
+                    </th>
+                    <th >
+                        Cedula Portero
+                    </th>
+                    <th >
+                        Con Deuda
+                    </th>
                     <th>
                         Detalles
                     </th>
+
                 </tr>
             </thead>
             <tbody style="vertical-align:middle">
@@ -94,12 +109,18 @@
                     <td th:text = "${m.type}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
                     <td th:text = "${m.sector}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
                     <td th:text = "${m.CambiarFormatoFecha2()}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
+                    <td th:text = "${m.ExtraerHora()}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
+                    <td th:text = "${m.name_portero}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
+                    <td th:text = "${m.surname_portero}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
+                    <td th:text = "${m.ci_portero}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
+                    <td th:text = "${m.CambiarIsDefaulter()}" th:style="${m.is_defaulter == 'true' ? 'color : red;' : ''}"></td>
                     <td>
                         <a th:href="@{/records/ver/{id}(id=${m.id})}" class="btn btn-info">Detalles</a>
                     </td>
                 </tr>
             </tbody>
         </table>
+
     </div>
 </div>
 
