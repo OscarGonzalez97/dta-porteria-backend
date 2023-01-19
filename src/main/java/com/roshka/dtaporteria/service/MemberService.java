@@ -133,7 +133,7 @@ public class MemberService {
         membersRepository.deleteById(id);
         ApiFuture<WriteResult> writeResultApiFuture = posts.document(id).delete();
         writeResultApiFuture.get();
-        return "deleteSuccess";
+        return "?deleteSuccess";
     }
 
     private static Map<String, Object> getDocData(MemberDTO post) {
