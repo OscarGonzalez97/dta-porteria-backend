@@ -59,13 +59,12 @@ public class RecordService {
                 Long fecha_ingreso = Long.parseLong(String.valueOf(doc.get("date_time")));  //aqui obtnemos la fecha exacta en milisegundos
                 int mes=getMonthofdatetime(fecha_ingreso,ano,canti_perso);//getMonthofdatetime nos traera el mes de la fecha que esta en milisegundo
                 arraymes(mes,mesArray);
-                System.out.println(canti_perso);
+
             }
-            System.out.println(canti_perso);
             mesArray[12]=canti_perso;
             return mesArray;
         } catch (Exception e) {
-            System.out.println("ffffffffff");
+
             return null;
 
         }

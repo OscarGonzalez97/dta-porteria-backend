@@ -142,7 +142,7 @@ public class MemberService {
             }
             return canti_defaulter;
         } catch (Exception e) {
-            return -99;
+            return 0;
         }
     }
     private void arrayMiembros(String tipo,int[] arrayMembers){
