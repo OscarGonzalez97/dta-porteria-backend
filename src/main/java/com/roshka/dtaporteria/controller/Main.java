@@ -19,12 +19,13 @@ public class Main {
     MembersRepository membersRepository;
     @GetMapping
     public String main(Model model) throws Exception {
-        model.addAttribute("dataLinea",service.dataGraficoLinea(2023));
+        int[] meses=service.dataGraficoLinea(2023);    //obteniendo los datos
+        model.addAttribute("dataLinea",meses);
         model.addAttribute("dataPie",mService.dataGraficoPie());
-//        model.addAttribute("chartData",mservice.listadelista());
         model.addAttribute("miembros",membersRepository.findAll().size());
         model.addAttribute("morosos", membersRepository.countAllByIsDefaulterIsNotNull());
-//        model.addAttribute("personas",service.dataGrafico(2024)); //falta
+        model.addAttribute("personas_defaulter",mService.dataTarjetaM());
+        model.addAttribute("personas",meses[12]);  //le asigno el ultimo valor del array pq ahi esta la cantidad de persona que entraron ese dia (codigo en RecordService)
         return "dashboard";
     }
 

@@ -71,15 +71,15 @@
                 <div class="col-6">
                     <h1 style="padding: 0.5em;">Sectores</h1>
                 </div>
-                <div class="col-2">
-                    <a sec:authorize="hasAuthority('admin')" type="button" class="btn btn-success text-end" th:href="@{/sectores/addSectores}" target="_self">Nuevo</a>
-                    <a type="button" class="btn btn-secondary text-end" th:href="@{/sectores}" target="_self">Actualizar</a>
+                <div class="col-2" style="display: inline-flex;">
+                    <a sec:authorize="hasAuthority('admin')" type="button" class="btn btn-success text-end" style="margin-right:7px" th:href="@{/sectores/addSectores}" target="_self" title="Eliminar Sector"><img th:src="@{/img/delete2.svg}" class="icon_grl"></a>
+                    <a type="button" class="btn btn-secondary text-end" th:href="@{/sectores}" target="_self" title="Actualizar tabla"><img th:src="@{/img/refreshIcon.svg}" class="icon_grl"></a>
                 </div>
             </div>
         </div>
         <div class="container-fluid">
             <div class="row justify-content-center align-items-center g-2">
-                <div class="col-md-8 col-12">
+                <div class="col-md-8 col-12 contenedor_table" style="overflow-x:auto;">
                     <table class = "table table-striped table-bordered">
                         <thead>
                         <tr>
@@ -87,11 +87,11 @@
                             <th sec:authorize="hasAuthority('admin')">Acciones</th>
                         </tr>
                         </thead>
-                        <tbody>
+                        <tbody style="vertical-align:middle">
                         <tr th:each = "sector:${sector}">
                             <td th:text = "${sector.id}">Sector</td>
                             <td sec:authorize="hasAuthority('admin')">
-                                <a th:href="@{/sectores/{id}(id=${sector.id})}" class="btn btn-danger">Eliminar</a>
+                                <a th:href="@{/sectores/{id}(id=${sector.id})}" class="btn btn-danger"><img th:src="@{/img/delete2.svg}" class="icon_grl"></a>
                             </td>
                         </tr>
                         </tbody>

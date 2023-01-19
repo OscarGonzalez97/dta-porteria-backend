@@ -69,83 +69,83 @@ public class RecordService {
     }
     public int[] dataGraficoLinea(int ano){
         ApiFuture<QuerySnapshot> querySnapshotApiFuture = getCollection().get();
-        int[] mesArray={0,0,0,0,0,0,0,0,0,0,0,0};  //Iniciamos el array con 12 datos que serian los meses
+        int[] mesArray={0,0,0,0,0,0,0,0,0,0,0,0,0};  //Iniciamos el array con 13 datos. los primeros 12, son los meses y el ultimo es la
+        int canti_perso=0;                           // cantidad de personas que ingresaron ese mismo dia. (Por cuestion de rapidez se hizo asi.)
         try {
             for (DocumentSnapshot doc : querySnapshotApiFuture.get().getDocuments()) {
                 Long fecha_ingreso = Long.parseLong(String.valueOf(doc.get("date_time")));  //aqui obtnemos la fecha exacta en milisegundos
-                int mes=getMonthofdatetime(fecha_ingreso,ano);//getMonthofdatetime nos traera el mes de la fecha que esta en milisegundo
+                int mes=getMonthofdatetime(fecha_ingreso,ano,canti_perso);//getMonthofdatetime nos traera el mes de la fecha que esta en milisegundo
                 arraymes(mes,mesArray);
+                System.out.println(canti_perso);
             }
+            System.out.println(canti_perso);
+            mesArray[12]=canti_perso;
             return mesArray;
         } catch (Exception e) {
+            System.out.println("ffffffffff");
             return null;
+
         }
     }
-    public int getMonthofdatetime(Long l,int ano ){  //para el grafico mes a mes :)
-
-        Calendar date = new GregorianCalendar();
+    public int getMonthofdatetime(Long l,int ano,int persona_dia){  //para el grafico mes a mes :)
+        Calendar date = new GregorianCalendar();  //fecha que nos da la BBDD
         date.setTimeInMillis(l);
         date.setTimeZone(TimeZone.getDefault());
+        SimpleDateFormat dateFormatt = new SimpleDateFormat("dd-MM-yyyy");   //formateamos la fecha
 
+        Date datee = new Date();  //fecha actual
+        DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");  //formateamos la fecha
 
+        persona_dia++;
         if(date.get(Calendar.YEAR)==ano){
+
+            if(dateFormatt.format(date.getTime()).equals(dateFormat.format(datee))){  //si las fechar formateadas son iguales suma 1 persona
+                persona_dia++;                                                  // que ingreso ese dia.
+            }
             return date.get(Calendar.MONTH);
         }
-
-//        System.out.println(new SimpleDateFormat().format(date));
         return 99;
     }
-//    private int obtenerUsuarioDia(){
-//        Date datee = new Date();
-//        DateFormat dateFormat=new SimpleDateFormat("dd-MM-yyyy");
-//
-//        SimpleDateFormat dateFormatt = new SimpleDateFormat("dd-MM-yyyy");
-//        dateFormat.setTimeZone(date.getTimeZone());
-//        if(dateFormatt.format(date.getTime())==dateFormat.format(datee)){
-//            mes_cantip[1]+=1;
-//        }
-//    }
     private void arraymes(int mes,int[] mesArray){
         switch (mes) {
-            case 99:
+            case 99:  //por si hay error (esta controlado que sea 99)
                 break;
-            case 0:
+            case 0:  //Enero
                 mesArray[0] += 1;
                 break;
-            case 1:
+            case 1:   //Feb
                 mesArray[1] += 1;
                 break;
-            case 2:
+            case 2:   //Mar
                 mesArray[2] += 1;
                 break;
-            case 3:
+            case 3:   //Abril
                 mesArray[3] += 1;
                 break;
-            case 4:
+            case 4:   //Mayo
                 mesArray[4] += 1;
                 break;
-            case 5:
+            case 5:   //Junio
                 mesArray[5] += 1;
                 break;
-            case 6:
+            case 6:   //Julio
                 mesArray[6] += 1;
                 break;
-            case 7:
+            case 7:  //Agos
                 mesArray[7] += 1;
                 break;
-            case 8:
+            case 8:  //SEP
                 mesArray[8] += 1;
                 break;
-            case 9:
+            case 9:  //Oct
                 mesArray[9] += 1;
                 break;
-            case 10:
+            case 10:  //Nov
                 mesArray[10] += 1;
                 break;
-            case 11:
+            case 11:  //Dec
                 mesArray[11] += 1;
                 break;
-
         }
     }
     private CollectionReference getCollection() {

@@ -3,28 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <title id="pageTitle">Dashboard</title>
-    
-    <script defer src="https://cdn.jsdelivr.net/npm/chart.js" ></script>
+
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
-    <!--    <script type="text/javascript" th:inline="javascript">-->
-    <!--        // Load the Visualization API and the corechart package.-->
-    <!--        google.charts.load('current', {'packages':['corechart']});-->
-    <!--        google.charts.setOnLoadCallback(drawChart);-->
-    <!--        function drawChart() {-->
-    <!--            var data = new google.visualization.DataTable();-->
-    <!--            data.addColumn('string', 'Topping');-->
-    <!--            data.addColumn('number', 'Slices');-->
-    <!--            data.addRows([[${chartData}]]);-->
-    <!--            var options = {'title':'Tipos miembros',-->
-    <!--                'width':400,-->
-    <!--                'height':300};-->
-    <!--            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));-->
-    <!--            chart.draw(data, options);-->
-    <!--        }-->
-    <!--    </script>-->
 
 </head>
 <body>
@@ -40,23 +23,27 @@
 
             <div class="main-cards row">
 
-                <div class="card ">
+                <div class="card_dash ">
                     <div class="card-inner">
-                        <p class="text-primary">Personas Hoy</p>
+                        <p class="text-primary" >Personas Hoy</p>
                         <img th:src="@{/img/Person.svg}" class="icon">
                     </div>
-                    <span class="text-primary font-weight-bold">2</span>
+                    <span class="text-primary font-weight-bold" th:text="${personas}">1</span>
                 </div>
 
-                <div class="card ">
+                <div class="card_dash">
                     <div class="card-inner">
                         <p class="text-primary">Miembro en falta</p>
                         <img th:src="@{/img/blockk.svg}" class="icon">
                     </div>
+<<<<<<< HEAD
                     <span class="text-primary font-weight-bold" th:text="${morosos}"></span>
+=======
+                    <span class="text-primary font-weight-bold" th:text="${personas_defaulter}">0</span>
+>>>>>>> e459f317b47980ef947f5fa83957691a1b7913df
                 </div>
 
-                <div class="card ">
+                <div class="card_dash ">
                     <div class="card-inner">
                         <p class="text-primary">Miembros</p>
                         <img th:src="@{/img/users.svg}" class="icon">
@@ -66,7 +53,7 @@
 
             </div>
 
-            <div class="charts">
+            <div class="charts" style="overflow-x:auto">
 
                 <div class="charts-card">
                     <p class="chart-title">Entrada de miembros por mes</p>
@@ -75,12 +62,17 @@
 
                 <div class="charts-card">
                     <p class="chart-title">Tipos de miembros</p>
-                    <div id="area-chart"></div>
+                    <div id="area-chart" style="    display: flex;
+    justify-content: center;"></div>
                 </div>
 
             </div>
         </main>
         <script type="text/javascript" th:inline="javascript">
+        array=[[${dataLinea}]];
+        console.log(array);
+        array.pop();
+        console.log(array);
         var barChartOptions = {
         series: [{
         data: [[${dataLinea}]]
