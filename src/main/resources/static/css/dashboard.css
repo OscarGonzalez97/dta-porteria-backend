@@ -93,6 +93,17 @@ body {
           font-size: 3.5rem;
         }
       }
+      @media (max-width: 900px) {
+              .c1{
+                grid-column:1/4
+              }
+              .c2{
+                   grid-column:1/4
+              }
+              .c3{
+                   grid-column:1/4
+              }
+      }
 
       .b-example-divider {
         height: 3rem;

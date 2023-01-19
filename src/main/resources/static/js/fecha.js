@@ -11,9 +11,41 @@ $(document).ready(function() {
         buttons: [
             'excel'
         ],
+        columnDefs: [
+                    {
+                        target: 12, //para que no se pueda buscar detalles
+                        searchable: false,
+                    },
+                    {//para ocultar la vista de columnas
+                        target: 7,
+                        searchable: false,
+                        visible: false,
+                    },
+                    {
+                        target: 8,
+                        searchable: false,
+                        visible: false,
+                    },
+                    {
+                        target: 9,
+                        searchable: false,
+                        visible: false,
+                    },
+                    {
+                        target: 10,
+                        searchable: false,
+                        visible: false,
+                    },
+                    {
+                        target: 11,
+                        searchable: false,
+                        visible: false,
+                    },
+                ],
         "language": {
             "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
         }
+
     });
     var minDate, maxDate;
 

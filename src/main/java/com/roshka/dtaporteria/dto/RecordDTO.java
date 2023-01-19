@@ -61,6 +61,20 @@ public class RecordDTO { //para el registro de entradas y salidas
 
         return java_date;
     }
+    public String ExtraerHora(){ //formato para fecha y hora
+
+        long fechaL= Long.parseLong(this.date_time.substring(0,10)); //extrae los numeros necesarios para que sea fecha y hora
+
+        Date Fecha = new Date(fechaL*1000L);
+
+        SimpleDateFormat jdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        jdf.setTimeZone(TimeZone.getDefault()); //define la zona horaria
+
+        String java_date = jdf.format(Fecha);
+
+        return java_date.substring(11,19);
+        //java_date.substring(0,10) para traer solo la fecha
+    }
     public String fotoDefault () { //para poner una foto por defecto a las que no tienen
 
         if (photo == "") {
