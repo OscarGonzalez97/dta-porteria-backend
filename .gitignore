@@ -33,7 +33,8 @@ build/
 
 ### JSON config ###
 firebaseAccountInfo.json
-firebaseAccountInfo.json
+firebaseAccountInfo.test.json
+firebaseAccountInfo.prod.json
 
 firebaseJsApp
 firebaseJsApp.test
