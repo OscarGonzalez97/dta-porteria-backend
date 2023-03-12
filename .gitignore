@@ -34,3 +34,5 @@ build/
 ### JSON config ###
 firebaseAccountInfo.json
 firebaseAccountInfo.json
+
+firebaseJsApp
