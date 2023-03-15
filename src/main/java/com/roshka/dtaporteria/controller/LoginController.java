@@ -9,10 +9,12 @@ import com.roshka.dtaporteria.service.UserService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -51,8 +53,33 @@ public class LoginController {
     }
 
     @GetMapping("/login")
-    public String getLogin() {
+    public String getLogin(Model model) {
+
+        String credentials = "";
+
+        try {
+            FileInputStream googleJs = new FileInputStream("./firebaseJsApp");
+            credentials = getFileContent(googleJs, "UTF-8");
+        }
+        catch(FileNotFoundException e) {
+            credentials = "console.log('firebaseJsApp no encontrado (se encuentra en firebase console)')";
+        } catch (IOException e) {
+            credentials = "console.log('Problemas al abrir el archivo')";
+        }
+
+        model.addAttribute("credentials", credentials);
         return "login";
     }
 
+    public static String getFileContent(FileInputStream fis, String encoding) throws IOException {
+        try(BufferedReader br = new BufferedReader( new InputStreamReader(fis, encoding) )){
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while(( line = br.readLine()) != null ) {
+                sb.append( line );
+                sb.append( '\n' );
+            }
+            return sb.toString();
+        }
+    }
 }
