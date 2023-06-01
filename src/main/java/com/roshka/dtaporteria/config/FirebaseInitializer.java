@@ -23,7 +23,7 @@ public class FirebaseInitializer {
         FileInputStream serviceAccount = new FileInputStream("./firebaseAccountInfo.json");
         FirebaseOptions options = new FirebaseOptions.Builder().
                 setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                .setDatabaseUrl("https://porteria-dta-test.firebaseio.com/")
+                .setDatabaseUrl("https://porteria-dta.firebaseio.com/")
                 .build();
         FirebaseApp firebaseApp = FirebaseApp.initializeApp(options);
         return FirestoreClient.getFirestore(firebaseApp);
