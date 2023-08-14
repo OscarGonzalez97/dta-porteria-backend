@@ -19,6 +19,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 @Configuration
 @EnableScheduling
@@ -47,6 +51,56 @@ public class Scheduler {
         checkFechaAndSync();
         syncRecords();
 
+    }
+
+    @Scheduled(cron = "00 00 00 * * *")
+    public void consultaOracle() {
+        // Consulta a Oracle y actualización en PostgreSQL
+        try {
+            // Establecer conexión a Oracle
+            String oracleUrl = "jdbc:oracle:thin:@192.168.1.200:1521:xe";
+            String oracleUsername = "consulta";
+            String oraclePassword = "consu#123";
+            Connection oracleConn = DriverManager.getConnection(oracleUrl, oracleUsername, oraclePassword);
+            // Consultar la tabla fin_cliente (socio) en Oracle
+            Statement oracleStmt = oracleConn.createStatement();
+            ResultSet oracleRs = oracleStmt.executeQuery("SELECT * FROM fin_cliente");
+            MemberDTO member = new MemberDTO();
+            // Procesar el resultado de la consulta de Oracle
+            while (oracleRs.next()) {
+                // Obtener datos del resultado de Oracle
+                String cliCodigo = oracleRs.getString("cli_codigo");
+                // ... Puedes obtener otros campos del resultado según tus necesidades ...
+                // Realizar acciones de actualización en PostgreSQL con los datos obtenidos
+                // Por ejemplo, puedes usar el campo cliCodigo para actualizar la tabla correspondiente en PostgreSQL
+                // ... Código para actualizar la tabla en PostgreSQL ...
+            }
+            oracleRs = oracleStmt.executeQuery("select * from estado_socios");
+            // Procesar el resultado de la consulta de Oracle
+            while (oracleRs.next()) {
+                // Obtener datos del resultado de Oracle
+                String cliCodigo = oracleRs.getString("cod_socio");
+                // ... Puedes obtener otros campos del resultado según tus necesidades ...
+                // Realizar acciones de actualización en PostgreSQL con los datos obtenidos
+                // Por ejemplo, puedes usar el campo cliCodigo para actualizar la tabla correspondiente en PostgreSQL
+                // ... Código para actualizar la tabla en PostgreSQL ...
+                member.setCreated_by("Sync_server");
+                member.setType("Socio");
+//        member.setCi();
+//        member.setId_member();
+//        member.setIs_defaulter();
+//        member.setName();
+//        member.setSurname();
+                memberService.add(member);
+            }
+            // Cerrar recursos de Oracle
+            oracleRs.close();
+            oracleStmt.close();
+            oracleConn.close();
+        } catch (Exception e) {
+            // Manejar excepciones en caso de error
+            e.printStackTrace();
+        }
     }
     
 
