@@ -49,8 +49,8 @@ public class Main {
         syncRepository.updateCantidad();
         if (!sync.isEmpty() && sync.get(0).getCantidad() <=3){
             scheduler.syncMembers();
-            scheduler.checkFechaAndSync();
-            scheduler.syncRecords();
+//            scheduler.checkFechaAndSync();
+//            scheduler.syncRecords();
         }
         return "redirect:/";
     }

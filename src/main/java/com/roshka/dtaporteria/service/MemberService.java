@@ -1,5 +1,7 @@
 package com.roshka.dtaporteria.service;
 import com.google.api.core.ApiFuture;
+import com.google.api.core.ApiFutureCallback;
+import com.google.api.core.ApiFutures;
 import com.google.cloud.firestore.*;
 import com.roshka.dtaporteria.config.FirebaseInitializer;
 import com.roshka.dtaporteria.dto.MemberDTO;
@@ -24,6 +26,7 @@ public class MemberService {
     public List<Member> listMemberPg(){return membersRepository.findAll();}
 
     public MemberDTO getById(String id) {
+
         DocumentReference docRef = getCollection().document(id);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         try {
@@ -128,6 +131,7 @@ public class MemberService {
         return "?deleteSuccess";
     }
 
+
     private static Map<String, Object> getDocData(MemberDTO post) {
         Map<String, Object> docData = new HashMap<>();
         docData.put("created_by", post.getCreated_by());
@@ -141,6 +145,22 @@ public class MemberService {
         docData.put("fecha_vencimiento", post.getFecha_vencimiento());
         return docData;
     }
+
+
+    private static Map<String, Object> getDocData(Member member) {
+        Map<String, Object> docData = new HashMap<>();
+        docData.put("created_by", member.getCreatedBy());
+        docData.put("id_member", member.getIdMember());
+        docData.put("ci", member.getCi());
+        docData.put("is_defaulter", member.getIsDefaulter());
+        docData.put("name", member.getName());
+        docData.put("photo", member.getPhoto());
+        docData.put("surname", member.getSurname());
+        docData.put("type", member.getType());
+        docData.put("fecha_vencimiento", member.getFechaVencimiento());
+        return docData;
+    }
+
     private void arrayMiembros(String tipo,int[] arrayMembers){
         switch (tipo) {
             case "Socio":
@@ -200,4 +220,58 @@ public class MemberService {
     private CollectionReference getCollection() {
         return firebase.getFirestore().collection("MEMBERS");
     }
+
+    public void addFirebase(Member member) throws ExecutionException, InterruptedException {
+        Map<String, Object> docData = getDocData(member);
+        CollectionReference posts = getCollection();
+        ApiFuture<WriteResult> writer = posts.document(member.getId()).set(docData);
+        ApiFutures.addCallback(writer, new ApiFutureCallback<WriteResult>(){
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+
+            @Override
+            public void onSuccess(WriteResult result) {
+                System.out.println(member.getId() + " :: inserted");
+            }
+        } );
+    }
+
+    public void updateFirebase(Member member) throws ExecutionException, InterruptedException {
+        Map<String, Object> docData = getDocData(member);
+        CollectionReference posts = getCollection();
+        ApiFuture<WriteResult> writer = posts.document(member.getId()).update(docData);
+        ApiFutures.addCallback(writer, new ApiFutureCallback<WriteResult>(){
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+
+            @Override
+            public void onSuccess(WriteResult result) {
+                System.out.println(member.getId() + " :: updated" );
+            }
+        } );
+
+    }
+
+    public void deleteFirebase(String id) throws ExecutionException, InterruptedException {
+        CollectionReference posts = getCollection();
+        ApiFuture<WriteResult> writer = posts.document(id).delete();
+
+        ApiFutures.addCallback(writer, new ApiFutureCallback<WriteResult>(){
+            @Override
+            public void onFailure(Throwable t) {
+                t.printStackTrace();
+            }
+
+            @Override
+            public void onSuccess(WriteResult result) {
+                System.out.println(id + " :: deleted");
+            }
+        } );
+    }
+
+
 }

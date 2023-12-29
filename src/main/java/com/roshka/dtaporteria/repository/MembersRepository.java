@@ -18,4 +18,12 @@ public interface MembersRepository  extends JpaRepository<Member, String> {
     @Modifying
     @Query(value = "DELETE FROM Member AS u WHERE u.fechaVencimiento<?1")
     void deleteFecha(String fecha);
+
+    Member findOneByIdMember(String idMember);
+
+    @Transactional
+    @Query(value = "UPDATE Member SET status = :newStatus")
+    @Modifying
+    int updateAllByStatus(String newStatus);
+
 }

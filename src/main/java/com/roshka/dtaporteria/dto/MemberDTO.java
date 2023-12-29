@@ -46,4 +46,20 @@ public class MemberDTO {
         this.is_defaulter = object.toString();
     }
 
+
+    @Override
+    public String toString() {
+        return "MemberDTO{" +
+                "id='" + id + '\'' +
+                ", created_by='" + created_by + '\'' +
+                ", ci='" + ci + '\'' +
+                ", id_member='" + id_member + '\'' +
+                ", is_defaulter='" + is_defaulter + '\'' +
+                ", name='" + name + '\'' +
+                ", photo='" + photo + '\'' +
+                ", surname='" + surname + '\'' +
+                ", type='" + type + '\'' +
+                ", fecha_vencimiento='" + fecha_vencimiento + '\'' +
+                '}';
+    }
 }

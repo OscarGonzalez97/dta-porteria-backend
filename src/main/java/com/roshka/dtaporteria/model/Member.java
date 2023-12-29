@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -13,7 +14,15 @@ import java.time.format.DateTimeFormatter;
 @Data
 @NoArgsConstructor
 public class Member{
+
+    public static final String STATUS_ACTIVE = "A";
+    public static final String STATUS_INACTIVE = "I";
+
+    public static final String TYPE_SOCIO = "socio";
+
     @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     private String createdBy;
     private String ci;
@@ -24,20 +33,21 @@ public class Member{
     private String surname;
     private String type;
     private String fechaVencimiento;
+    private String status;
 
-    public Member(String id, String created_by, String ci, String id_member, String is_defaulter, String name, String photo, String surname, String type, String fecha_vencimiento) {
+    public Member(String id, String createdBy, String ci, String idMember, String isDefaulter, String name, String photo, String surname, String type, String fechaVencimiento) {
         this.id = id;
-        this.createdBy = created_by;
+        this.createdBy = createdBy;
         this.ci = ci;
-        this.idMember = id_member;
-        this.isDefaulter = is_defaulter;
+        this.idMember = idMember;
+        this.isDefaulter = isDefaulter;
         this.name = name;
         this.photo = photo;
         this.surname = surname;
         this.type = type;
-        this.fechaVencimiento = fecha_vencimiento;
+        this.fechaVencimiento = fechaVencimiento;
     }
-    public String getFecha_vencimiento() {
+    public String getFechaVencimiento() {
         try {
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate.parse(this.fechaVencimiento, formatter);

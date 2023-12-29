@@ -1,4 +1,5 @@
 package com.roshka.dtaporteria.service;
+import com.roshka.dtaporteria.config.DtaConfig;
 import com.roshka.dtaporteria.dto.MemberDTO;
 import com.roshka.dtaporteria.dto.RecordDTO;
 import com.roshka.dtaporteria.model.LogErrores;
@@ -13,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -41,6 +44,22 @@ public class Scheduler {
 
     @Autowired
     private SyncRepository syncRepository;
+
+    @Autowired
+    private DtaConfig dtaConfig;
+
+    private static final String GET_MEMBER_TO_SYNC_SQL =
+            "select c.cli_doc_ident_propietario, c.cli_codigo, c.cli_nom, c.cli_ape, c.cli_est_cli " +
+            ",min(e.fecha_vencimiento) as vencimiento " +
+            "from fin_cliente c " +
+            " left outer join estado_socios e " +
+            "                 on c.cli_codigo = e.cod_socio " +
+            "where c.cli_est_cli in ('A','V', 'I', 'P','T', 'B') " +
+            "  and (e.saldo_cuota > 0 or  e.saldo_cuota is null) " +
+            //"  and c.cli_doc_ident_propietario is not null " +
+            //"  and c.cli_ape like '%WELTI%'" +
+            "group by c.cli_doc_ident_propietario, c.cli_codigo, c.cli_nom, c.cli_ape, c.cli_est_cli";
+
     @Scheduled(cron = "00 00 00 * * *")
     public void tasks(){
         if (syncRepository.findAll().isEmpty()){
@@ -54,56 +73,106 @@ public class Scheduler {
     }
 
     @Scheduled(cron = "00 00 00 * * *")
-    public void consultaOracle() {
+    public void makeDbSync() {
         // Consulta a Oracle y actualización en PostgreSQL
+        Connection conn = null;
         try {
-            // Establecer conexión a Oracle
-            String oracleUrl = "jdbc:oracle:thin:@192.168.1.200:1521:xe";
-            String oracleUsername = "consulta";
-            String oraclePassword = "consu#123";
-            Connection oracleConn = DriverManager.getConnection(oracleUrl, oracleUsername, oraclePassword);
-            // Consultar la tabla fin_cliente (socio) en Oracle
-            Statement oracleStmt = oracleConn.createStatement();
-            ResultSet oracleRs = oracleStmt.executeQuery("SELECT * FROM fin_cliente");
-            MemberDTO member = new MemberDTO();
-            // Procesar el resultado de la consulta de Oracle
-            while (oracleRs.next()) {
-                // Obtener datos del resultado de Oracle
-                String cliCodigo = oracleRs.getString("cli_codigo");
-                // ... Puedes obtener otros campos del resultado según tus necesidades ...
-                // Realizar acciones de actualización en PostgreSQL con los datos obtenidos
-                // Por ejemplo, puedes usar el campo cliCodigo para actualizar la tabla correspondiente en PostgreSQL
-                // ... Código para actualizar la tabla en PostgreSQL ...
+            Locale.setDefault(Locale.US);
+            Class.forName(dtaConfig.getDataSourceDriverClassName());
+            conn = DriverManager.getConnection(
+                    dtaConfig.getDataSourceUrl(),
+                    dtaConfig.getDataSourceUsername(),
+                    dtaConfig.getDataSourcePassword());
+
+            System.out.println(GET_MEMBER_TO_SYNC_SQL);
+            membersRepository.updateAllByStatus(Member.STATUS_INACTIVE);
+
+            ResultSet rs = conn.prepareStatement(GET_MEMBER_TO_SYNC_SQL).executeQuery();
+            while (rs.next()) {
+                Member member = getMemberFromRS(rs);
+                System.out.println(member);
+
+                Member memberData = membersRepository.findOneByIdMember(member.getIdMember());
+                if(memberData != null && memberData.getIdMember()!=null) {
+                    member.setId(memberData.getId());
+                }
+
+                membersRepository.save(member);
             }
-            oracleRs = oracleStmt.executeQuery("select * from estado_socios");
-            // Procesar el resultado de la consulta de Oracle
-            while (oracleRs.next()) {
-                // Obtener datos del resultado de Oracle
-                String cliCodigo = oracleRs.getString("cod_socio");
-                // ... Puedes obtener otros campos del resultado según tus necesidades ...
-                // Realizar acciones de actualización en PostgreSQL con los datos obtenidos
-                // Por ejemplo, puedes usar el campo cliCodigo para actualizar la tabla correspondiente en PostgreSQL
-                // ... Código para actualizar la tabla en PostgreSQL ...
-                member.setCreated_by("Sync_server");
-                member.setType("Socio");
-//        member.setCi();
-//        member.setId_member();
-//        member.setIs_defaulter();
-//        member.setName();
-//        member.setSurname();
-                memberService.add(member);
-            }
-            // Cerrar recursos de Oracle
-            oracleRs.close();
-            oracleStmt.close();
-            oracleConn.close();
+
+
         } catch (Exception e) {
-            // Manejar excepciones en caso de error
+            e.printStackTrace();
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+    public void makeFirebaseSync(){
+        List<MemberDTO> fbMembers = memberService.list();
+
+        List<Member> members = membersRepository.findAll();
+
+        try {
+            for (Member member : members) {
+                System.out.println(member);
+                if (Member.STATUS_ACTIVE.equals(member.getStatus())) {
+
+                    if (fbMembers.stream().anyMatch(m -> m.getId().equalsIgnoreCase(member.getId()))) {
+                        //se actualiza
+                        memberService.updateFirebase(member);
+                    } else {
+                        //se inserta
+                        memberService.addFirebase(member);
+                    }
+                } else if (Member.STATUS_INACTIVE.equals(member.getStatus())) {
+                    // borra (dependiendo del status)
+                    if (fbMembers.stream().anyMatch(m -> m.getId().equalsIgnoreCase(member.getId()))) {
+                        memberService.deleteFirebase(member.getId());
+                    }
+                }
+
+            }
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
     
+    private Member getMemberFromRS(ResultSet rs) throws SQLException {
+        Member member = new Member();
+        member.setIdMember(rs.getString("cli_codigo"));
+        member.setCreatedBy("sync");
+        member.setName(rs.getString("cli_nom"));
+        member.setSurname(rs.getString("cli_ape"));
+        member.setCi(rs.getString("cli_doc_ident_propietario"));
+        member.setType(Member.TYPE_SOCIO);
+        member.setIsDefaulter(""+false);
+        member.setStatus(Member.STATUS_ACTIVE);
 
+        String sourceStatus = rs.getString("cli_est_cli");
+        if("B".equalsIgnoreCase(sourceStatus)){
+            member.setStatus(Member.STATUS_INACTIVE);
+        }
+
+        java.sql.Timestamp vencimientoUltimaCuotaPaga = rs.getTimestamp("vencimiento");
+        if(vencimientoUltimaCuotaPaga!=null){
+            //si el vencimiento de la ultima cuota tiene mas de n meses, se marca 'true' el 'defaulter'
+            Calendar c = Calendar.getInstance();
+            c.setTimeInMillis(vencimientoUltimaCuotaPaga.getTime());
+            c.add(Calendar.MONTH,dtaConfig.getMemberAmountMonthArrearsClaim());
+            member.setIsDefaulter(""+Calendar.getInstance().after(c));
+        }
+
+
+        return member;
+    }
 
     public void syncMembers(){
         List<MemberDTO> listaMember;
@@ -210,6 +279,7 @@ public class Scheduler {
         member.setSurname(memberDTO.getSurname());
         member.setType(memberDTO.getType());
         member.setFechaVencimiento(memberDTO.getFecha_vencimiento());
+        member.setStatus(Member.STATUS_ACTIVE);
         return member;
     }
 }
