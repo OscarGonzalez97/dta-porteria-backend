@@ -18,9 +18,12 @@ class DtaPorteriaApplicationTests {
 
 
 	@Test
-	void makedbSyncTest(){
+	void makedbSyncTest() throws InterruptedException {
 		scheduler.makeDbSync();
 		scheduler.makeFirebaseSync();
+
+		Thread.sleep(1000000);
 	}
+
 
 }

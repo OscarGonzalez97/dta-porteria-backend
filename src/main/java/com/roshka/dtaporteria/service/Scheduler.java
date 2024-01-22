@@ -54,10 +54,8 @@ public class Scheduler {
             "from fin_cliente c " +
             " left outer join estado_socios e " +
             "                 on c.cli_codigo = e.cod_socio " +
-            "where c.cli_est_cli in ('A','V', 'I', 'P','T', 'B') " +
-            "  and (e.saldo_cuota > 0 or  e.saldo_cuota is null) " +
-            //"  and c.cli_doc_ident_propietario is not null " +
-            //"  and c.cli_ape like '%WELTI%'" +
+                             "and (e.saldo_cuota > 0  or e.saldo_cuota is null) " +
+            "where c.cli_est_cli in ('A','V', 'I','B') " +
             "group by c.cli_doc_ident_propietario, c.cli_codigo, c.cli_nom, c.cli_ape, c.cli_est_cli";
 
     @Scheduled(cron = "00 00 00 * * *")
@@ -90,7 +88,7 @@ public class Scheduler {
             ResultSet rs = conn.prepareStatement(GET_MEMBER_TO_SYNC_SQL).executeQuery();
             while (rs.next()) {
                 Member member = getMemberFromRS(rs);
-                System.out.println(member);
+                //System.out.println(member);
 
                 Member memberData = membersRepository.findOneByIdMember(member.getIdMember());
                 if(memberData != null && memberData.getIdMember()!=null) {
@@ -119,10 +117,12 @@ public class Scheduler {
         List<MemberDTO> fbMembers = memberService.list();
 
         List<Member> members = membersRepository.findAll();
-
+        System.out.println("members size ::" + members.size());
+        int i=0;
         try {
             for (Member member : members) {
-                System.out.println(member);
+                System.out.println("# "  + i++);
+//                System.out.println(member);
                 if (Member.STATUS_ACTIVE.equals(member.getStatus())) {
 
                     if (fbMembers.stream().anyMatch(m -> m.getId().equalsIgnoreCase(member.getId()))) {

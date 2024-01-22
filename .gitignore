@@ -39,3 +39,5 @@ firebaseAccountInfo.prod.json
 firebaseJsApp
 firebaseJsApp.test
 firebaseJsApp.prod
+
+data/
