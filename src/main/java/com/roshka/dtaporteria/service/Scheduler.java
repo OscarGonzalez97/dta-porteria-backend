@@ -58,17 +58,17 @@ public class Scheduler {
             "where c.cli_est_cli in ('A','V', 'I','B') " +
             "group by c.cli_doc_ident_propietario, c.cli_codigo, c.cli_nom, c.cli_ape, c.cli_est_cli";
 
-    @Scheduled(cron = "00 00 00 * * *")
-    public void tasks(){
-        if (syncRepository.findAll().isEmpty()){
-            syncRepository.save(new Sync(1,0));
-        }
-        syncRepository.resetCantidad();
-        syncMembers();
-        checkFechaAndSync();
-        syncRecords();
-
-    }
+//    @Scheduled(cron = "00 00 00 * * *")
+//    public void tasks(){
+//        if (syncRepository.findAll().isEmpty()){
+//            syncRepository.save(new Sync(1,0));
+//        }
+//        syncRepository.resetCantidad();
+//        syncMembers();
+//        checkFechaAndSync();
+//        syncRecords();
+//
+//    }
 
     @Scheduled(cron = "00 00 00 * * *")
     public void makeDbSync() {
@@ -88,7 +88,7 @@ public class Scheduler {
             ResultSet rs = conn.prepareStatement(GET_MEMBER_TO_SYNC_SQL).executeQuery();
             while (rs.next()) {
                 Member member = getMemberFromRS(rs);
-                //System.out.println(member);
+                System.out.println(member);
 
                 Member memberData = membersRepository.findOneByIdMember(member.getIdMember());
                 if(memberData != null && memberData.getIdMember()!=null) {
@@ -112,7 +112,7 @@ public class Scheduler {
         }
     }
 
-
+    @Scheduled(cron = "00 00 01 * * *")
     public void makeFirebaseSync(){
         List<MemberDTO> fbMembers = memberService.list();
 
