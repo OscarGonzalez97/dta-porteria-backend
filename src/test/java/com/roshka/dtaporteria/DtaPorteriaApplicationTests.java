@@ -26,4 +26,10 @@ class DtaPorteriaApplicationTests {
 	}
 
 
+	@Test
+	void makeSyncRecords(){
+		scheduler.syncRecords();
+	}
+
+
 }

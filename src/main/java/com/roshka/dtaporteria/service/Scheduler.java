@@ -140,11 +140,15 @@ public class Scheduler {
                 }
 
             }
+
+
+            //get RECORDS from FIREBASE
+            syncRecords();
         }catch (Exception e){
             e.printStackTrace();
         }
     }
-    
+
     private Member getMemberFromRS(ResultSet rs) throws SQLException {
         Member member = new Member();
         member.setIdMember(rs.getString("cli_codigo"));
