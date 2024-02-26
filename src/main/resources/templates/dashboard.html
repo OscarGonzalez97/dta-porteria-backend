@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragmento/base::base}" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title id="pageTitle">Dashboard</title>
+
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.35.3/apexcharts.min.js"></script>
+
+</head>
+<body>
+<div layout:fragment="contenido">
+    <nav class="breadcrumbs">
+        <a href="/" class="breadcrumbs__item is-active">Dashboard</a>
+    </nav>
+    <div class="container-fluid">
+        <main class="main-container ">
+            <div class="main-title">
+                <p class="font-weight-bold">DASHBOARD</p>
+            </div>
+
+            <div class="main-cards row">
+                <div class="card_dash c1">
+                    <div class="card-inner">
+                        <p class="text-primary" >Personas Hoy</p>
+                        <img th:src="@{/img/Person.svg}" class="icon">
+                    </div>
+                    <span class="text-primary font-weight-bold" th:text="${personas}">1</span>
+                </div>
+
+                <div class="card_dash c2">
+                    <div class="card-inner">
+                        <p class="text-primary">Miembro en falta</p>
+                        <img th:src="@{/img/blockk.svg}" class="icon">
+                    </div>
+                    <span class="text-primary font-weight-bold" th:text="${morosos}"></span>
+                </div>
+
+                <div class="card_dash c3">
+                    <div class="card-inner">
+                            <p class="text-primary">Miembros</p>
+                        <img th:src="@{/img/users.svg}" class="icon">
+                    </div>
+                    <span class="text-primary font-weight-bold" th:text="${miembros}">0</span>
+                </div>
+
+            </div>
+
+            <div class="charts" style="overflow-x:auto">
+
+                <div class="charts-card">
+                    <p class="chart-title">Entrada de miembros por mes</p>
+                    <div id="bar-chart"></div>
+                </div>
+
+                <div class="charts-card">
+                    <p class="chart-title">Tipos de miembros</p>
+                    <div id="area-chart" style="    display: flex;
+    justify-content: center;"></div>
+                <a  sec:authorize="hasAuthority('admin')" type="button" class="btn btn-success" th:href="@{/sync}" target="_self" title="Actualizar">Actualizar</a>
+                </div>
+            </div>
+        </main>
+        <script type="text/javascript" th:inline="javascript">
+        array=[[${dataLinea}]];
+        array.pop();
+        var barChartOptions = {
+        series: [{
+        data: [[${dataLinea}]]
+        }],
+        chart: {
+        type: 'bar',
+        height: 350,
+        toolbar: {
+        show: false
+        },
+        },
+        colors: [
+            "#246dec",
+            "#cc3c43",
+            "#367952",
+            "#f5b74f",
+            "#4f35a1",
+            "#CACBF6",
+            "#106009",
+            "#9B0FD7",
+            "#CD3793",
+            "#DD8800",
+            "#00a76d",
+            "#BDC58F"
+        ],
+        plotOptions: {
+        bar: {
+        distributed: true,
+        borderRadius: 4,
+        horizontal: false,
+        columnWidth: '40%',
+        }
+    },
+        dataLabels: {
+        enabled: false
+        },
+    legend: {
+        show: false
+    },
+    xaxis: {
+        categories: ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre","Diciembre"]
+    },
+    yaxis: {
+        title: {
+        text: "Count"
+         }
+      }
+    };
+    var barChart = new ApexCharts(document.querySelector("#bar-chart"), barChartOptions);
+    barChart.render();
+</script>
+    <script type="text/javascript"  th:inline="javascript">
+var options = {
+          series: [[${dataPie}]],
+          chart: {
+          width: 450,
+          type: 'pie',
+        },
+        colors: [
+    "#246dec",
+    "#cc3c43",
+    "#07A772",
+    "#f5b74f",
+    "#4f35a1",
+     "#CACBF6",
+     "#106009",
+     "#9B0FD7",
+     "#CD3793",
+  ],
+        labels: ['Socio', 'Staff', 'Guarderia', 'Piscina', 'Tenis','Restaurante', 'Gimnasio','Eventos','Invitado' ],
+        responsive: [{
+          breakpoint: 480,
+          options: {
+            chart: {
+              width: 350
+            },
+            legend: {
+              position: 'bottom'
+            }
+          }
+        }]
+        };
+
+        var chart = new ApexCharts(document.querySelector("#area-chart"), options);
+        chart.render();
+    </script>
+
+    </div>
+</div>
+</body>
+
+</html>

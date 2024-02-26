@@ -1,0 +1,19 @@
+.smt{
+    padding-top: 0.9em;
+}
+body {
+    background-color: rgb(243, 243, 243) !important;
+    height: 100vh;
+    color: rgb(0, 0, 0) !important;
+}
+.form-check {
+    display: flex;
+    align-items: center;
+    vertical-align: middle;
+}
+#checkbox{
+    padding-top: 2em;
+}
+#cancelarNuevoMiembro{
+    padding-top: 5em;
+}

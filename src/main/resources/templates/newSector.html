@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragmento/base::base}">
+<head>
+    <meta charset="UTF-8">
+    <title id="pageTitle">Nuevo Sector</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+</head>
+<body>
+<div layout:fragment="contenido">
+    <nav class="breadcrumbs">
+        <a href="/" class="breadcrumbs__item">Dashboard</a>
+        <a href="/sectores" class="breadcrumbs__item">Sectores</a>
+        <a th:href="@{/sectores/addSectores}" class="breadcrumbs__item is-active">Nuevo sector</a> 
+    </nav>
+    <div class = "container" style="padding-top: 1em;">
+        <div class="col-1 g-2"><a type="button" class="" href="/sectores" aria-label="Close" title="Volver atras"><img th:src="@{/img/back.svg}" style="height:48px;width:48px"></a></div>
+        <div class = "row text-center">
+            <h1>Sectores</h1>
+        </div>
+        <div class="row justify-content-center align-items-center g-2">
+            <div class="col-md-6 col-12 container justify-content-center card">
+                <div class = "card-body">
+                    <div class="card-header">
+                        <h3 class = "text-center">Añadir</h3>
+                    </div>
+                    <div class="card-body">
+                        <form action=# th:action="@{/sectores/add}" th:object="${SectorDTO}" method="POST">
+                            <div class="input-group mb-2">
+                                <div class="input-group-prepend">
+                                  <div class="input-group-text">Nombre</div>
+                                </div>
+                                <input type="text" class="form-control" name="id" th:field="*{id}" placeholder="Ingrese un sector...">
+                              </div>
+                            <br>
+                            <div class="box-footer justify-content-center text-center">
+                                <button class="btn btn-success" type = submit>Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- <a href="/sectores/addSectores" class="btn btn-success">Agregar</a> -->
+
+    </div>
+</div>
+</body>
+</html>

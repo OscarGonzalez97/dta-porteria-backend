@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{fragmento/base::base}">
+<head>
+    <meta charset="UTF-8">
+    <title>Nuevo Sector</title>
+
+</head>
+<body>
+<div layout:fragment="contenido">
+    
+    <div class = "container">
+        <br>
+        <div class = "row">
+            <div class = "col-lg-6 col-md 6 col-sm-6 container justify-content-center card">
+                <br>
+                <h1 class = "text-center">Sectores</h1>
+                <div class = "card-body">
+                    <form action=# th:action="@{/sectores/add}" th:object="${SectorDTO}" method="POST">
+                        <div class="form-group">
+                            <label>Sector</label>
+                            <input type="text" name="id" th:field="*{id}" class="form-control" placeholder="Ingrese un sector: " required>
+                        </div>
+                        <br>
+                        <div class="box-footer">
+                            <button class="btn btn-success" type = submit> Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
